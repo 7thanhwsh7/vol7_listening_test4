@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G.EDU – IELTS Listening Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --gold: #D4AF37;
+  --gold-light: #f0d060;
+  --gold-dark: #a88a20;
+  --navy: #1a1208;
+  --navy-mid: #2a1e0a;
+  --cream: #fdfcfb;
+  --ink: #2d3436;
+  --ink-light: #636e72;
+  --flag-red: #e17055;
+  --highlight-yellow: #fff2ac;
+  --sidebar-w: 280px;
+  --radius: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ===== LOGIN SCREEN ===== */
+#login-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--navy);
+  background-image:
+    radial-gradient(ellipse at 30% 30%, rgba(212,175,55,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 70%, rgba(212,175,55,0.10) 0%, transparent 50%),
+    repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(212,175,55,0.03) 30px, rgba(212,175,55,0.03) 31px),
+    repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(212,175,55,0.02) 30px, rgba(212,175,55,0.02) 31px);
+  position: relative;
+  overflow: hidden;
+}
+
+#login-screen::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border: 1px solid rgba(212,175,55,0.12);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+#login-screen::after {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  border: 1px solid rgba(212,175,55,0.08);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.login-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 16px;
+  padding: 52px 48px;
+  width: 420px;
+  max-width: 94vw;
+  backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.login-subtitle {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.55);
+  text-align: center;
+  margin-bottom: 36px;
+}
+.login-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 28px;
+  font-style: italic;
+}
+.login-field {
+  margin-bottom: 16px;
+}
+.login-field label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.7);
+  margin-bottom: 8px;
+}
+.login-field input {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.login-field input::placeholder { color: rgba(255,255,255,0.25); }
+.login-field input:focus { border-color: var(--gold); }
+
+.login-btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.login-btn:hover { background: var(--gold-light); }
+.login-btn:active { transform: scale(0.98); }
+
+.login-note {
+  margin-top: 14px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+}
+
+/* ===== APP LAYOUT ===== */
+#app {
+  display: none;
+  min-height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+#sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 100;
+  border-right: 1px solid rgba(212,175,55,0.15);
+}
+
+.sb-logo {
+  padding: 28px 24px 16px;
+  border-bottom: 1px solid rgba(212,175,55,0.12);
+}
+.sb-logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 3px;
+}
+.sb-test-name {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.45);
+  margin-top: 3px;
+}
+
+.sb-student {
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(212,175,55,0.08);
+}
+.sb-student-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sb-student-class {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 2px;
+}
+
+/* Timer */
+.sb-timer {
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(212,175,55,0.08);
+  text-align: center;
+}
+.sb-timer-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.45);
+  margin-bottom: 4px;
+}
+.sb-timer-display {
+  font-family: 'DM Mono', monospace;
+  font-size: 28px;
+  color: var(--gold);
+  letter-spacing: 3px;
+}
+.sb-timer-display.urgent { color: #ff7675; animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+/* Question Map */
+.sb-map-section {
+  padding: 16px 24px;
+  flex: 1;
+}
+.sb-map-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.45);
+  margin-bottom: 10px;
+}
+.q-map {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+.q-dot {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  font-family: 'DM Mono', monospace;
+}
+.q-dot:hover { border-color: var(--gold); color: var(--gold); }
+.q-dot.answered { background: rgba(212,175,55,0.2); border-color: var(--gold); color: var(--gold); }
+.q-dot.flagged { border-color: var(--flag-red); color: var(--flag-red); }
+.q-dot.answered.flagged { background: rgba(212,175,55,0.2); border-color: var(--flag-red); color: var(--gold); }
+.q-dot.answered.flagged::after {
+  content: '';
+  position: absolute;
+  top: 2px; right: 2px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--flag-red);
+}
+
+/* Sidebar buttons */
+.sb-btns {
+  padding: 14px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.btn-flag-view {
+  padding: 9px 14px;
+  background: transparent;
+  border: 1px solid var(--flag-red);
+  color: var(--flag-red);
+  border-radius: 5px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  letter-spacing: 0.5px;
+}
+.btn-flag-view:hover { background: rgba(225,112,85,0.1); }
+
+.btn-submit {
+  padding: 11px 14px;
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  border-radius: 5px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-submit:hover { background: rgba(212,175,55,0.1); }
+
+/* ===== MAIN CONTENT ===== */
+#main {
+  margin-left: var(--sidebar-w);
+  padding: 40px 52px 80px;
+  max-width: calc(100vw - var(--sidebar-w));
+}
+
+.part-header {
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgba(212,175,55,0.3);
+}
+.part-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.part-instruction {
+  font-size: 13.5px;
+  color: var(--ink-light);
+  line-height: 1.7;
+}
+.part-instruction strong { color: var(--ink); }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+/* Form table Part 1 */
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #d0c8b8;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.form-table th {
+  background: #f2ede4;
+  padding: 10px 18px;
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1.5px solid #d0c8b8;
+  color: var(--ink);
+}
+.form-table td {
+  padding: 8px 18px;
+  font-size: 13.5px;
+  line-height: 1.8;
+  vertical-align: top;
+  color: var(--ink);
+}
+.form-table .example-row td { background: #f8f5ef; color: var(--ink-light); font-style: italic; }
+.form-table .example-row td span { text-decoration: underline; }
+.form-table .section-row td {
+  background: #f2ede4;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 5px 18px;
+  color: var(--ink-light);
+}
+
+/* Inline inputs */
+.q-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  vertical-align: middle;
+}
+.q-num-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--gold-dark);
+  background: rgba(212,175,55,0.12);
+  border-radius: 3px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+.q-input {
+  border: none;
+  border-bottom: 1.5px solid #b0a070;
+  background: transparent;
+  width: 130px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 13.5px;
+  color: var(--ink);
+  padding: 2px 4px;
+  outline: none;
+  transition: border-color 0.15s;
+  display: inline-block;
+}
+.q-input:focus { border-bottom-color: var(--gold); }
+
+.flag-btn {
+  width: 22px; height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  vertical-align: middle;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.flag-btn:hover { border-color: var(--flag-red); }
+.flag-btn.active { background: rgba(225,112,85,0.1); border-color: var(--flag-red); }
+
+/* Question rows (MCQ) */
+.q-block {
+  margin-bottom: 24px;
+}
+.q-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.q-row-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gold-dark);
+  min-width: 26px;
+  padding-top: 1px;
+}
+.q-row-text {
+  font-size: 14px;
+  line-height: 1.65;
+  font-weight: 600;
+  flex: 1;
+  color: var(--ink);
+}
+.q-options {
+  margin-left: 36px;
+  margin-top: 6px;
+}
+.q-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-bottom: 2px;
+}
+.q-option:hover { background: rgba(212,175,55,0.07); }
+.q-option input[type="radio"],
+.q-option input[type="checkbox"] {
+  margin-top: 3px;
+  accent-color: var(--gold);
+  flex-shrink: 0;
+}
+.q-option-label {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.q-option-letter {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gold-dark);
+  min-width: 18px;
+}
+
+/* Flowchart */
+.flowchart-box {
+  background: #faf7f0;
+  border: 1.5px solid #d0c8b8;
+  border-radius: 10px;
+  padding: 30px 40px;
+  margin: 16px 0 32px;
+  position: relative;
+}
+.flowchart-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 28px;
+  color: var(--ink);
+}
+.flowchart-step {
+  text-align: center;
+  font-size: 13.5px;
+  line-height: 1.7;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.flowchart-arrow {
+  text-align: center;
+  color: var(--ink-light);
+  font-size: 20px;
+  margin: 2px 0;
+  line-height: 1;
+}
+
+.option-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px 16px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: rgba(212,175,55,0.06);
+  border-radius: 6px;
+  border: 1px solid rgba(212,175,55,0.18);
+}
+.option-list-item {
+  font-size: 12.5px;
+  color: var(--ink-light);
+}
+.option-list-item strong { color: var(--ink); }
+
+/* Matching section (26-30) */
+.matching-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.matching-table td {
+  padding: 8px 14px;
+  font-size: 13.5px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  vertical-align: middle;
+}
+.matching-table td:first-child {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--gold-dark);
+  width: 36px;
+}
+.matching-table td:nth-child(3) {
+  width: 200px;
+}
+
+/* Notes table Part 4 */
+.notes-box {
+  background: #faf7f0;
+  border: 1.5px solid #d0c8b8;
+  border-radius: 10px;
+  padding: 28px 36px;
+  margin: 16px 0 32px;
+}
+.notes-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+.notes-section-head {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  margin: 18px 0 6px;
+}
+.notes-line {
+  font-size: 13.5px;
+  line-height: 2;
+  color: var(--ink);
+}
+
+/* Part divider */
+.part-divider {
+  border: none;
+  border-top: 1.5px solid rgba(212,175,55,0.2);
+  margin: 48px 0 40px;
+}
+
+/* ===== HIGHLIGHT BUTTON ===== */
+#hl-btn {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 4px;
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+#hl-btn:hover { background: var(--gold-light); }
+
+mark.hl {
+  background: var(--highlight-yellow);
+  color: inherit;
+  border-radius: 2px;
+  cursor: pointer;
+  display: inline;
+  padding: 0;
+  margin: 0;
+  line-height: inherit;
+}
+
+/* ===== MODALS ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 5000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+
+.modal-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 40px 40px 32px;
+  max-width: 460px;
+  width: 94vw;
+  position: relative;
+  animation: fadeInUp 0.25s ease;
+  border-top: 4px solid var(--gold);
+}
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+.modal-body {
+  font-size: 14px;
+  color: var(--ink-light);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.modal-body strong { color: var(--ink); font-size: 16px; }
+.modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+.modal-btn-cancel {
+  padding: 9px 20px;
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--ink-light);
+}
+.modal-btn-cancel:hover { background: #e9e9e9; }
+.modal-btn-confirm {
+  padding: 9px 24px;
+  background: var(--gold);
+  border: none;
+  border-radius: 5px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--navy);
+  letter-spacing: 1px;
+}
+.modal-btn-confirm:hover { background: var(--gold-light); }
+
+/* Flag panel */
+#flag-panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 4000;
+  align-items: flex-start;
+  justify-content: flex-end;
+  backdrop-filter: blur(3px);
+}
+#flag-panel.open { display: flex; }
+.flag-panel-inner {
+  width: 340px;
+  height: 100vh;
+  background: #fff;
+  overflow-y: auto;
+  padding: 32px 28px;
+  animation: slideInRight 0.25s ease;
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.flag-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(212,175,55,0.3);
+}
+.flag-panel-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+.flag-panel-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--ink-light);
+  padding: 4px;
+}
+.flag-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(225,112,85,0.2);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.flag-item:hover { background: rgba(225,112,85,0.06); }
+.flag-item-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--flag-red);
+  min-width: 32px;
+}
+.flag-item-ans {
+  font-size: 12px;
+  color: var(--ink-light);
+  font-style: italic;
+}
+.flag-none {
+  font-size: 13px;
+  color: var(--ink-light);
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* ===== RESULT SCREEN ===== */
+#result-screen {
+  display: none;
+  min-height: 100vh;
+  background: var(--navy);
+  background-image: radial-gradient(ellipse at 30% 20%, rgba(212,175,55,0.15) 0%, transparent 55%);
+  padding: 60px 40px;
+  align-items: flex-start;
+  justify-content: center;
+}
+#result-screen.show { display: flex; }
+
+.result-card {
+  background: rgba(255,255,255,0.97);
+  border-radius: 20px;
+  padding: 52px 56px;
+  max-width: 780px;
+  width: 100%;
+  border-top: 5px solid var(--gold);
+  animation: fadeInUp 0.5s ease;
+}
+.result-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+.result-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+.result-score-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 72px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.result-score-label {
+  font-size: 13px;
+  color: var(--ink-light);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.result-meta {
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.result-meta span { font-weight: 600; }
+
+.result-divider {
+  border: none;
+  border-top: 1.5px solid rgba(212,175,55,0.25);
+  margin: 32px 0;
+}
+.result-review-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+.review-part-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  font-weight: 600;
+  margin: 20px 0 10px;
+}
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+.review-item {
+  background: #f8f5ef;
+  border: 1px solid #e0d8c8;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.review-item-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold-dark);
+  min-width: 22px;
+}
+.review-item-ans {
+  font-size: 12.5px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.review-item-empty {
+  font-size: 12px;
+  color: #ccc;
+  font-style: italic;
+}
+
+/* Scroll margin for anchors */
+[id^="anchor-"] { scroll-margin-top: 24px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  #sidebar { display: none; }
+  #main { margin-left: 0; padding: 20px; }
+}
+
+/* Result screen cloned main */
+#result-review-content #main,
+#result-review-content [id="main"] {
+  margin-left: 0 !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">G.EDU</div>
+    <div class="login-subtitle">IELTS Preparation</div>
+    <div class="login-title">Listening Test · Test 4</div>
+    <div class="login-field">
+      <label>Họ và tên học sinh</label>
+      <input type="text" id="inp-name" placeholder="Họ và tên học sinh" autocomplete="off">
+    </div>
+    <div class="login-field">
+      <label>Lớp học</label>
+      <input type="text" id="inp-class" placeholder="Lớp học" autocomplete="off">
+    </div>
+    <button class="login-btn" onclick="startTest()">BẮT ĐẦU LÀM BÀI</button>
+    <div class="login-note">Nhập đúng Tên + Lớp để khôi phục bài làm dở</div>
+  </div>
+</div>
+
+<!-- ===== HIGHLIGHT BUTTON ===== -->
+<button id="hl-btn">✏ Highlight</button>
+
+<!-- ===== MAIN APP ===== -->
+<div id="app">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-text">G.EDU</div>
+      <div class="sb-test-name">Listening · Test 4</div>
+    </div>
+    <div class="sb-student">
+      <div class="sb-student-name" id="sb-name">—</div>
+      <div class="sb-student-class" id="sb-class">—</div>
+    </div>
+
+    <div class="sb-map-section">
+      <div class="sb-map-label">Question Map</div>
+      <div class="q-map" id="q-map"></div>
+    </div>
+    <div class="sb-btns">
+      <button class="btn-flag-view" onclick="openFlagPanel()">🚩 Xem câu đánh dấu</button>
+      <button class="btn-submit" onclick="openSubmitModal()">NỘP BÀI</button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main id="main" class="main-content">
+
+    <!-- ===== PART 1 ===== -->
+    <div id="anchor-part1">
+      <div class="part-header">
+        <div class="part-label">PART 1</div>
+        <div class="part-instruction">
+          <strong>Questions 1–10</strong><br>
+          Complete the form below.<br>
+          Write <strong>ONE WORD AND/OR NUMBER</strong> for each answer.
+        </div>
+      </div>
+
+      <table class="form-table">
+        <thead>
+          <tr><th colspan="2">Superior Home Appliances – Customer Complaint Form</th></tr>
+        </thead>
+        <tbody>
+          <tr class="example-row">
+            <td colspan="2"><em>Example</em><br>Type of appliance: <span>fridge</span></td>
+          </tr>
+          <tr>
+            <td id="anchor-1">Name: Jessica Brown</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tel: 5823 2210</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Under warranty: yes</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="anchor-1b">Model type: a <span class="q-inline"><span class="q-num-badge">Q1</span><input class="q-input" id="q1" type="text" data-q="1" autocomplete="off"> mount</span></td>
+            <td id="anchor-2">Colour: <span class="q-inline"><span class="q-num-badge">Q2</span><input class="q-input" id="q2" type="text" data-q="2" autocomplete="off"></span></td>
+          </tr>
+          <tr>
+            <td>Model number: S 654 391 X</td>
+            <td id="anchor-3">Date of purchase: <span class="q-inline"><span class="q-num-badge">Q3</span><input class="q-input" id="q3" type="text" data-q="3" autocomplete="off" style="width:150px"></span></td>
+          </tr>
+          <tr class="section-row">
+            <td colspan="2">Problems:</td>
+          </tr>
+          <tr>
+            <td colspan="2" id="anchor-4">
+              • the <span class="q-inline"><span class="q-num-badge">Q4</span><input class="q-input" id="q4" type="text" data-q="4" autocomplete="off"></span> in the fridge sounded
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" id="anchor-5">
+              • freezer temperature is <span class="q-inline"><span class="q-num-badge">Q5</span><input class="q-input" id="q5" type="text" data-q="5" autocomplete="off" style="width:70px"></span> degrees
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">• the main fridge is not working.</td>
+          </tr>
+          <tr>
+            <td colspan="2" id="anchor-6">
+              Nearest service centre: Ken's Appliances (near the <span class="q-inline"><span class="q-num-badge">Q6</span><input class="q-input" id="q6" type="text" data-q="6" autocomplete="off"></span> )
+            </td>
+          </tr>
+          <tr class="section-row">
+            <td colspan="2">Comments:</td>
+          </tr>
+          <tr>
+            <td colspan="2" id="anchor-7">
+              • customer needs the fridge to store food for her <span class="q-inline"><span class="q-num-badge">Q7</span><input class="q-input" id="q7" type="text" data-q="7" autocomplete="off"></span> shop
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" id="anchor-8">
+              • value of food in fridge: $ <span class="q-inline"><span class="q-num-badge">Q8</span><input class="q-input" id="q8" type="text" data-q="8" autocomplete="off" style="width:80px"></span>
+            </td>
+          </tr>
+          <tr class="section-row">
+            <td colspan="2">To do:</td>
+          </tr>
+          <tr>
+            <td colspan="2" id="anchor-9">
+              • get the <span class="q-inline"><span class="q-num-badge">Q9</span><input class="q-input" id="q9" type="text" data-q="9" autocomplete="off"></span> to call her today
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" id="anchor-10">
+              • replace damaged <span class="q-inline"><span class="q-num-badge">Q10</span><input class="q-input" id="q10" type="text" data-q="10" autocomplete="off"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Flag buttons for Part 1 -->
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;">
+        <script>
+          // Will render flag buttons after DOM
+        </script>
+      </div>
+    </div>
+
+    <hr class="part-divider">
+
+    <!-- ===== PART 2 ===== -->
+    <div id="anchor-part2">
+      <div class="part-header">
+        <div class="part-label">PART 2</div>
+        <div class="part-instruction">
+          <strong>Questions 11–14</strong><br>
+          Choose the correct answer.
+        </div>
+      </div>
+
+      <!-- Q11 -->
+      <div class="q-block" id="anchor-11">
+        <div class="q-row">
+          <span class="q-row-num">11</span>
+          <span class="q-row-text">People who act as hosts for Connection</span>
+          <button class="flag-btn" data-q="11" onclick="toggleFlag(11,this)" title="Flag">🚩</button>
+        </div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="q11" value="A" data-q="11"><span class="q-option-letter">A</span><span class="q-option-label">are given a little money.</span></label>
+          <label class="q-option"><input type="radio" name="q11" value="B" data-q="11"><span class="q-option-letter">B</span><span class="q-option-label">do not receive payment.</span></label>
+          <label class="q-option"><input type="radio" name="q11" value="C" data-q="11"><span class="q-option-letter">C</span><span class="q-option-label">can apply for expenses.</span></label>
+        </div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="q-block" id="anchor-12">
+        <div class="q-row">
+          <span class="q-row-num">12</span>
+          <span class="q-row-text">Connections is for people from other countries who</span>
+          <button class="flag-btn" data-q="12" onclick="toggleFlag(12,this)" title="Flag">🚩</button>
+        </div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="q12" value="A" data-q="12"><span class="q-option-letter">A</span><span class="q-option-label">have difficulty making friends.</span></label>
+          <label class="q-option"><input type="radio" name="q12" value="B" data-q="12"><span class="q-option-letter">B</span><span class="q-option-label">are looking for temporary work.</span></label>
+          <label class="q-option"><input type="radio" name="q12" value="C" data-q="12"><span class="q-option-letter">C</span><span class="q-option-label">can offer language support.</span></label>
+        </div>
+      </div>
+
+      <!-- Q13 -->
+      <div class="q-block" id="anchor-13">
+        <div class="q-row">
+          <span class="q-row-num">13</span>
+          <span class="q-row-text">According to the speaker, what can a guest expect to do during their stay?</span>
+          <button class="flag-btn" data-q="13" onclick="toggleFlag(13,this)" title="Flag">🚩</button>
+        </div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="q13" value="A" data-q="13"><span class="q-option-letter">A</span><span class="q-option-label">cook food for their host family</span></label>
+          <label class="q-option"><input type="radio" name="q13" value="B" data-q="13"><span class="q-option-letter">B</span><span class="q-option-label">explain their own family traditions.</span></label>
+          <label class="q-option"><input type="radio" name="q13" value="C" data-q="13"><span class="q-option-letter">C</span><span class="q-option-label">discuss matters of personal interest.</span></label>
+        </div>
+      </div>
+
+      <!-- Q14 -->
+      <div class="q-block" id="anchor-14">
+        <div class="q-row">
+          <span class="q-row-num">14</span>
+          <span class="q-row-text">According to the speaker, a long-term benefit of the Connections scheme could be</span>
+          <button class="flag-btn" data-q="14" onclick="toggleFlag(14,this)" title="Flag">🚩</button>
+        </div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="q14" value="A" data-q="14"><span class="q-option-letter">A</span><span class="q-option-label">an increased understanding between cultures.</span></label>
+          <label class="q-option"><input type="radio" name="q14" value="B" data-q="14"><span class="q-option-letter">B</span><span class="q-option-label">a programme of weekly visits.</span></label>
+          <label class="q-option"><input type="radio" name="q14" value="C" data-q="14"><span class="q-option-letter">C</span><span class="q-option-label">more involvement from people of different communities.</span></label>
+        </div>
+      </div>
+
+      <hr class="part-divider" style="margin:32px 0 28px">
+
+      <!-- Q15–20 Flowchart -->
+      <div class="part-instruction" style="margin-bottom:16px">
+        <strong>Questions 15–20</strong><br>
+        Complete the flowchart below.<br>
+        Choose <strong>SIX correct answers</strong>, A – H, next to questions 15 – 20.
+      </div>
+
+      <div class="option-list">
+        <div class="option-list-item"><strong>A</strong> acknowledgement</div>
+        <div class="option-list-item"><strong>B</strong> decision</div>
+        <div class="option-list-item"><strong>C</strong> identity</div>
+        <div class="option-list-item"><strong>D</strong> an interview</div>
+        <div class="option-list-item"><strong>E</strong> legal status</div>
+        <div class="option-list-item"><strong>F</strong> records</div>
+        <div class="option-list-item"><strong>G</strong> rejection</div>
+        <div class="option-list-item"><strong>H</strong> vetting</div>
+      </div>
+
+      <div class="flowchart-box">
+        <div class="flowchart-title">To apply to <em>Connections</em> as a guest</div>
+
+        <div class="flowchart-step" id="anchor-15">
+          The applicant makes an initial phone call to the
+          <span class="q-inline"><span class="q-num-badge">Q15</span>
+          <select class="q-input" id="q15" data-q="15" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
+            <option value="">—</option>
+            <option value="A">A – acknowledgement</option>
+            <option value="B">B – decision</option>
+            <option value="C">C – identity</option>
+            <option value="D">D – an interview</option>
+            <option value="E">E – legal status</option>
+            <option value="F">F – records</option>
+            <option value="G">G – rejection</option>
+            <option value="H">H – vetting</option>
+          </select></span> department.
+          <button class="flag-btn" data-q="15" onclick="toggleFlag(15,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div class="flowchart-arrow">↓</div>
+
+        <div class="flowchart-step" id="anchor-16">
+          The applicant sends in a reference to confirm his/her
+          <span class="q-inline"><span class="q-num-badge">Q16</span>
+          <select class="q-input" id="q16" data-q="16" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
+            <option value="">—</option>
+            <option value="A">A – acknowledgement</option>
+            <option value="B">B – decision</option>
+            <option value="C">C – identity</option>
+            <option value="D">D – an interview</option>
+            <option value="E">E – legal status</option>
+            <option value="F">F – records</option>
+            <option value="G">G – rejection</option>
+            <option value="H">H – vetting</option>
+          </select></span>
+          <button class="flag-btn" data-q="16" onclick="toggleFlag(16,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div class="flowchart-arrow">↓</div>
+
+        <div class="flowchart-step">Following approval, an application form is emailed to the applicant.</div>
+        <div class="flowchart-arrow">↓</div>
+
+        <div class="flowchart-step" id="anchor-17">
+          The applicant returns the completed form with two photographs (one for
+          <span class="q-inline"><span class="q-num-badge">Q17</span>
+          <select class="q-input" id="q17" data-q="17" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
+            <option value="">—</option>
+            <option value="A">A – acknowledgement</option>
+            <option value="B">B – decision</option>
+            <option value="C">C – identity</option>
+            <option value="D">D – an interview</option>
+            <option value="E">E – legal status</option>
+            <option value="F">F – records</option>
+            <option value="G">G – rejection</option>
+            <option value="H">H – vetting</option>
+          </select></span> and one for the family).
+          <button class="flag-btn" data-q="17" onclick="toggleFlag(17,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div class="flowchart-arrow">↓</div>
+
+        <div class="flowchart-step" id="anchor-18">
+          The applicant receives
+          <span class="q-inline"><span class="q-num-badge">Q18</span>
+          <select class="q-input" id="q18" data-q="18" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
+            <option value="">—</option>
+            <option value="A">A – acknowledgement</option>
+            <option value="B">B – decision</option>
+            <option value="C">C – identity</option>
+            <option value="D">D – an interview</option>
+            <option value="E">E – legal status</option>
+            <option value="F">F – records</option>
+            <option value="G">G – rejection</option>
+            <option value="H">H – vetting</option>
+          </select></span> within seven days.
+          <button class="flag-btn" data-q="18" onclick="toggleFlag(18,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div class="flowchart-arrow">↓</div>
+
+        <div class="flowchart-step" id="anchor-19">
+          The applicant has
+          <span class="q-inline"><span class="q-num-badge">Q19</span>
+          <select class="q-input" id="q19" data-q="19" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
+            <option value="">—</option>
+            <option value="A">A – acknowledgement</option>
+            <option value="B">B – decision</option>
+            <option value="C">C – identity</option>
+            <option value="D">D – an interview</option>
+            <option value="E">E – legal status</option>
+            <option value="F">F – records</option>
+            <option value="G">G – rejection</option>
+            <option value="H">H – vetting</option>
+          </select></span> with a staff member.
+          <button class="flag-btn" data-q="19" onclick="toggleFlag(19,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div class="flowchart-arrow">↓</div>
+
+        <div class="flowchart-step" id="anchor-20">
+          The applicant receives a final
+          <span class="q-inline"><span class="q-num-badge">Q20</span>
+          <select class="q-input" id="q20" data-q="20" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
+            <option value="">—</option>
+            <option value="A">A – acknowledgement</option>
+            <option value="B">B – decision</option>
+            <option value="C">C – identity</option>
+            <option value="D">D – an interview</option>
+            <option value="E">E – legal status</option>
+            <option value="F">F – records</option>
+            <option value="G">G – rejection</option>
+            <option value="H">H – vetting</option>
+          </select></span> in writing.
+          <button class="flag-btn" data-q="20" onclick="toggleFlag(20,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="part-divider">
+
+    <!-- ===== PART 3 ===== -->
+    <div id="anchor-part3">
+      <div class="part-header">
+        <div class="part-label">PART 3</div>
+        <div class="part-instruction">
+          <strong>Questions 21–25</strong><br>
+          Choose the correct answer.
+        </div>
+      </div>
+
+      <div class="section-title" style="text-align:center;margin-bottom:20px;">Climate change and allergies</div>
+
+      <!-- Q21 -->
+      <div class="q-block" id="anchor-21">
+        <div class="q-row">
+          <span class="q-row-num">21</span>
+          <span class="q-row-text">Why is Beth unconvinced that allergies are linked to vitamin D deficiency?</span>
+          <button class="flag-btn" data-q="21" onclick="toggleFlag(21,this)" title="Flag">🚩</button>
+        </div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="q21" value="A" data-q="21"><span class="q-option-letter">A</span><span class="q-option-label">because people's diets have improved since the 1950s</span></label>
+          <label class="q-option"><input type="radio" name="q21" value="B" data-q="21"><span class="q-option-letter">B</span><span class="q-option-label">because most people get enough vitamin D</span></label>
+          <label class="q-option"><input type="radio" name="q21" value="C" data-q="21"><span class="q-option-letter">C</span><span class="q-option-label">because the evidence only applies in Britain</span></label>
+        </div>
+      </div>
+
+      <!-- Q22 -->
+      <div class="q-block" id="anchor-22">
+        <div class="q-row">
+          <span class="q-row-num">22</span>
+          <span class="q-row-text">Eliot explains that rising CO2 levels</span>
+          <button class="flag-btn" data-q="22" onclick="toggleFlag(22,this)" title="Flag">🚩</button>
+        </div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="q22" value="A" data-q="22"><span class="q-option-letter">A</span><span class="q-option-label">will mean distribution of pollen over a wider area.</span></label>
+          <label class="q-option"><input type="radio" name="q22" value="B" data-q="22"><span class="q-option-letter">B</span><span class="q-option-label">are having less impact on pollen than milder winters.</span></label>
+          <label class="q-option"><input type="radio" name="q22" value="C" data-q="22"><span class="q-option-letter">C</span><span class="q-option-label">are responsible for higher quantities of pollen.</span></label>
+        </div>
+      </div>
+
+      <!-- Q23 -->
+      <div class="q-block" id="anchor-23">
+        <div class="q-row">
+          <span class="q-row-num">23</span>
+          <span class="q-row-text">What does Beth say about seasonal changes?</span>
+          <button class="flag-btn" data-q="23" onclick="toggleFlag(23,this)" title="Flag">🚩</button>
+        </div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="q23" value="A" data-q="23"><span class="q-option-letter">A</span><span class="q-option-label">There is no clear short-term trend for the arrival of spring.</span></label>
+          <label class="q-option"><input type="radio" name="q23" value="B" data-q="23"><span class="q-option-letter">B</span><span class="q-option-label">In general, spring is likely to continue arriving early.</span></label>
+          <label class="q-option"><input type="radio" name="q23" value="C" data-q="23"><span class="q-option-letter">C</span><span class="q-option-label">Springs are becoming milder and longer.</span></label>
+        </div>
+      </div>
+
+      <!-- Q24 -->
+      <div class="q-block" id="anchor-24">
+        <div class="q-row">
+          <span class="q-row-num">24</span>
+          <span class="q-row-text">What point is made about the plant ragweed?</span>
+          <button class="flag-btn" data-q="24" onclick="toggleFlag(24,this)" title="Flag">🚩</button>
+        </div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="q24" value="A" data-q="24"><span class="q-option-letter">A</span><span class="q-option-label">it is spreading to more countries.</span></label>
+          <label class="q-option"><input type="radio" name="q24" value="B" data-q="24"><span class="q-option-letter">B</span><span class="q-option-label">it is the most widespread cause of allergies globally.</span></label>
+          <label class="q-option"><input type="radio" name="q24" value="C" data-q="24"><span class="q-option-letter">C</span><span class="q-option-label">it causes the most severe type of allergy.</span></label>
+        </div>
+      </div>
+
+      <!-- Q25 -->
+      <div class="q-block" id="anchor-25">
+        <div class="q-row">
+          <span class="q-row-num">25</span>
+          <span class="q-row-text">Why is tree pollen a more serious problem in cities?</span>
+          <button class="flag-btn" data-q="25" onclick="toggleFlag(25,this)" title="Flag">🚩</button>
+        </div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="q25" value="A" data-q="25"><span class="q-option-letter">A</span><span class="q-option-label">Trees produce more pollen there.</span></label>
+          <label class="q-option"><input type="radio" name="q25" value="B" data-q="25"><span class="q-option-letter">B</span><span class="q-option-label">There is less to absorb the tree pollen.</span></label>
+          <label class="q-option"><input type="radio" name="q25" value="C" data-q="25"><span class="q-option-letter">C</span><span class="q-option-label">There is not enough control over tree-planting.</span></label>
+        </div>
+      </div>
+
+      <hr class="part-divider" style="margin:32px 0 28px">
+
+      <!-- Q26–30 Matching -->
+      <div class="part-instruction" style="margin-bottom:16px">
+        <strong>Questions 26–30</strong><br>
+        What comment is made about the seasonal changes in pollen in each of the following European countries?<br>
+        Choose <strong>FIVE correct answers</strong>, A – G, next to questions 26 – 30.
+      </div>
+
+      <div style="text-align:center;font-weight:700;font-size:14px;margin-bottom:12px;">Seasonal changes in pollen</div>
+      <div class="option-list" style="grid-template-columns: repeat(2,1fr)">
+        <div class="option-list-item"><strong>A</strong> greatest change recorded for oak pollen</div>
+        <div class="option-list-item"><strong>B</strong> changes identified for two pollen types only</div>
+        <div class="option-list-item"><strong>C</strong> a longer season for grass pollen</div>
+        <div class="option-list-item"><strong>D</strong> earlier start dates for all pollen types</div>
+        <div class="option-list-item"><strong>E</strong> significant change in start date of birch pollen</div>
+        <div class="option-list-item"><strong>F</strong> little difference in start dates</div>
+        <div class="option-list-item"><strong>G</strong> information only available for birch pollen</div>
+      </div>
+
+      <table class="matching-table">
+        <tbody>
+          <tr id="anchor-26">
+            <td>26</td>
+            <td>Australia</td>
+            <td>
+              <span class="q-inline">
+                <select class="q-input" id="q26" data-q="26" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
+                  <option value="">—</option>
+                  <option value="A">A – greatest change recorded for oak pollen</option>
+                  <option value="B">B – changes identified for two pollen types only</option>
+                  <option value="C">C – a longer season for grass pollen</option>
+                  <option value="D">D – earlier start dates for all pollen types</option>
+                  <option value="E">E – significant change in start date of birch pollen</option>
+                  <option value="F">F – little difference in start dates</option>
+                  <option value="G">G – information only available for birch pollen</option>
+                </select>
+              </span>
+            </td>
+            <td><button class="flag-btn" data-q="26" onclick="toggleFlag(26,this)">🚩</button></td>
+          </tr>
+          <tr id="anchor-27">
+            <td>27</td>
+            <td>France</td>
+            <td>
+              <span class="q-inline">
+                <select class="q-input" id="q27" data-q="27" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
+                  <option value="">—</option>
+                  <option value="A">A – greatest change recorded for oak pollen</option>
+                  <option value="B">B – changes identified for two pollen types only</option>
+                  <option value="C">C – a longer season for grass pollen</option>
+                  <option value="D">D – earlier start dates for all pollen types</option>
+                  <option value="E">E – significant change in start date of birch pollen</option>
+                  <option value="F">F – little difference in start dates</option>
+                  <option value="G">G – information only available for birch pollen</option>
+                </select>
+              </span>
+            </td>
+            <td><button class="flag-btn" data-q="27" onclick="toggleFlag(27,this)">🚩</button></td>
+          </tr>
+          <tr id="anchor-28">
+            <td>28</td>
+            <td>The Netherlands</td>
+            <td>
+              <span class="q-inline">
+                <select class="q-input" id="q28" data-q="28" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
+                  <option value="">—</option>
+                  <option value="A">A – greatest change recorded for oak pollen</option>
+                  <option value="B">B – changes identified for two pollen types only</option>
+                  <option value="C">C – a longer season for grass pollen</option>
+                  <option value="D">D – earlier start dates for all pollen types</option>
+                  <option value="E">E – significant change in start date of birch pollen</option>
+                  <option value="F">F – little difference in start dates</option>
+                  <option value="G">G – information only available for birch pollen</option>
+                </select>
+              </span>
+            </td>
+            <td><button class="flag-btn" data-q="28" onclick="toggleFlag(28,this)">🚩</button></td>
+          </tr>
+          <tr id="anchor-29">
+            <td>29</td>
+            <td>Switzerland</td>
+            <td>
+              <span class="q-inline">
+                <select class="q-input" id="q29" data-q="29" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
+                  <option value="">—</option>
+                  <option value="A">A – greatest change recorded for oak pollen</option>
+                  <option value="B">B – changes identified for two pollen types only</option>
+                  <option value="C">C – a longer season for grass pollen</option>
+                  <option value="D">D – earlier start dates for all pollen types</option>
+                  <option value="E">E – significant change in start date of birch pollen</option>
+                  <option value="F">F – little difference in start dates</option>
+                  <option value="G">G – information only available for birch pollen</option>
+                </select>
+              </span>
+            </td>
+            <td><button class="flag-btn" data-q="29" onclick="toggleFlag(29,this)">🚩</button></td>
+          </tr>
+          <tr id="anchor-30">
+            <td>30</td>
+            <td>UK</td>
+            <td>
+              <span class="q-inline">
+                <select class="q-input" id="q30" data-q="30" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
+                  <option value="">—</option>
+                  <option value="A">A – greatest change recorded for oak pollen</option>
+                  <option value="B">B – changes identified for two pollen types only</option>
+                  <option value="C">C – a longer season for grass pollen</option>
+                  <option value="D">D – earlier start dates for all pollen types</option>
+                  <option value="E">E – significant change in start date of birch pollen</option>
+                  <option value="F">F – little difference in start dates</option>
+                  <option value="G">G – information only available for birch pollen</option>
+                </select>
+              </span>
+            </td>
+            <td><button class="flag-btn" data-q="30" onclick="toggleFlag(30,this)">🚩</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="part-divider">
+
+    <!-- ===== PART 4 ===== -->
+    <div id="anchor-part4">
+      <div class="part-header">
+        <div class="part-label">PART 4</div>
+        <div class="part-instruction">
+          <strong>Questions 31–40</strong><br>
+          Complete the notes below.<br>
+          Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <h3>Saffron</h3>
+        <div style="font-size:13.5px;color:var(--ink-light);margin-bottom:8px;">Saffron: a spice which comes from the crocus flower</div>
+        <div style="font-size:13.5px;color:var(--ink-light);margin-bottom:14px;">Cultivation and production</div>
+
+        <div class="notes-section-head">Harvested in October</div>
+
+        <div class="notes-line" id="anchor-31">
+          Number of stigmas needed for 50 grams:
+          <span class="q-inline"><span class="q-num-badge">Q31</span><input class="q-input" id="q31" type="text" data-q="31" autocomplete="off" style="width:80px"></span>
+          <button class="flag-btn" data-q="31" onclick="toggleFlag(31,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div class="notes-line" id="anchor-32">
+          Method of preservation:
+          <span class="q-inline"><span class="q-num-badge">Q32</span><input class="q-input" id="q32" type="text" data-q="32" autocomplete="off"></span>
+          <button class="flag-btn" data-q="32" onclick="toggleFlag(32,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div class="notes-line">Taste and aroma: like honey</div>
+        <div class="notes-line" id="anchor-33">
+          Forms in which sold: as whole stigmas and as a
+          <span class="q-inline"><span class="q-num-badge">Q33</span><input class="q-input" id="q33" type="text" data-q="33" autocomplete="off"></span>
+          <button class="flag-btn" data-q="33" onclick="toggleFlag(33,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+
+        <div class="notes-section-head">Uses of saffron today</div>
+        <div class="notes-line" id="anchor-34">
+          To colour and flavour food in many countries especially for making
+          <span class="q-inline"><span class="q-num-badge">Q34</span><input class="q-input" id="q34" type="text" data-q="34" autocomplete="off"></span> dishes
+          <button class="flag-btn" data-q="34" onclick="toggleFlag(34,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+
+        <div class="notes-section-head">In medicine</div>
+        <div class="notes-line" id="anchor-35">
+          • as a drug in treatment of problems affecting the
+          <span class="q-inline"><span class="q-num-badge">Q35</span><input class="q-input" id="q35" type="text" data-q="35" autocomplete="off"></span>
+          <button class="flag-btn" data-q="35" onclick="toggleFlag(35,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div class="notes-line" id="anchor-36">
+          • experiments with rats as protection from exposure to some types of
+          <span class="q-inline"><span class="q-num-badge">Q36</span><input class="q-input" id="q36" type="text" data-q="36" autocomplete="off"></span>
+          <button class="flag-btn" data-q="36" onclick="toggleFlag(36,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+
+        <div class="notes-section-head">History of saffron use</div>
+        <div style="font-size:13px;font-weight:600;color:var(--ink-light);margin:6px 0 2px;">Ancient Crete</div>
+        <div class="notes-line" id="anchor-37">
+          • as a dye for
+          <span class="q-inline"><span class="q-num-badge">Q37</span><input class="q-input" id="q37" type="text" data-q="37" autocomplete="off"></span>
+          <button class="flag-btn" data-q="37" onclick="toggleFlag(37,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:var(--ink-light);margin:6px 0 2px;">Roman Empire</div>
+        <div class="notes-line" id="anchor-38">
+          • in oil used for the production of
+          <span class="q-inline"><span class="q-num-badge">Q38</span><input class="q-input" id="q38" type="text" data-q="38" autocomplete="off"></span>
+          <button class="flag-btn" data-q="38" onclick="toggleFlag(38,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div class="notes-line" id="anchor-39">
+          • as a
+          <span class="q-inline"><span class="q-num-badge">Q39</span><input class="q-input" id="q39" type="text" data-q="39" autocomplete="off"></span> in public baths
+          <button class="flag-btn" data-q="39" onclick="toggleFlag(39,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:var(--ink-light);margin:6px 0 2px;">Persia (Iran)</div>
+        <div class="notes-line" id="anchor-40">
+          • as a dye used in the making of
+          <span class="q-inline"><span class="q-num-badge">Q40</span><input class="q-input" id="q40" type="text" data-q="40" autocomplete="off"></span>
+          <button class="flag-btn" data-q="40" onclick="toggleFlag(40,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===== SUBMIT MODAL ===== -->
+<div class="modal-overlay" id="submit-modal">
+  <div class="modal-box">
+    <div class="modal-title">Xác nhận nộp bài</div>
+    <div class="modal-body" id="submit-modal-body">Bạn có chắc chắn muốn nộp bài không?</div>
+    <div class="modal-btns">
+      <button class="modal-btn-cancel" onclick="closeSubmitModal()">Quay lại</button>
+      <button class="modal-btn-confirm" onclick="confirmSubmit()">NỘP BÀI</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FLAG PANEL ===== -->
+<div id="flag-panel">
+  <div class="flag-panel-inner">
+    <div class="flag-panel-header">
+      <div class="flag-panel-title">🚩 Câu đã đánh dấu</div>
+      <button class="flag-panel-close" onclick="closeFlagPanel()">✕</button>
+    </div>
+    <div id="flag-panel-list"></div>
+  </div>
+</div>
+
+<!-- ===== RESULT SCREEN ===== -->
+<div id="result-screen">
+  <div style="max-width:900px;width:100%;margin:0 auto;">
+    <!-- Header bar -->
+    <div style="background:var(--navy);border-radius:14px;padding:28px 40px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:24px;color:var(--gold);letter-spacing:3px;">G.EDU</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;color:#fff;margin-top:4px;">Kết quả bài thi · Listening Test 4</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.45);margin-top:6px;">Đáp án của bạn — giáo viên sẽ chữa bài trực tiếp trên lớp.</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:'Playfair Display',serif;font-size:52px;font-weight:700;color:var(--gold);line-height:1;" id="res-score">—</div>
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);">/ 40 câu</div>
+        <div style="font-size:13px;color:#fff;margin-top:6px;" id="res-name-class">—</div>
+      </div>
+    </div>
+    <!-- Review content cloned from exam -->
+    <div id="result-review-content" style="background:#fff;border-radius:14px;padding:40px 48px 60px;"></div>
+  </div>
+</div>
+
+<script>
+// ===== CONFIG =====
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbze-ULqfpnB5IcJxAvg2m7IfSqkoUY4JmoHnjvpuGvxodzmLbhHHlcqxfcnha2aahY/exec';
+const TEST_NAME = 'listening_test 4';
+
+// ===== ANSWER KEY =====
+const CORRECT_ANSWERS = {
+  1:'top', 2:'silver', 3:'january 12th', 4:'alarm', 5:'10',
+  6:'station', 7:'sandwich', 8:'180', 9:'manager', 10:'door',
+  11:'B', 12:'A', 13:'C', 14:'A',
+  15:'H', 16:'C', 17:'F', 18:'A', 19:'D', 20:'B',
+  21:'C', 22:'C', 23:'A', 24:'A', 25:'B',
+  26:'G', 27:'B', 28:'A', 29:'D', 30:'C',
+  31:'14000', 32:'drying', 33:'powder', 34:'rice', 35:'eye',
+  36:'lights', 37:'clothes', 38:'cosmetics', 39:'perfume', 40:'carpets'
+};
+
+let studentName = '', studentClass = '';
+let timerInterval = null;
+let secondsLeft = 60 * 60;
+let flags = {};
+let _sheetSent = false;
+
+// ===== LOCALSTORAGE HELPERS =====
+function lsKey(suffix) {
+  return `gedu_lt_${studentName}_${studentClass}_${suffix}`;
+}
+function saveAnswers() {
+  if (!studentName) return;
+  const ans = collectAnswers();
+  localStorage.setItem(lsKey('answers'), JSON.stringify(ans));
+}
+function saveFlags() {
+  if (!studentName) return;
+  localStorage.setItem(lsKey('flags'), JSON.stringify(flags));
+}
+function loadSaved() {
+  const ansStr = localStorage.getItem(lsKey('answers'));
+  if (ansStr) {
+    const ans = JSON.parse(ansStr);
+    for (let q = 1; q <= 40; q++) {
+      if (ans[q] === undefined) continue;
+      const el = document.getElementById('q'+q);
+      if (!el) continue;
+      if (el.tagName === 'INPUT') { el.value = ans[q]; }
+      else if (el.tagName === 'SELECT') { el.value = ans[q]; }
+    }
+    // Radio buttons
+    [11,12,13,14,21,22,23,24,25].forEach(q => {
+      if (ans[q]) {
+        const r = document.querySelector(`input[name="q${q}"][value="${ans[q]}"]`);
+        if (r) r.checked = true;
+      }
+    });
+  }
+  const flagStr = localStorage.getItem(lsKey('flags'));
+  if (flagStr) {
+    flags = JSON.parse(flagStr);
+    Object.keys(flags).forEach(q => {
+      if (flags[q]) {
+        const btn = document.querySelector(`.flag-btn[data-q="${q}"]`);
+        if (btn) btn.classList.add('active');
+      }
+    });
+  }
+  updateMap();
+}
+
+// ===== START TEST =====
+function startTest() {
+  const n = document.getElementById('inp-name').value.trim();
+  const c = document.getElementById('inp-class').value.trim();
+  if (!n || !c) { alert('Vui lòng nhập đầy đủ Họ tên và Lớp học.'); return; }
+  studentName = n; studentClass = c;
+  document.getElementById('sb-name').textContent = n;
+  document.getElementById('sb-class').textContent = c;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  buildMap();
+  loadSaved();
+  attachInputListeners();
+}
+
+// ===== TIMER =====
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      confirmSubmit();
+    }
+  }, 1000);
+}
+function updateTimerDisplay() {
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  el.classList.toggle('urgent', secondsLeft <= 300);
+}
+
+// ===== BUILD MAP =====
+function buildMap() {
+  const map = document.getElementById('q-map');
+  map.innerHTML = '';
+  for (let i = 1; i <= 40; i++) {
+    const d = document.createElement('div');
+    d.className = 'q-dot';
+    d.id = 'dot-' + i;
+    d.textContent = i;
+    d.onclick = () => scrollToQ(i);
+    map.appendChild(d);
+  }
+}
+function updateMap() {
+  const ans = collectAnswers();
+  for (let i = 1; i <= 40; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (!dot) continue;
+    const answered = ans[i] !== '' && ans[i] !== undefined && ans[i] !== null;
+    const flagged = !!flags[i];
+    dot.classList.toggle('answered', answered);
+    dot.classList.toggle('flagged', flagged);
+  }
+}
+function scrollToQ(n) {
+  const el = document.getElementById('anchor-' + n);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ===== COLLECT ANSWERS =====
+function collectAnswers() {
+  const ans = {};
+  for (let q = 1; q <= 40; q++) {
+    const el = document.getElementById('q' + q);
+    if (el) {
+      ans[q] = el.tagName === 'SELECT' ? el.value : el.value.trim();
+    } else {
+      // Radio
+      const r = document.querySelector(`input[name="q${q}"]:checked`);
+      ans[q] = r ? r.value : '';
+    }
+  }
+  return ans;
+}
+
+// ===== ATTACH LISTENERS =====
+function attachInputListeners() {
+  document.querySelectorAll('.q-input').forEach(el => {
+    el.addEventListener('input', () => { saveAnswers(); updateMap(); });
+    el.addEventListener('change', () => { saveAnswers(); updateMap(); });
+  });
+  document.querySelectorAll('input[type="radio"]').forEach(el => {
+    el.addEventListener('change', () => { saveAnswers(); updateMap(); });
+  });
+}
+
+// ===== FLAG =====
+function toggleFlag(q, btn) {
+  flags[q] = !flags[q];
+  btn.classList.toggle('active', !!flags[q]);
+  saveFlags();
+  updateMap();
+}
+
+// ===== FLAG PANEL =====
+function openFlagPanel() {
+  const list = document.getElementById('flag-panel-list');
+  const flaggedQs = Object.keys(flags).filter(q => flags[q]).sort((a,b) => a-b);
+  if (flaggedQs.length === 0) {
+    list.innerHTML = '<div class="flag-none">Chưa có câu nào được đánh dấu.</div>';
+  } else {
+    const ans = collectAnswers();
+    list.innerHTML = flaggedQs.map(q => {
+      const a = ans[q] || '';
+      return `<div class="flag-item" onclick="goToFlagged(${q})">
+        <div class="flag-item-num">Câu ${q}</div>
+        <div class="flag-item-ans">${a ? 'Đã điền: ' + a : 'Chưa điền'}</div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('flag-panel').classList.add('open');
+}
+function closeFlagPanel() {
+  document.getElementById('flag-panel').classList.remove('open');
+}
+function goToFlagged(q) {
+  closeFlagPanel();
+  setTimeout(() => scrollToQ(q), 200);
+}
+
+// ===== SUBMIT MODAL =====
+function openSubmitModal() {
+  const ans = collectAnswers();
+  const unanswered = Object.values(ans).filter(v => !v).length;
+  let msg = '';
+  if (unanswered > 0) {
+    msg = `Bạn còn <strong>${unanswered} câu chưa trả lời</strong>. Bạn có chắc chắn muốn nộp bài không?`;
+  } else {
+    msg = 'Bạn đã trả lời đủ <strong>40 câu</strong>. Xác nhận nộp bài?';
+  }
+  document.getElementById('submit-modal-body').innerHTML = msg;
+  document.getElementById('submit-modal').classList.add('open');
+}
+function closeSubmitModal() {
+  document.getElementById('submit-modal').classList.remove('open');
+}
+
+// ===== CONFIRM SUBMIT =====
+function confirmSubmit() {
+  closeSubmitModal();
+  clearInterval(timerInterval);
+
+  const ans = collectAnswers();
+  let score = 0;
+  for (let q = 1; q <= 40; q++) {
+    const given = (ans[q] || '').toLowerCase().trim();
+    const correct = (CORRECT_ANSWERS[q] || '').toLowerCase().trim();
+    if (given === correct) score++;
+  }
+
+  // Send to Google Sheet
+  if (!_sheetSent) {
+    _sheetSent = true;
+    const params = new URLSearchParams({
+      test_name: TEST_NAME,
+      name: studentName,
+      cls: studentClass,
+      score: score,
+      answers: JSON.stringify(ans)
+    });
+    const img = new Image();
+    img.src = SCRIPT_URL + '?' + params.toString();
+  }
+
+  // Show result
+  showResult(ans, score);
+}
+
+// ===== RESULT =====
+function showResult(ans, score) {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('res-score').textContent = score;
+  document.getElementById('res-name-class').textContent = studentName + ' · ' + studentClass;
+
+  // Clone the main exam content into result
+  const mainEl = document.getElementById('main');
+  const clone = mainEl.cloneNode(true);
+
+  // Fill all inputs/selects in clone with student answers, then disable
+  clone.querySelectorAll('input.q-input').forEach(el => {
+    const q = el.getAttribute('data-q');
+    if (q && ans[q] !== undefined) el.value = ans[q];
+    el.disabled = true;
+    el.style.color = '#1a6aaf';
+    el.style.fontWeight = '600';
+  });
+  clone.querySelectorAll('select.q-input').forEach(el => {
+    const q = el.getAttribute('data-q');
+    if (q && ans[q] !== undefined) el.value = ans[q];
+    el.disabled = true;
+    el.style.color = '#1a6aaf';
+    el.style.fontWeight = '600';
+  });
+  // Fill radio buttons
+  [11,12,13,14,21,22,23,24,25].forEach(q => {
+    if (ans[q]) {
+      const r = clone.querySelector(`input[name="q${q}"][value="${ans[q]}"]`);
+      if (r) {
+        r.checked = true;
+        r.disabled = true;
+        // highlight selected option label
+        const label = r.closest('.q-option');
+        if (label) label.style.background = 'rgba(26,106,175,0.09)';
+      }
+      clone.querySelectorAll(`input[name="q${q}"]`).forEach(r2 => r2.disabled = true);
+    }
+  });
+  // Remove flag buttons
+  clone.querySelectorAll('.flag-btn').forEach(b => b.remove());
+
+  document.getElementById('result-review-content').innerHTML = '';
+  document.getElementById('result-review-content').appendChild(clone);
+
+  const rs = document.getElementById('result-screen');
+  rs.classList.add('show');
+}
+
+// ===== HIGHLIGHT =====
+document.addEventListener('DOMContentLoaded', () => {
+  const hlBtn = document.getElementById('hl-btn');
+
+  document.addEventListener('mouseup', (e) => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+      hlBtn.style.display = 'none';
+      return;
+    }
+    // Check if selection is within .main-content
+    let node = sel.anchorNode;
+    let inMain = false;
+    while (node) {
+      if (node.classList && node.classList.contains('main-content')) { inMain = true; break; }
+      node = node.parentNode;
+    }
+    if (!inMain) { hlBtn.style.display = 'none'; return; }
+
+    // Check no inputs in range
+    try {
+      const range = sel.getRangeAt(0);
+      const frag = range.cloneContents();
+      if (frag.querySelector('input, select, button')) { hlBtn.style.display = 'none'; return; }
+      const rect = range.getBoundingClientRect();
+      hlBtn.style.display = 'block';
+      hlBtn.style.left = rect.left + rect.width / 2 - 40 + 'px';
+      hlBtn.style.top = rect.top - 36 + 'px';
+    } catch(err) {
+      hlBtn.style.display = 'none';
+    }
+  });
+
+  hlBtn.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed) return;
+    try {
+      const range = sel.getRangeAt(0);
+      const mark = document.createElement('mark');
+      mark.className = 'hl';
+      mark.onclick = function() {
+        const parent = this.parentNode;
+        while (this.firstChild) parent.insertBefore(this.firstChild, this);
+        parent.removeChild(this);
+        parent.normalize();
+      };
+      range.surroundContents(mark);
+    } catch(err) {
+      // ignore complex selections
+    }
+    sel.removeAllRanges();
+    hlBtn.style.display = 'none';
+  });
+
+  document.addEventListener('mousedown', (e) => {
+    if (e.target !== hlBtn) hlBtn.style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>
