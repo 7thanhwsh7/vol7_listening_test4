@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>G.EDU – IELTS Listening Test</title>
+<title>G.EDU — IELTS Listening Test</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-/* ===== CSS VARIABLES ===== */
+/* ============================================================
+   G.EDU DESIGN SYSTEM — IELTS LISTENING TEMPLATE
+   ============================================================ */
 :root {
   --gold: #D4AF37;
-  --gold-light: #f0d060;
-  --gold-dark: #a88a20;
+  --gold-light: #e8cc6a;
+  --gold-dim: rgba(212,175,55,0.18);
   --navy: #1a1208;
-  --navy-mid: #2a1e0a;
+  --navy-mid: #2a1f0a;
   --cream: #fdfcfb;
   --ink: #2d3436;
-  --ink-light: #636e72;
+  --ink-soft: #636e72;
   --flag-red: #e17055;
-  --highlight-yellow: #fff2ac;
+  --flag-red-dim: rgba(225,112,85,0.15);
   --sidebar-w: 280px;
+  --hl-yellow: rgba(255,214,0,0.45);
+  --hl-green: rgba(39,174,96,0.35);
+  --hl-blue: rgba(52,152,219,0.35);
+  --hl-pink: rgba(232,67,147,0.35);
   --radius: 6px;
+  --transition: 0.22s ease;
+  font-size: 15px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,1915 +39,2425 @@ body {
   font-family: 'Be Vietnam Pro', sans-serif;
   background: var(--cream);
   color: var(--ink);
-  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* ===== LOGIN SCREEN ===== */
-#login-screen {
-  display: flex;
+/* ── HIGHLIGHT MARKS ── */
+mark.hl-yellow { background: var(--hl-yellow); border-radius: 2px; padding: 0 1px; color: inherit; }
+mark.hl-green  { background: var(--hl-green);  border-radius: 2px; padding: 0 1px; color: inherit; }
+mark.hl-blue   { background: var(--hl-blue);   border-radius: 2px; padding: 0 1px; color: inherit; }
+mark.hl-pink   { background: var(--hl-pink);   border-radius: 2px; padding: 0 1px; color: inherit; }
+
+/* ============================================================
+   SCREEN MANAGER
+   ============================================================ */
+.screen { display: none; }
+.screen.active { display: flex; }
+
+/* ============================================================
+   LOGIN SCREEN
+   ============================================================ */
+#screen-login {
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   background: var(--navy);
-  background-image:
-    radial-gradient(ellipse at 30% 30%, rgba(212,175,55,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 70%, rgba(212,175,55,0.10) 0%, transparent 50%),
-    repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(212,175,55,0.03) 30px, rgba(212,175,55,0.03) 31px),
-    repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(212,175,55,0.02) 30px, rgba(212,175,55,0.02) 31px);
   position: relative;
   overflow: hidden;
 }
 
-#login-screen::before {
-  content: '';
-  position: absolute;
-  width: 600px; height: 600px;
-  border: 1px solid rgba(212,175,55,0.12);
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  pointer-events: none;
+.login-bg-text {
+  position: absolute; inset: 0; z-index: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 10vw, 7rem);
+  font-weight: 700; letter-spacing: 0.08em;
+  color: rgba(212,175,55,0.06);
+  text-transform: uppercase; text-align: center;
+  pointer-events: none; user-select: none;
+  line-height: 1.2; padding: 24px;
+  word-break: break-word;
 }
-#login-screen::after {
-  content: '';
-  position: absolute;
-  width: 400px; height: 400px;
-  border: 1px solid rgba(212,175,55,0.08);
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
+
+.login-bg-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(212,175,55,0.22) 0%, transparent 70%),
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(212,175,55,0.06) 39px, rgba(212,175,55,0.06) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(212,175,55,0.06) 39px, rgba(212,175,55,0.06) 40px);
   pointer-events: none;
 }
 
 .login-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(212,175,55,0.25);
-  border-radius: 16px;
-  padding: 52px 48px;
-  width: 420px;
-  max-width: 94vw;
+  position: relative; z-index: 1;
+  background: rgba(26,18,8,0.85);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 12px;
+  padding: 48px 44px 40px;
+  width: 100%; max-width: 460px;
   backdrop-filter: blur(12px);
-  position: relative;
-  z-index: 1;
-  animation: fadeInUp 0.6s ease;
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.08);
 }
 
 .login-logo {
   font-family: 'Playfair Display', serif;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--gold);
-  letter-spacing: 3px;
+  letter-spacing: 0.08em;
   text-align: center;
   margin-bottom: 4px;
 }
-.login-subtitle {
-  font-size: 11px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: rgba(212,175,55,0.55);
-  text-align: center;
-  margin-bottom: 36px;
+.login-logo span { color: rgba(212,175,55,0.5); font-size: 0.9rem; font-weight: 400; font-family: 'Be Vietnam Pro', sans-serif; letter-spacing: 0.15em; display: block; margin-top: 2px; }
+
+.login-divider {
+  height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+  margin: 20px 0 28px;
 }
-.login-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  color: #fff;
-  text-align: center;
-  margin-bottom: 28px;
-  font-style: italic;
+
+.login-notice {
+  font-size: 0.78rem; color: rgba(212,175,55,0.75);
+  text-align: center; line-height: 1.6;
+  margin-bottom: 24px;
+  padding: 10px 14px;
+  background: rgba(212,175,55,0.07);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: var(--radius);
 }
-.login-field {
-  margin-bottom: 16px;
-}
+
+.login-field { margin-bottom: 16px; }
 .login-field label {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(212,175,55,0.7);
-  margin-bottom: 8px;
+  display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
 }
 .login-field input {
-  width: 100%;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(212,175,55,0.2);
-  border-radius: 6px;
-  padding: 12px 16px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 14px;
-  color: #fff;
-  outline: none;
-  transition: border-color 0.2s;
+  width: 100%; padding: 12px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: var(--radius);
+  color: #fff; font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.95rem;
+  outline: none; transition: border-color var(--transition), background var(--transition);
 }
-.login-field input::placeholder { color: rgba(255,255,255,0.25); }
-.login-field input:focus { border-color: var(--gold); }
-
-.login-btn {
-  width: 100%;
-  margin-top: 24px;
-  padding: 14px;
-  background: var(--gold);
-  color: var(--navy);
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-}
-.login-btn:hover { background: var(--gold-light); }
-.login-btn:active { transform: scale(0.98); }
-
-.login-note {
-  margin-top: 14px;
-  font-size: 11px;
-  color: rgba(255,255,255,0.3);
-  text-align: center;
+.login-field input::placeholder { color: rgba(255,255,255,0.3); }
+.login-field input:focus {
+  border-color: var(--gold); background: rgba(212,175,55,0.06);
 }
 
-/* ===== APP LAYOUT ===== */
-#app {
-  display: none;
+.btn-start {
+  width: 100%; margin-top: 24px; padding: 14px;
+  background: linear-gradient(135deg, var(--gold) 0%, #b8960c 100%);
+  color: var(--navy); font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 700; font-size: 0.95rem; letter-spacing: 0.06em;
+  border: none; border-radius: var(--radius); cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.btn-start:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-start:active { transform: translateY(0); }
+
+/* ============================================================
+   READY SCREEN (countdown intro)
+   ============================================================ */
+#screen-ready {
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+.ready-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(212,175,55,0.15) 0%, transparent 70%); pointer-events: none; }
+
+.ready-card {
+  position: relative; z-index: 1; text-align: center;
+  padding: 48px 44px; max-width: 500px;
+  background: rgba(26,18,8,0.7);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+.ready-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 6px; letter-spacing: 0.06em; }
+.ready-test-name { font-size: 0.8rem; color: rgba(212,175,55,0.6); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 28px; }
+.ready-student { font-size: 1rem; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+.ready-class { font-size: 0.85rem; color: rgba(212,175,55,0.65); margin-bottom: 32px; }
+.ready-divider { height: 1px; background: linear-gradient(90deg,transparent,rgba(212,175,55,0.35),transparent); margin: 0 -10px 32px; }
+.ready-note {
+  font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.7;
+  margin-bottom: 32px; padding: 12px 16px;
+  background: rgba(255,255,255,0.04);
+  border-left: 3px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0;
+  text-align: left;
+}
+.btn-begin {
+  padding: 16px 48px;
+  background: linear-gradient(135deg, var(--gold) 0%, #b8960c 100%);
+  color: var(--navy); font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 700; font-size: 1rem; letter-spacing: 0.06em;
+  border: none; border-radius: var(--radius); cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 8px 24px rgba(212,175,55,0.3);
+}
+.btn-begin:hover { opacity: 0.92; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(212,175,55,0.4); }
+
+/* ============================================================
+   EXAM SCREEN
+   ============================================================ */
+#screen-exam {
+  flex-direction: row;
   min-height: 100vh;
 }
 
-/* ===== SIDEBAR ===== */
-#sidebar {
-  position: fixed;
-  top: 0; left: 0;
+/* ── SIDEBAR ── */
+.sidebar {
   width: var(--sidebar-w);
-  height: 100vh;
+  min-height: 100vh;
   background: var(--navy);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  z-index: 100;
   border-right: 1px solid rgba(212,175,55,0.15);
+  display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; bottom: 0;
+  z-index: 100; overflow-y: auto;
+  padding-bottom: 24px;
 }
-
-.sb-logo {
-  padding: 28px 24px 16px;
+.sidebar-logo {
+  padding: 22px 20px 14px;
   border-bottom: 1px solid rgba(212,175,55,0.12);
 }
-.sb-logo-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 3px;
+.sidebar-logo .g-logo {
+  font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+  color: var(--gold); letter-spacing: 0.1em;
 }
-.sb-test-name {
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(212,175,55,0.45);
-  margin-top: 3px;
+.sidebar-logo .g-test-name {
+  font-size: 0.68rem; color: rgba(212,175,55,0.5); letter-spacing: 0.14em;
+  text-transform: uppercase; margin-top: 2px;
 }
-
-.sb-student {
-  padding: 14px 24px;
+.sidebar-student {
+  padding: 14px 20px 12px;
   border-bottom: 1px solid rgba(212,175,55,0.08);
 }
-.sb-student-name {
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.sb-student-class {
-  font-size: 11px;
-  color: rgba(255,255,255,0.35);
-  margin-top: 2px;
-}
+.sidebar-student .s-name { font-size: 0.85rem; font-weight: 600; color: #fff; }
+.sidebar-student .s-class { font-size: 0.75rem; color: rgba(212,175,55,0.55); margin-top: 2px; letter-spacing: 0.08em; }
 
 /* Timer */
-.sb-timer {
-  padding: 14px 24px;
+.sidebar-timer {
+  padding: 14px 20px;
   border-bottom: 1px solid rgba(212,175,55,0.08);
-  text-align: center;
 }
-.sb-timer-label {
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(212,175,55,0.45);
-  margin-bottom: 4px;
+.timer-label { font-size: 0.65rem; color: rgba(212,175,55,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+.timer-display {
+  font-family: 'DM Mono', monospace; font-size: 1.9rem; font-weight: 500;
+  color: var(--gold); letter-spacing: 0.05em;
+  transition: color 0.3s;
 }
-.sb-timer-display {
-  font-family: 'DM Mono', monospace;
-  font-size: 28px;
-  color: var(--gold);
-  letter-spacing: 3px;
-}
-.sb-timer-display.urgent { color: #ff7675; animation: pulse 1s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+.timer-display.warn { color: var(--flag-red); animation: pulse-timer 1s ease-in-out infinite; }
+@keyframes pulse-timer { 0%,100%{opacity:1} 50%{opacity:0.6} }
 
 /* Question Map */
-.sb-map-section {
-  padding: 16px 24px;
-  flex: 1;
+.sidebar-map { padding: 16px 20px 12px; flex: 1; }
+.map-label {
+  font-size: 0.65rem; color: rgba(212,175,55,0.5);
+  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px;
 }
-.sb-map-label {
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(212,175,55,0.45);
-  margin-bottom: 10px;
+.q-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px;
 }
-.q-map {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 5px;
-}
-.q-dot {
+.q-cell {
   aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500;
   color: rgba(255,255,255,0.4);
   border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s;
+  border-radius: 4px; cursor: pointer;
+  transition: all var(--transition);
   position: relative;
-  font-family: 'DM Mono', monospace;
 }
-.q-dot:hover { border-color: var(--gold); color: var(--gold); }
-.q-dot.answered { background: rgba(212,175,55,0.2); border-color: var(--gold); color: var(--gold); }
-.q-dot.flagged { border-color: var(--flag-red); color: var(--flag-red); }
-.q-dot.answered.flagged { background: rgba(212,175,55,0.2); border-color: var(--flag-red); color: var(--gold); }
-.q-dot.answered.flagged::after {
-  content: '';
-  position: absolute;
-  top: 2px; right: 2px;
-  width: 5px; height: 5px;
-  border-radius: 50%;
+.q-cell:hover { border-color: var(--gold-light); color: var(--gold-light); }
+.q-cell.answered { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); font-weight: 600; }
+.q-cell.flagged { border-color: var(--flag-red); color: var(--flag-red); }
+.q-cell.answered.flagged { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+.q-cell.answered.flagged::after {
+  content: ''; position: absolute; top: 2px; right: 2px;
+  width: 5px; height: 5px; border-radius: 50%;
   background: var(--flag-red);
 }
-
-/* Sidebar buttons */
-.sb-btns {
-  padding: 14px 24px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.part-label-cell {
+  grid-column: 1 / -1;
+  font-size: 0.6rem; color: rgba(212,175,55,0.4); letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 6px 0 2px;
+  font-family: 'Be Vietnam Pro', sans-serif;
 }
+
+/* Sidebar Buttons */
+.sidebar-actions { padding: 12px 20px 0; display: flex; flex-direction: column; gap: 8px; }
 .btn-flag-view {
-  padding: 9px 14px;
+  width: 100%; padding: 9px 12px;
   background: transparent;
   border: 1px solid var(--flag-red);
-  color: var(--flag-red);
-  border-radius: 5px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-  letter-spacing: 0.5px;
+  color: var(--flag-red); border-radius: var(--radius);
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; transition: all var(--transition); letter-spacing: 0.04em;
 }
-.btn-flag-view:hover { background: rgba(225,112,85,0.1); }
+.btn-flag-view:hover { background: var(--flag-red-dim); }
 
 .btn-submit {
-  padding: 11px 14px;
+  width: 100%; padding: 11px 12px;
   background: transparent;
   border: 1.5px solid var(--gold);
-  color: var(--gold);
-  border-radius: 5px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.15s;
+  color: var(--gold); border-radius: var(--radius);
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.85rem; font-weight: 700;
+  cursor: pointer; transition: all var(--transition); letter-spacing: 0.06em;
 }
-.btn-submit:hover { background: rgba(212,175,55,0.1); }
+.btn-submit:hover { background: var(--gold-dim); }
 
-/* ===== MAIN CONTENT ===== */
-#main {
+/* ── MAIN CONTENT ── */
+.main-content {
   margin-left: var(--sidebar-w);
-  padding: 40px 52px 80px;
-  max-width: calc(100vw - var(--sidebar-w));
-}
-
-.part-header {
-  margin-bottom: 32px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid rgba(212,175,55,0.3);
-}
-.part-label {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-.part-instruction {
-  font-size: 13.5px;
-  color: var(--ink-light);
-  line-height: 1.7;
-}
-.part-instruction strong { color: var(--ink); }
-
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: var(--ink);
-}
-
-/* Form table Part 1 */
-.form-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1.5px solid #d0c8b8;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 32px;
-}
-.form-table th {
-  background: #f2ede4;
-  padding: 10px 18px;
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-  border-bottom: 1.5px solid #d0c8b8;
-  color: var(--ink);
-}
-.form-table td {
-  padding: 8px 18px;
-  font-size: 13.5px;
-  line-height: 1.8;
-  vertical-align: top;
-  color: var(--ink);
-}
-.form-table .example-row td { background: #f8f5ef; color: var(--ink-light); font-style: italic; }
-.form-table .example-row td span { text-decoration: underline; }
-.form-table .section-row td {
-  background: #f2ede4;
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.5px;
-  padding: 5px 18px;
-  color: var(--ink-light);
-}
-
-/* Inline inputs */
-.q-inline {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  vertical-align: middle;
-}
-.q-num-badge {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--gold-dark);
-  background: rgba(212,175,55,0.12);
-  border-radius: 3px;
-  padding: 1px 5px;
-  white-space: nowrap;
-}
-.q-input {
-  border: none;
-  border-bottom: 1.5px solid #b0a070;
-  background: transparent;
-  width: 130px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 13.5px;
-  color: var(--ink);
-  padding: 2px 4px;
-  outline: none;
-  transition: border-color 0.15s;
-  display: inline-block;
-}
-.q-input:focus { border-bottom-color: var(--gold); }
-
-.flag-btn {
-  width: 22px; height: 22px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 12px;
-  vertical-align: middle;
-  transition: all 0.15s;
-  flex-shrink: 0;
-}
-.flag-btn:hover { border-color: var(--flag-red); }
-.flag-btn.active { background: rgba(225,112,85,0.1); border-color: var(--flag-red); }
-
-/* Question rows (MCQ) */
-.q-block {
-  margin-bottom: 24px;
-}
-.q-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 6px;
-}
-.q-row-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--gold-dark);
-  min-width: 26px;
-  padding-top: 1px;
-}
-.q-row-text {
-  font-size: 14px;
-  line-height: 1.65;
-  font-weight: 600;
-  flex: 1;
-  color: var(--ink);
-}
-.q-options {
-  margin-left: 36px;
-  margin-top: 6px;
-}
-.q-option {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 7px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.15s;
-  margin-bottom: 2px;
-}
-.q-option:hover { background: rgba(212,175,55,0.07); }
-.q-option input[type="radio"],
-.q-option input[type="checkbox"] {
-  margin-top: 3px;
-  accent-color: var(--gold);
-  flex-shrink: 0;
-}
-.q-option-label {
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: var(--ink);
-}
-.q-option-letter {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--gold-dark);
-  min-width: 18px;
-}
-
-/* Flowchart */
-.flowchart-box {
-  background: #faf7f0;
-  border: 1.5px solid #d0c8b8;
-  border-radius: 10px;
-  padding: 30px 40px;
-  margin: 16px 0 32px;
+  flex: 1; padding: 0 0 80px;
   position: relative;
 }
-.flowchart-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 16px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 28px;
-  color: var(--ink);
+
+/* Highlight Toolbar — contextual popup */
+.hl-toolbar {
+  position: fixed; z-index: 200;
+  display: none; align-items: center; gap: 6px;
+  background: rgba(26,18,8,0.93); border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 24px; padding: 6px 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  pointer-events: auto;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  width: max-content;
 }
-.flowchart-step {
-  text-align: center;
-  font-size: 13.5px;
-  line-height: 1.7;
-  margin-bottom: 6px;
-  color: var(--ink);
+.hl-toolbar.visible { display: flex; }
+.hl-btn {
+  width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent;
+  cursor: pointer; transition: transform var(--transition), border-color var(--transition);
+  position: relative;
 }
-.flowchart-arrow {
-  text-align: center;
-  color: var(--ink-light);
-  font-size: 20px;
-  margin: 2px 0;
+.hl-btn:hover { transform: scale(1.2); }
+.hl-btn.active { border-color: #fff; transform: scale(1.15); }
+.hl-btn[data-color="yellow"] { background: rgba(255,214,0,0.8); }
+.hl-btn[data-color="green"]  { background: rgba(39,174,96,0.8); }
+.hl-btn[data-color="blue"]   { background: rgba(52,152,219,0.8); }
+.hl-btn[data-color="pink"]   { background: rgba(232,67,147,0.8); }
+.hl-erase {
+  width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7);
+  font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition);
+}
+.hl-erase:hover { background: rgba(255,255,255,0.2); }
+.hl-sep { width: 1px; height: 14px; background: rgba(212,175,55,0.25); margin: 0 2px; }
+
+/* Part Header */
+.part-header {
+  padding: 40px 48px 0;
+}
+.part-tag {
+  display: inline-block;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold);
+  border: 1px solid rgba(212,175,55,0.35); border-radius: 3px;
+  padding: 3px 10px; margin-bottom: 12px;
+}
+.part-title {
+  font-family: 'Playfair Display', serif; font-size: 1.5rem;
+  font-weight: 700; color: var(--ink); margin-bottom: 6px; line-height: 1.3;
+}
+.part-instruction {
+  font-size: 0.88rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 4px;
+  font-style: italic;
+}
+.part-divider {
+  height: 1px; background: linear-gradient(90deg, rgba(212,175,55,0.4), transparent);
+  margin: 20px 0 28px;
+}
+
+/* Question Block */
+.q-block {
+  padding: 0 48px; margin-bottom: 8px;
+  scroll-margin-top: 80px;
+}
+.q-block + .q-block { margin-top: 0; }
+
+/* Section label (e.g. Questions 1–10) */
+.q-section-label {
+  padding: 24px 48px 12px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(212,175,55,0.75);
+  border-bottom: 1px solid rgba(212,175,55,0.1);
+  margin-bottom: 20px;
+}
+
+/* Question row */
+.q-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(45,52,54,0.07);
+}
+.q-row:last-child { border-bottom: none; }
+
+.q-num {
+  font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500;
+  color: var(--gold); min-width: 28px; padding-top: 2px;
+  flex-shrink: 0;
+}
+.q-flag-btn {
+  width: 22px; height: 22px; flex-shrink: 0;
+  background: transparent; border: none; cursor: pointer;
+  font-size: 13px; line-height: 22px; text-align: center;
+  opacity: 0.35; transition: opacity var(--transition), transform var(--transition);
+  padding: 0;
+}
+.q-flag-btn:hover { opacity: 0.75; transform: scale(1.1); }
+.q-flag-btn.flagged { opacity: 1; filter: none; }
+
+.q-content { flex: 1; }
+.q-text { font-size: 0.92rem; line-height: 1.65; color: var(--ink); margin-bottom: 8px; }
+
+/* Fill-in input */
+.q-input {
+  background: transparent; border: none; border-bottom: 1.5px solid rgba(45,52,54,0.3);
+  outline: none; font-family: 'DM Mono', monospace; font-size: 0.9rem;
+  color: var(--ink); padding: 2px 6px; min-width: 140px;
+  transition: border-color var(--transition);
+}
+.q-input:focus { border-bottom-color: var(--gold); }
+.q-input.has-answer { border-bottom-color: var(--gold); color: #1a5c2a; font-weight: 500; }
+
+/* MCQ options */
+.mcq-options { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.mcq-option {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 7px 10px; border-radius: 5px;
+  cursor: pointer; transition: background var(--transition);
+  font-size: 0.88rem; line-height: 1.5;
+}
+.mcq-option:hover { background: rgba(212,175,55,0.07); }
+.mcq-option input[type="radio"],
+.mcq-option input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 1.5px solid rgba(45,52,54,0.3);
+  background: transparent; cursor: pointer; flex-shrink: 0;
+  margin-top: 2px;
+  transition: all var(--transition);
+  position: relative;
+}
+.mcq-option input[type="checkbox"] { border-radius: 3px; }
+.mcq-option input[type="radio"]:checked,
+.mcq-option input[type="checkbox"]:checked {
+  background: var(--gold); border-color: var(--gold);
+}
+.mcq-option input[type="radio"]:checked::after {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--navy); transform: translate(-50%,-50%);
+}
+.mcq-option input[type="checkbox"]:checked::after {
+  content: '✓'; position: absolute; top: 50%; left: 50%;
+  font-size: 10px; color: var(--navy); transform: translate(-50%,-50%);
   line-height: 1;
 }
+.mcq-label { color: var(--ink); cursor: pointer; }
+.mcq-key { color: var(--gold); font-weight: 600; font-family: 'DM Mono', monospace; margin-right: 4px; min-width: 18px; }
 
-.option-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px 16px;
-  margin-bottom: 16px;
-  padding: 12px 16px;
-  background: rgba(212,175,55,0.06);
-  border-radius: 6px;
-  border: 1px solid rgba(212,175,55,0.18);
+/* Table / Flow-chart wrapper */
+.q-table-wrap { margin: 12px 0; overflow-x: auto; }
+.q-table {
+  width: 100%; border-collapse: collapse; font-size: 0.88rem;
 }
-.option-list-item {
-  font-size: 12.5px;
-  color: var(--ink-light);
+.q-table th {
+  background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.2);
+  padding: 8px 12px; font-weight: 600; text-align: left;
+  font-size: 0.8rem; letter-spacing: 0.04em; color: var(--ink);
 }
-.option-list-item strong { color: var(--ink); }
-
-/* Matching section (26-30) */
-.matching-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 16px;
-}
-.matching-table td {
-  padding: 8px 14px;
-  font-size: 13.5px;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  vertical-align: middle;
-}
-.matching-table td:first-child {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  color: var(--gold-dark);
-  width: 36px;
-}
-.matching-table td:nth-child(3) {
-  width: 200px;
+.q-table td {
+  border: 1px solid rgba(45,52,54,0.1); padding: 8px 12px;
+  vertical-align: top; line-height: 1.55;
 }
 
-/* Notes table Part 4 */
-.notes-box {
-  background: #faf7f0;
-  border: 1.5px solid #d0c8b8;
-  border-radius: 10px;
-  padding: 28px 36px;
-  margin: 16px 0 32px;
+/* Options list (A–H) for matching */
+.options-box {
+  background: rgba(212,175,55,0.05);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: var(--radius); padding: 14px 16px;
+  margin: 14px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px;
 }
-.notes-box h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 20px;
-  color: var(--ink);
+.option-item { font-size: 0.86rem; line-height: 1.5; padding: 3px 0; }
+.option-key { color: var(--gold); font-weight: 700; margin-right: 4px; font-family: 'DM Mono', monospace; }
+.q-select {
+  background: transparent; border: none; border-bottom: 1.5px solid rgba(45,52,54,0.3);
+  outline: none; font-family: 'DM Mono', monospace; font-size: 0.9rem;
+  color: var(--ink); padding: 2px 4px; cursor: pointer;
+  transition: border-color var(--transition);
 }
-.notes-section-head {
-  font-weight: 700;
-  font-size: 13px;
-  color: var(--ink);
-  margin: 18px 0 6px;
-}
-.notes-line {
-  font-size: 13.5px;
-  line-height: 2;
-  color: var(--ink);
+.q-select:focus { border-bottom-color: var(--gold); }
+.q-select.has-answer { border-bottom-color: var(--gold); color: #1a5c2a; font-weight: 600; }
+
+/* Part separator */
+.part-sep {
+  height: 1px; margin: 40px 48px;
+  background: linear-gradient(90deg, rgba(212,175,55,0.3), rgba(212,175,55,0.08), transparent);
 }
 
-/* Part divider */
-.part-divider {
-  border: none;
-  border-top: 1.5px solid rgba(212,175,55,0.2);
-  margin: 48px 0 40px;
+/* ============================================================
+   FLAG OVERLAY PANEL
+   ============================================================ */
+.flag-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+  align-items: flex-start; justify-content: flex-end; padding: 20px;
 }
+.flag-overlay.open { display: flex; }
 
-/* ===== HIGHLIGHT BUTTON ===== */
-#hl-btn {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  background: var(--gold);
-  color: var(--navy);
-  border: none;
-  border-radius: 4px;
-  padding: 4px 9px;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-  transition: background 0.15s;
-  white-space: nowrap;
+.flag-panel {
+  background: var(--navy); border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 10px; width: 340px; max-height: 80vh;
+  overflow-y: auto; box-shadow: 0 24px 60px rgba(0,0,0,0.6);
 }
-#hl-btn:hover { background: var(--gold-light); }
-
-mark.hl {
-  background: var(--highlight-yellow);
-  color: inherit;
-  border-radius: 2px;
-  cursor: pointer;
-  display: inline;
-  padding: 0;
-  margin: 0;
-  line-height: inherit;
+.flag-panel-header {
+  padding: 18px 20px; border-bottom: 1px solid rgba(212,175,55,0.12);
+  display: flex; align-items: center; justify-content: space-between;
 }
+.flag-panel-title { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1rem; }
+.flag-panel-close {
+  width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
+  background: transparent; color: rgba(255,255,255,0.6); font-size: 1rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition);
+}
+.flag-panel-close:hover { border-color: var(--gold); color: var(--gold); }
+.flag-panel-body { padding: 12px 0; }
+.flag-item {
+  padding: 10px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px;
+  transition: background var(--transition); border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.flag-item:hover { background: rgba(212,175,55,0.07); }
+.flag-item-num {
+  font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500;
+  color: var(--flag-red); min-width: 36px;
+}
+.flag-item-ans { font-size: 0.82rem; color: rgba(255,255,255,0.65); flex: 1; font-style: italic; }
+.flag-empty { padding: 24px 20px; text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.35); }
 
-/* ===== MODALS ===== */
+/* ============================================================
+   MODAL
+   ============================================================ */
 .modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  z-index: 5000;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
+  display: none; position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
 }
 .modal-overlay.open { display: flex; }
 
 .modal-box {
-  background: #fff;
-  border-radius: 14px;
-  padding: 40px 40px 32px;
-  max-width: 460px;
-  width: 94vw;
-  position: relative;
-  animation: fadeInUp 0.25s ease;
-  border-top: 4px solid var(--gold);
-}
-.modal-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: var(--ink);
-}
-.modal-body {
-  font-size: 14px;
-  color: var(--ink-light);
-  line-height: 1.7;
-  margin-bottom: 28px;
-}
-.modal-body strong { color: var(--ink); font-size: 16px; }
-.modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
-.modal-btn-cancel {
-  padding: 9px 20px;
-  background: #f4f4f4;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 13px;
-  cursor: pointer;
-  color: var(--ink-light);
-}
-.modal-btn-cancel:hover { background: #e9e9e9; }
-.modal-btn-confirm {
-  padding: 9px 24px;
-  background: var(--gold);
-  border: none;
-  border-radius: 5px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  color: var(--navy);
-  letter-spacing: 1px;
-}
-.modal-btn-confirm:hover { background: var(--gold-light); }
-
-/* Flag panel */
-#flag-panel {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  z-index: 4000;
-  align-items: flex-start;
-  justify-content: flex-end;
-  backdrop-filter: blur(3px);
-}
-#flag-panel.open { display: flex; }
-.flag-panel-inner {
-  width: 340px;
-  height: 100vh;
-  background: #fff;
-  overflow-y: auto;
-  padding: 32px 28px;
-  animation: slideInRight 0.25s ease;
-}
-@keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-.flag-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid rgba(212,175,55,0.3);
-}
-.flag-panel-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 700;
-}
-.flag-panel-close {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: var(--ink-light);
-  padding: 4px;
-}
-.flag-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(225,112,85,0.2);
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.flag-item:hover { background: rgba(225,112,85,0.06); }
-.flag-item-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--flag-red);
-  min-width: 32px;
-}
-.flag-item-ans {
-  font-size: 12px;
-  color: var(--ink-light);
-  font-style: italic;
-}
-.flag-none {
-  font-size: 13px;
-  color: var(--ink-light);
+  background: var(--navy); border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 12px; padding: 36px 40px; max-width: 420px; width: 100%;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
   text-align: center;
-  padding: 20px 0;
+}
+.modal-icon { font-size: 2rem; margin-bottom: 16px; }
+.modal-title {
+  font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #fff;
+  margin-bottom: 10px;
+}
+.modal-body { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 28px; }
+.modal-body strong { color: var(--gold); }
+.modal-actions { display: flex; gap: 12px; justify-content: center; }
+.btn-modal-cancel {
+  padding: 10px 24px; background: transparent;
+  border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);
+  border-radius: var(--radius); font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.88rem; cursor: pointer; transition: all var(--transition);
+}
+.btn-modal-cancel:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+.btn-modal-confirm {
+  padding: 10px 28px;
+  background: linear-gradient(135deg, var(--gold) 0%, #b8960c 100%);
+  color: var(--navy); border: none; border-radius: var(--radius);
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.88rem; font-weight: 700;
+  cursor: pointer; transition: opacity var(--transition);
+}
+.btn-modal-confirm:hover { opacity: 0.9; }
+
+/* ============================================================
+   RESULT SCREEN
+   ============================================================ */
+#screen-result {
+  min-height: 100vh; flex-direction: column;
+  align-items: center; justify-content: flex-start;
+  background: var(--cream); padding: 60px 24px;
 }
 
-/* ===== RESULT SCREEN ===== */
-#result-screen {
-  display: none;
-  min-height: 100vh;
-  background: var(--navy);
-  background-image: radial-gradient(ellipse at 30% 20%, rgba(212,175,55,0.15) 0%, transparent 55%);
-  padding: 60px 40px;
-  align-items: flex-start;
-  justify-content: center;
-}
-#result-screen.show { display: flex; }
+.result-header { text-align: center; margin-bottom: 48px; }
+.result-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 4px; }
+.result-subtitle { font-size: 0.75rem; color: rgba(212,175,55,0.6); letter-spacing: 0.14em; text-transform: uppercase; }
 
 .result-card {
-  background: rgba(255,255,255,0.97);
-  border-radius: 20px;
-  padding: 52px 56px;
-  max-width: 780px;
-  width: 100%;
-  border-top: 5px solid var(--gold);
-  animation: fadeInUp 0.5s ease;
+  background: #fff; border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 12px; padding: 40px 48px;
+  max-width: 680px; width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  text-align: center; margin-bottom: 28px;
 }
-.result-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  color: var(--gold);
-  letter-spacing: 3px;
-  margin-bottom: 8px;
+.result-score-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px; }
+.result-score {
+  font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 700;
+  color: var(--gold); line-height: 1; margin-bottom: 4px;
 }
-.result-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 28px;
-}
-.result-score-big {
-  font-family: 'Playfair Display', serif;
-  font-size: 72px;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.result-score-label {
-  font-size: 13px;
-  color: var(--ink-light);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 28px;
-}
-.result-meta {
-  font-size: 15px;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-.result-meta span { font-weight: 600; }
+.result-score span { font-size: 1.5rem; color: var(--ink-soft); font-weight: 400; }
+.result-name { font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-top: 16px; }
+.result-class { font-size: 0.85rem; color: var(--ink-soft); margin-top: 4px; }
+.result-divider { height: 1px; background: rgba(212,175,55,0.15); margin: 24px 0; }
+.result-note { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
 
-.result-divider {
-  border: none;
-  border-top: 1.5px solid rgba(212,175,55,0.25);
-  margin: 32px 0;
+.result-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 32px; max-width: 680px; width: 100%; }
+
+.band-card {
+  background: #fff; border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 12px; padding: 28px 36px;
+  max-width: 680px; width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  margin-bottom: 28px;
 }
-.result-review-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: var(--ink);
+.band-card-title {
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 16px; text-align: center;
 }
-.review-part-label {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold-dark);
-  font-weight: 600;
-  margin: 20px 0 10px;
+.band-highlight {
+  text-align: center; margin-bottom: 20px;
 }
-.review-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 8px;
+.band-highlight-score {
+  font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700;
+  color: var(--gold); line-height: 1;
 }
-.review-item {
-  background: #f8f5ef;
-  border: 1px solid #e0d8c8;
-  border-radius: 6px;
-  padding: 8px 12px;
-  display: flex;
+.band-highlight-label { font-size: 0.78rem; color: var(--ink-soft); margin-top: 4px; letter-spacing: 0.06em; }
+.band-divider { height: 1px; background: rgba(212,175,55,0.12); margin: 16px 0; }
+.band-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.band-table th {
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft); font-weight: 600; padding: 6px 10px;
+  border-bottom: 1px solid rgba(212,175,55,0.15); text-align: center;
+}
+.band-table td {
+  padding: 5px 10px; text-align: center; border-bottom: 1px solid rgba(45,52,54,0.05);
+  color: var(--ink); font-family: 'DM Mono', monospace; font-size: 0.8rem;
+}
+.band-table tr.band-current td {
+  background: rgba(212,175,55,0.12); color: var(--gold);
+  font-weight: 700; border-radius: 4px;
+}
+.band-table tr:last-child td { border-bottom: none; }
+.btn-result {
+  padding: 12px 28px; border-radius: var(--radius);
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.88rem; font-weight: 600;
+  cursor: pointer; transition: all var(--transition); letter-spacing: 0.04em;
+}
+.btn-result-primary {
+  background: linear-gradient(135deg, var(--gold) 0%, #b8960c 100%);
+  color: var(--navy); border: none;
+}
+.btn-result-primary:hover { opacity: 0.9; }
+.btn-result-secondary {
+  background: transparent; border: 1.5px solid var(--gold); color: #b8960c;
+}
+.btn-result-secondary:hover { background: rgba(212,175,55,0.08); }
+
+/* ============================================================
+   ANSWER SHEET SCREEN
+   ============================================================ */
+#screen-answersheet {
+  min-height: 100vh; flex-direction: column;
+  align-items: center; background: var(--cream); padding: 48px 24px;
+}
+/* Answer Sheet — wide horizontal layout */
+#screen-answersheet {
+  background: #f7f6f4; padding: 40px 32px;
+}
+.answersheet-wrap { max-width: 1200px; width: 100%; }
+.answersheet-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 6px; flex-wrap: wrap; gap: 8px;
+}
+.answersheet-title {
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 1rem;
+  font-weight: 700; color: var(--ink); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.answersheet-meta { font-size: 0.75rem; color: var(--ink-soft); margin-top: 3px; }
+.answersheet-close-hint { font-size: 0.75rem; color: var(--ink-soft); cursor: default; }
+.as-topbar {
+  background: #fff; border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 6px; padding: 10px 16px;
+  font-size: 0.82rem; color: var(--ink); margin-bottom: 20px;
+}
+.as-topbar strong { color: var(--gold); }
+.answersheet-notice {
+  background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25);
+  border-radius: var(--radius); padding: 10px 16px;
+  font-size: 0.78rem; color: #7a6200; line-height: 1.6; margin-bottom: 20px;
+  text-align: center;
+}
+/* 4-column table layout */
+.as-table-wrap {
+  background: #fff; border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 8px; overflow: hidden;
+}
+.as-columns {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 2px solid rgba(212,175,55,0.15);
+}
+.as-col { border-right: 1px solid rgba(212,175,55,0.1); }
+.as-col:last-child { border-right: none; }
+.as-col-header {
+  display: grid; grid-template-columns: 44px 1fr;
+  padding: 8px 12px; border-bottom: 1px solid rgba(212,175,55,0.15);
+  background: rgba(212,175,55,0.05);
+  font-size: 0.68rem; font-weight: 700; color: var(--ink-soft);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.as-row {
+  display: grid; grid-template-columns: 44px 1fr;
+  padding: 7px 12px; border-bottom: 1px solid rgba(45,52,54,0.05);
   align-items: center;
-  gap: 8px;
 }
-.review-item-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--gold-dark);
-  min-width: 22px;
+.as-row:last-child { border-bottom: none; }
+.as-row:nth-child(even) { background: rgba(212,175,55,0.03); }
+.as-row-num {
+  font-family: 'DM Mono', monospace; font-size: 0.72rem;
+  color: var(--ink-soft); font-weight: 500;
 }
-.review-item-ans {
-  font-size: 12.5px;
-  color: var(--ink);
-  font-weight: 500;
+.as-row-ans {
+  font-family: 'DM Mono', monospace; font-size: 0.88rem;
+  font-weight: 600; color: var(--ink);
 }
-.review-item-empty {
-  font-size: 12px;
-  color: #ccc;
-  font-style: italic;
+.as-row-ans.empty { color: rgba(45,52,54,0.2); font-weight: 400; font-style: italic; font-size: 0.78rem; }
+/* legacy unused */
+.as-part-label { display: none; }
+.as-grid { display: none; }
+.as-cell { display: none; }
+.as-divider { display: none; }
+.btn-back-review {
+  margin-top: 28px; padding: 12px 28px;
+  background: transparent; border: 1.5px solid rgba(45,52,54,0.2);
+  color: var(--ink-soft); border-radius: var(--radius);
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.88rem; font-weight: 500;
+  cursor: pointer; transition: all var(--transition);
+}
+.btn-back-review:hover { border-color: var(--gold); color: #7a6200; }
+
+/* ============================================================
+   REVIEW SCREEN (read-only)
+   ============================================================ */
+#screen-review {
+  flex-direction: row; min-height: 100vh; background: var(--cream);
+}
+.review-sidebar-overlay {
+  /* Readonly badge pinned to sidebar bottom */
+  padding: 12px 20px 0;
+}
+.review-readonly-badge {
+  display: block; text-align: center;
+  padding: 6px 12px; background: rgba(225,112,85,0.15);
+  border: 1px solid rgba(225,112,85,0.4); border-radius: 20px;
+  font-size: 0.72rem; color: var(--flag-red); font-weight: 600; letter-spacing: 0.06em;
+}
+.review-main {
+  margin-left: var(--sidebar-w);
+  flex: 1; padding: 32px 0 100px;
 }
 
-/* Scroll margin for anchors */
-[id^="anchor-"] { scroll-margin-top: 24px; }
+/* Read-only inputs in review */
+.q-input[readonly] { cursor: default; border-bottom-color: rgba(212,175,55,0.4); }
+.mcq-option.readonly { cursor: default; pointer-events: none; }
+.q-select[disabled] { cursor: default; }
 
-/* Responsive */
-@media (max-width: 768px) {
-  #sidebar { display: none; }
-  #main { margin-left: 0; padding: 20px; }
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+.spinner-overlay {
+  display: none; position: fixed; inset: 0; z-index: 900;
+  background: rgba(26,18,8,0.85); align-items: center; justify-content: center;
+  flex-direction: column; gap: 16px;
 }
+.spinner-overlay.open { display: flex; }
+.spinner {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 3px solid rgba(212,175,55,0.2); border-top-color: var(--gold);
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner-text { color: rgba(212,175,55,0.7); font-size: 0.85rem; letter-spacing: 0.08em; }
 
-/* Result screen cloned main */
-#result-review-content #main,
-#result-review-content [id="main"] {
-  margin-left: 0 !important;
-  padding: 0 !important;
-  max-width: 100% !important;
+/* ============================================================
+   PART TAB NAVIGATION
+   ============================================================ */
+.part-tabs {
+  display: flex; align-items: center; gap: 0;
+  padding: 0 48px;
+  border-bottom: 1px solid rgba(212,175,55,0.15);
+  background: var(--cream);
+  position: sticky; top: 0; z-index: 10;
+}
+.part-tab {
+  padding: 14px 24px; cursor: pointer;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(45,52,54,0.45); border-bottom: 2px solid transparent;
+  transition: all var(--transition); position: relative; user-select: none;
+  background: none; border-top: none; border-left: none; border-right: none;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+.part-tab:hover { color: var(--gold); }
+.part-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.part-tab .tab-dot {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); margin-left: 6px; vertical-align: middle;
+  opacity: 0; transition: opacity var(--transition);
+}
+.part-tab.has-answers .tab-dot { opacity: 1; }
+
+.part-panel { display: none; }
+.part-panel.active { display: block; }
+
+.part-nav-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px 0;
+  margin-top: 8px;
+}
+.btn-part-nav {
+  padding: 9px 20px; border-radius: var(--radius);
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.04em; cursor: pointer; transition: all var(--transition);
+  background: transparent; border: 1.5px solid rgba(212,175,55,0.35); color: var(--gold);
+}
+.btn-part-nav:hover { background: var(--gold-dim); border-color: var(--gold); }
+.btn-part-nav:disabled { opacity: 0.25; cursor: default; }
+.part-nav-label { font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.06em; }
+
+/* ============================================================
+   RESPONSIVE / SCROLL HELPERS
+   ============================================================ */
+[id^="anchor-"] { scroll-margin-top: 72px; }
+
+@media (max-width: 900px) {
+  :root { --sidebar-w: 220px; }
+  .q-block { padding: 0 24px; }
+  .part-header { padding: 32px 24px 0; }
+  .q-section-label { padding: 20px 24px 10px; }
+  .part-sep { margin: 32px 24px; }
+  .as-grid { grid-template-columns: repeat(3,1fr); }
 }
 </style>
 </head>
 <body>
 
-<!-- ===== LOGIN SCREEN ===== -->
-<div id="login-screen">
+<!-- ============================================================
+     SCREEN: LOGIN
+     ============================================================ -->
+<div id="screen-login" class="screen active">
+  <div class="login-bg-pattern"></div>
+  <div class="login-bg-text" id="login-bg-text"></div>
   <div class="login-card">
-    <div class="login-logo">G.EDU</div>
-    <div class="login-subtitle">IELTS Preparation</div>
-    <div class="login-title">Listening Test · Test 4</div>
+    <div class="login-logo">G.EDU <span>IELTS LISTENING</span></div>
+    <div class="login-divider"></div>
+    <div class="login-notice">
+      Vui lòng nhập Họ tên và Lớp bằng <strong style="color:#D4AF37">CHỮ IN HOA</strong>. Thông tin chính xác sẽ giúp hệ thống ghi nhận và khôi phục bài làm nếu bạn thoát hoặc tải lại trang.
+    </div>
     <div class="login-field">
       <label>Họ và tên học sinh</label>
-      <input type="text" id="inp-name" placeholder="Họ và tên học sinh" autocomplete="off">
+      <input type="text" id="input-name" placeholder="HỌ VÀ TÊN" autocomplete="off" />
     </div>
     <div class="login-field">
       <label>Lớp học</label>
-      <input type="text" id="inp-class" placeholder="Lớp học" autocomplete="off">
+      <input type="text" id="input-class" placeholder="LỚP HỌC" autocomplete="off" />
     </div>
-    <button class="login-btn" onclick="startTest()">BẮT ĐẦU LÀM BÀI</button>
-    <div class="login-note">Nhập đúng Tên + Lớp để khôi phục bài làm dở</div>
+    <button class="btn-start" onclick="handleLogin()">Tiếp tục</button>
   </div>
 </div>
 
-<!-- ===== HIGHLIGHT BUTTON ===== -->
-<button id="hl-btn">✏ Highlight</button>
+<!-- ============================================================
+     SCREEN: READY (start countdown)
+     ============================================================ -->
+<div id="screen-ready" class="screen">
+  <div class="ready-bg"></div>
+  <div class="ready-card">
+    <div class="ready-logo">G.EDU</div>
+    <div class="ready-test-name" id="ready-test-name"><!-- TEST_NAME --></div>
+    <div class="ready-student" id="ready-student-name"></div>
+    <div class="ready-class" id="ready-student-class"></div>
+    <div class="ready-divider"></div>
+    <div class="ready-note">
+      ⚠️ Bấm vào <strong style="color:#D4AF37">BẮT ĐẦU LÀM BÀI</strong> khi giáo viên mở audio nghe.<br>
+      Đồng hồ sẽ bắt đầu đếm ngược <strong style="color:#D4AF37">32 phút</strong> ngay khi bạn bấm. Sau 30 phút làm bài nghe, bạn sẽ có <strong style="color:#D4AF37">2 phút</strong> để xem lại bài.
+    </div>
+    <button class="btn-begin" onclick="handleBegin()">▶ BẮT ĐẦU LÀM BÀI</button>
+  </div>
+</div>
 
-<!-- ===== MAIN APP ===== -->
-<div id="app">
+<!-- ============================================================
+     SCREEN: EXAM
+     ============================================================ -->
+<div id="screen-exam" class="screen">
+
+  <!-- Highlight Toolbar — contextual popup, shown on text selection -->
+  <div class="hl-toolbar" id="hl-toolbar">
+    <button class="hl-btn active" data-color="yellow" title="Vàng" onclick="selectHLColor('yellow',this)"></button>
+    <button class="hl-btn" data-color="green" title="Xanh lá" onclick="selectHLColor('green',this)"></button>
+    <button class="hl-btn" data-color="blue" title="Xanh dương" onclick="selectHLColor('blue',this)"></button>
+    <button class="hl-btn" data-color="pink" title="Hồng" onclick="selectHLColor('pink',this)"></button>
+  </div>
+
   <!-- SIDEBAR -->
-  <nav id="sidebar">
-    <div class="sb-logo">
-      <div class="sb-logo-text">G.EDU</div>
-      <div class="sb-test-name">Listening · Test 4</div>
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="g-logo">G.EDU</div>
+      <div class="g-test-name" id="sidebar-test-name"><!-- TEST_NAME --></div>
     </div>
-    <div class="sb-student">
-      <div class="sb-student-name" id="sb-name">—</div>
-      <div class="sb-student-class" id="sb-class">—</div>
+    <div class="sidebar-student">
+      <div class="s-name" id="sidebar-name"></div>
+      <div class="s-class" id="sidebar-class"></div>
     </div>
-
-    <div class="sb-map-section">
-      <div class="sb-map-label">Question Map</div>
-      <div class="q-map" id="q-map"></div>
+    <div class="sidebar-timer">
+      <div class="timer-label">Thời gian còn lại</div>
+      <div class="timer-display" id="timer-display">32:00</div>
     </div>
-    <div class="sb-btns">
+    <div class="sidebar-map">
+      <div class="map-label">Question Map</div>
+      <div class="q-grid" id="q-grid">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+    <div class="sidebar-actions">
       <button class="btn-flag-view" onclick="openFlagPanel()">🚩 Xem câu đánh dấu</button>
       <button class="btn-submit" onclick="openSubmitModal()">NỘP BÀI</button>
     </div>
-  </nav>
+  </aside>
 
-  <!-- MAIN CONTENT -->
-  <main id="main" class="main-content">
+  <!-- MAIN -->
+  <main class="main-content" id="main-content">
 
-    <!-- ===== PART 1 ===== -->
-    <div id="anchor-part1">
-      <div class="part-header">
-        <div class="part-label">PART 1</div>
-        <div class="part-instruction">
-          <strong>Questions 1–10</strong><br>
-          Complete the form below.<br>
-          Write <strong>ONE WORD AND/OR NUMBER</strong> for each answer.
-        </div>
-      </div>
-
-      <table class="form-table">
-        <thead>
-          <tr><th colspan="2">Superior Home Appliances – Customer Complaint Form</th></tr>
-        </thead>
-        <tbody>
-          <tr class="example-row">
-            <td colspan="2"><em>Example</em><br>Type of appliance: <span>fridge</span></td>
-          </tr>
-          <tr>
-            <td id="anchor-1">Name: Jessica Brown</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Tel: 5823 2210</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Under warranty: yes</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td id="anchor-1b">Model type: a <span class="q-inline"><span class="q-num-badge">Q1</span><input class="q-input" id="q1" type="text" data-q="1" autocomplete="off"> mount</span></td>
-            <td id="anchor-2">Colour: <span class="q-inline"><span class="q-num-badge">Q2</span><input class="q-input" id="q2" type="text" data-q="2" autocomplete="off"></span></td>
-          </tr>
-          <tr>
-            <td>Model number: S 654 391 X</td>
-            <td id="anchor-3">Date of purchase: <span class="q-inline"><span class="q-num-badge">Q3</span><input class="q-input" id="q3" type="text" data-q="3" autocomplete="off" style="width:150px"></span></td>
-          </tr>
-          <tr class="section-row">
-            <td colspan="2">Problems:</td>
-          </tr>
-          <tr>
-            <td colspan="2" id="anchor-4">
-              • the <span class="q-inline"><span class="q-num-badge">Q4</span><input class="q-input" id="q4" type="text" data-q="4" autocomplete="off"></span> in the fridge sounded
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" id="anchor-5">
-              • freezer temperature is <span class="q-inline"><span class="q-num-badge">Q5</span><input class="q-input" id="q5" type="text" data-q="5" autocomplete="off" style="width:70px"></span> degrees
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">• the main fridge is not working.</td>
-          </tr>
-          <tr>
-            <td colspan="2" id="anchor-6">
-              Nearest service centre: Ken's Appliances (near the <span class="q-inline"><span class="q-num-badge">Q6</span><input class="q-input" id="q6" type="text" data-q="6" autocomplete="off"></span> )
-            </td>
-          </tr>
-          <tr class="section-row">
-            <td colspan="2">Comments:</td>
-          </tr>
-          <tr>
-            <td colspan="2" id="anchor-7">
-              • customer needs the fridge to store food for her <span class="q-inline"><span class="q-num-badge">Q7</span><input class="q-input" id="q7" type="text" data-q="7" autocomplete="off"></span> shop
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" id="anchor-8">
-              • value of food in fridge: $ <span class="q-inline"><span class="q-num-badge">Q8</span><input class="q-input" id="q8" type="text" data-q="8" autocomplete="off" style="width:80px"></span>
-            </td>
-          </tr>
-          <tr class="section-row">
-            <td colspan="2">To do:</td>
-          </tr>
-          <tr>
-            <td colspan="2" id="anchor-9">
-              • get the <span class="q-inline"><span class="q-num-badge">Q9</span><input class="q-input" id="q9" type="text" data-q="9" autocomplete="off"></span> to call her today
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" id="anchor-10">
-              • replace damaged <span class="q-inline"><span class="q-num-badge">Q10</span><input class="q-input" id="q10" type="text" data-q="10" autocomplete="off"></span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Flag buttons for Part 1 -->
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;">
-        <script>
-          // Will render flag buttons after DOM
-        </script>
-      </div>
+    <!-- TAB BAR -->
+    <div class="part-tabs">
+      <button class="part-tab active" data-tab="1" onclick="switchPart(1)">Part 1 <span class="tab-dot"></span></button>
+      <button class="part-tab" data-tab="2" onclick="switchPart(2)">Part 2 <span class="tab-dot"></span></button>
+      <button class="part-tab" data-tab="3" onclick="switchPart(3)">Part 3 <span class="tab-dot"></span></button>
+      <button class="part-tab" data-tab="4" onclick="switchPart(4)">Part 4 <span class="tab-dot"></span></button>
     </div>
 
-    <hr class="part-divider">
+    <!-- ══════════════════════════════════════════════════════
+         AI STUDIO: ĐIỀN NỘI DUNG ĐỀ BÀI VÀO ĐÂY
+         Mỗi part nằm trong <div class="part-panel" data-part="N">
+         ══════════════════════════════════════════════════════ -->
 
-    <!-- ===== PART 2 ===== -->
-    <div id="anchor-part2">
+    <!-- ─── PART 1 ─── -->
+    <div class="part-panel active" data-part="1">
       <div class="part-header">
-        <div class="part-label">PART 2</div>
-        <div class="part-instruction">
-          <strong>Questions 11–14</strong><br>
-          Choose the correct answer.
+        <div class="part-tag">Part 1</div>
+        <div class="part-title">Refrigerator Complaint Form</div>
+        <div class="part-instruction">Questions 1–10. Complete the form below. Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</div>
+        <div class="part-divider"></div>
+      </div>
+
+      <div class="q-section-label">Questions 1 – 10</div>
+
+      <div class="q-block" id="anchor-1">
+        <div class="q-row">
+          <div class="q-num">1</div>
+          <button class="q-flag-btn" data-q="1" onclick="toggleFlag(1)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Model type: a <input type="text" class="q-input" id="ans-1" data-q="1" oninput="handleInput(1,this)" placeholder="..." /> mount</div>
+          </div>
         </div>
       </div>
 
-      <!-- Q11 -->
+      <div class="q-block" id="anchor-2">
+        <div class="q-row">
+          <div class="q-num">2</div>
+          <button class="q-flag-btn" data-q="2" onclick="toggleFlag(2)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Colour: <input type="text" class="q-input" id="ans-2" data-q="2" oninput="handleInput(2,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-3">
+        <div class="q-row">
+          <div class="q-num">3</div>
+          <button class="q-flag-btn" data-q="3" onclick="toggleFlag(3)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Date of purchase: <input type="text" class="q-input" id="ans-3" data-q="3" oninput="handleInput(3,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-4">
+        <div class="q-row">
+          <div class="q-num">4</div>
+          <button class="q-flag-btn" data-q="4" onclick="toggleFlag(4)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">The <input type="text" class="q-input" id="ans-4" data-q="4" oninput="handleInput(4,this)" placeholder="..." /> in the fridge sounded</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-5">
+        <div class="q-row">
+          <div class="q-num">5</div>
+          <button class="q-flag-btn" data-q="5" onclick="toggleFlag(5)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Freezer temperature is <input type="text" class="q-input" id="ans-5" data-q="5" oninput="handleInput(5,this)" placeholder="..." /> degrees</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-6">
+        <div class="q-row">
+          <div class="q-num">6</div>
+          <button class="q-flag-btn" data-q="6" onclick="toggleFlag(6)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Nearest service centre: Ken's Appliances (near the <input type="text" class="q-input" id="ans-6" data-q="6" oninput="handleInput(6,this)" placeholder="..." />)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-7">
+        <div class="q-row">
+          <div class="q-num">7</div>
+          <button class="q-flag-btn" data-q="7" onclick="toggleFlag(7)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Customer needs the fridge to store food for her <input type="text" class="q-input" id="ans-7" data-q="7" oninput="handleInput(7,this)" placeholder="..." /> shop</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-8">
+        <div class="q-row">
+          <div class="q-num">8</div>
+          <button class="q-flag-btn" data-q="8" onclick="toggleFlag(8)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Value of food in fridge: $ <input type="text" class="q-input" id="ans-8" data-q="8" oninput="handleInput(8,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-9">
+        <div class="q-row">
+          <div class="q-num">9</div>
+          <button class="q-flag-btn" data-q="9" onclick="toggleFlag(9)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Get the <input type="text" class="q-input" id="ans-9" data-q="9" oninput="handleInput(9,this)" placeholder="..." /> to call her today</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-10">
+        <div class="q-row">
+          <div class="q-num">10</div>
+          <button class="q-flag-btn" data-q="10" onclick="toggleFlag(10)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Replace damaged <input type="text" class="q-input" id="ans-10" data-q="10" oninput="handleInput(10,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-nav-bar">
+        <button class="btn-part-nav" disabled>← Part trước</button>
+        <span class="part-nav-label">Questions 1 – 10</span>
+        <button class="btn-part-nav" onclick="switchPart(2)">Part 2 →</button>
+      </div>
+      <div style="height:40px"></div>
+    </div>
+
+    <!-- ─── PART 2 ─── -->
+    <div class="part-panel" data-part="2">
+      <div class="part-header">
+        <div class="part-tag">Part 2</div>
+        <div class="part-title">The Connections Scheme</div>
+        <div class="part-instruction">Questions 11–20. <strong>Questions 11–14:</strong> Choose the correct answer. <strong>Questions 15–20:</strong> Complete the flowchart below. Choose SIX correct answers, A – H, next to questions 15–20.</div>
+        <div class="part-divider"></div>
+      </div>
+
+      <div class="q-section-label">Questions 11 – 14 — Choose the correct answer, A, B or C</div>
+
       <div class="q-block" id="anchor-11">
         <div class="q-row">
-          <span class="q-row-num">11</span>
-          <span class="q-row-text">People who act as hosts for Connection</span>
-          <button class="flag-btn" data-q="11" onclick="toggleFlag(11,this)" title="Flag">🚩</button>
-        </div>
-        <div class="q-options">
-          <label class="q-option"><input type="radio" name="q11" value="A" data-q="11"><span class="q-option-letter">A</span><span class="q-option-label">are given a little money.</span></label>
-          <label class="q-option"><input type="radio" name="q11" value="B" data-q="11"><span class="q-option-letter">B</span><span class="q-option-label">do not receive payment.</span></label>
-          <label class="q-option"><input type="radio" name="q11" value="C" data-q="11"><span class="q-option-letter">C</span><span class="q-option-label">can apply for expenses.</span></label>
+          <div class="q-num">11</div>
+          <button class="q-flag-btn" data-q="11" onclick="toggleFlag(11)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">People who act as hosts for Connection</div>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="q11" value="A" onchange="handleRadio(11,'A')" /><span class="mcq-label"><span class="mcq-key">A</span> are given a little money.</span></label>
+              <label class="mcq-option"><input type="radio" name="q11" value="B" onchange="handleRadio(11,'B')" /><span class="mcq-label"><span class="mcq-key">B</span> do not receive payment.</span></label>
+              <label class="mcq-option"><input type="radio" name="q11" value="C" onchange="handleRadio(11,'C')" /><span class="mcq-label"><span class="mcq-key">C</span> can apply for expenses.</span></label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Q12 -->
       <div class="q-block" id="anchor-12">
         <div class="q-row">
-          <span class="q-row-num">12</span>
-          <span class="q-row-text">Connections is for people from other countries who</span>
-          <button class="flag-btn" data-q="12" onclick="toggleFlag(12,this)" title="Flag">🚩</button>
-        </div>
-        <div class="q-options">
-          <label class="q-option"><input type="radio" name="q12" value="A" data-q="12"><span class="q-option-letter">A</span><span class="q-option-label">have difficulty making friends.</span></label>
-          <label class="q-option"><input type="radio" name="q12" value="B" data-q="12"><span class="q-option-letter">B</span><span class="q-option-label">are looking for temporary work.</span></label>
-          <label class="q-option"><input type="radio" name="q12" value="C" data-q="12"><span class="q-option-letter">C</span><span class="q-option-label">can offer language support.</span></label>
+          <div class="q-num">12</div>
+          <button class="q-flag-btn" data-q="12" onclick="toggleFlag(12)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Connections is for people from other countries who</div>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="q12" value="A" onchange="handleRadio(12,'A')" /><span class="mcq-label"><span class="mcq-key">A</span> have difficulty making friends.</span></label>
+              <label class="mcq-option"><input type="radio" name="q12" value="B" onchange="handleRadio(12,'B')" /><span class="mcq-label"><span class="mcq-key">B</span> are looking for temporary work.</span></label>
+              <label class="mcq-option"><input type="radio" name="q12" value="C" onchange="handleRadio(12,'C')" /><span class="mcq-label"><span class="mcq-key">C</span> can offer language support.</span></label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Q13 -->
       <div class="q-block" id="anchor-13">
         <div class="q-row">
-          <span class="q-row-num">13</span>
-          <span class="q-row-text">According to the speaker, what can a guest expect to do during their stay?</span>
-          <button class="flag-btn" data-q="13" onclick="toggleFlag(13,this)" title="Flag">🚩</button>
-        </div>
-        <div class="q-options">
-          <label class="q-option"><input type="radio" name="q13" value="A" data-q="13"><span class="q-option-letter">A</span><span class="q-option-label">cook food for their host family</span></label>
-          <label class="q-option"><input type="radio" name="q13" value="B" data-q="13"><span class="q-option-letter">B</span><span class="q-option-label">explain their own family traditions.</span></label>
-          <label class="q-option"><input type="radio" name="q13" value="C" data-q="13"><span class="q-option-letter">C</span><span class="q-option-label">discuss matters of personal interest.</span></label>
+          <div class="q-num">13</div>
+          <button class="q-flag-btn" data-q="13" onclick="toggleFlag(13)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">According to the speaker, what can a guest expect to do during their stay?</div>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="q13" value="A" onchange="handleRadio(13,'A')" /><span class="mcq-label"><span class="mcq-key">A</span> cook food for their host family</span></label>
+              <label class="mcq-option"><input type="radio" name="q13" value="B" onchange="handleRadio(13,'B')" /><span class="mcq-label"><span class="mcq-key">B</span> explain their own family traditions.</span></label>
+              <label class="mcq-option"><input type="radio" name="q13" value="C" onchange="handleRadio(13,'C')" /><span class="mcq-label"><span class="mcq-key">C</span> discuss matters of personal interest.</span></label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Q14 -->
       <div class="q-block" id="anchor-14">
         <div class="q-row">
-          <span class="q-row-num">14</span>
-          <span class="q-row-text">According to the speaker, a long-term benefit of the Connections scheme could be</span>
-          <button class="flag-btn" data-q="14" onclick="toggleFlag(14,this)" title="Flag">🚩</button>
+          <div class="q-num">14</div>
+          <button class="q-flag-btn" data-q="14" onclick="toggleFlag(14)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">According to the speaker, a long-term benefit of the Connections scheme could be</div>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="q14" value="A" onchange="handleRadio(14,'A')" /><span class="mcq-label"><span class="mcq-key">A</span> an increased understanding between cultures.</span></label>
+              <label class="mcq-option"><input type="radio" name="q14" value="B" onchange="handleRadio(14,'B')" /><span class="mcq-label"><span class="mcq-key">B</span> a programme of weekly visits.</span></label>
+              <label class="mcq-option"><input type="radio" name="q14" value="C" onchange="handleRadio(14,'C')" /><span class="mcq-label"><span class="mcq-key">C</span> more involvement from people of different communities.</span></label>
+            </div>
+          </div>
         </div>
-        <div class="q-options">
-          <label class="q-option"><input type="radio" name="q14" value="A" data-q="14"><span class="q-option-letter">A</span><span class="q-option-label">an increased understanding between cultures.</span></label>
-          <label class="q-option"><input type="radio" name="q14" value="B" data-q="14"><span class="q-option-letter">B</span><span class="q-option-label">a programme of weekly visits.</span></label>
-          <label class="q-option"><input type="radio" name="q14" value="C" data-q="14"><span class="q-option-letter">C</span><span class="q-option-label">more involvement from people of different communities.</span></label>
+      </div>
+
+      <div class="q-section-label">Questions 15 – 20 — Complete the flowchart. Choose SIX answers from the box (A–H)</div>
+      <div class="q-block" style="padding: 0 48px 16px;">
+        <div style="background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.2); border-radius: 6px; padding: 14px 18px; font-size: 0.85rem; line-height: 1.9;">
+          <strong style="color: var(--gold); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;">Options A – H</strong><br>
+          <span><strong>A</strong> acknowledgement &nbsp;&nbsp; <strong>B</strong> decision &nbsp;&nbsp; <strong>C</strong> identity &nbsp;&nbsp; <strong>D</strong> an interview</span><br>
+          <span><strong>E</strong> legal status &nbsp;&nbsp; <strong>F</strong> records &nbsp;&nbsp; <strong>G</strong> rejection &nbsp;&nbsp; <strong>H</strong> vetting</span>
         </div>
       </div>
 
-      <hr class="part-divider" style="margin:32px 0 28px">
-
-      <!-- Q15–20 Flowchart -->
-      <div class="part-instruction" style="margin-bottom:16px">
-        <strong>Questions 15–20</strong><br>
-        Complete the flowchart below.<br>
-        Choose <strong>SIX correct answers</strong>, A – H, next to questions 15 – 20.
-      </div>
-
-      <div class="option-list">
-        <div class="option-list-item"><strong>A</strong> acknowledgement</div>
-        <div class="option-list-item"><strong>B</strong> decision</div>
-        <div class="option-list-item"><strong>C</strong> identity</div>
-        <div class="option-list-item"><strong>D</strong> an interview</div>
-        <div class="option-list-item"><strong>E</strong> legal status</div>
-        <div class="option-list-item"><strong>F</strong> records</div>
-        <div class="option-list-item"><strong>G</strong> rejection</div>
-        <div class="option-list-item"><strong>H</strong> vetting</div>
-      </div>
-
-      <div class="flowchart-box">
-        <div class="flowchart-title">To apply to <em>Connections</em> as a guest</div>
-
-        <div class="flowchart-step" id="anchor-15">
-          The applicant makes an initial phone call to the
-          <span class="q-inline"><span class="q-num-badge">Q15</span>
-          <select class="q-input" id="q15" data-q="15" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
-            <option value="">—</option>
-            <option value="A">A – acknowledgement</option>
-            <option value="B">B – decision</option>
-            <option value="C">C – identity</option>
-            <option value="D">D – an interview</option>
-            <option value="E">E – legal status</option>
-            <option value="F">F – records</option>
-            <option value="G">G – rejection</option>
-            <option value="H">H – vetting</option>
-          </select></span> department.
-          <button class="flag-btn" data-q="15" onclick="toggleFlag(15,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div class="flowchart-arrow">↓</div>
-
-        <div class="flowchart-step" id="anchor-16">
-          The applicant sends in a reference to confirm his/her
-          <span class="q-inline"><span class="q-num-badge">Q16</span>
-          <select class="q-input" id="q16" data-q="16" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
-            <option value="">—</option>
-            <option value="A">A – acknowledgement</option>
-            <option value="B">B – decision</option>
-            <option value="C">C – identity</option>
-            <option value="D">D – an interview</option>
-            <option value="E">E – legal status</option>
-            <option value="F">F – records</option>
-            <option value="G">G – rejection</option>
-            <option value="H">H – vetting</option>
-          </select></span>
-          <button class="flag-btn" data-q="16" onclick="toggleFlag(16,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div class="flowchart-arrow">↓</div>
-
-        <div class="flowchart-step">Following approval, an application form is emailed to the applicant.</div>
-        <div class="flowchart-arrow">↓</div>
-
-        <div class="flowchart-step" id="anchor-17">
-          The applicant returns the completed form with two photographs (one for
-          <span class="q-inline"><span class="q-num-badge">Q17</span>
-          <select class="q-input" id="q17" data-q="17" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
-            <option value="">—</option>
-            <option value="A">A – acknowledgement</option>
-            <option value="B">B – decision</option>
-            <option value="C">C – identity</option>
-            <option value="D">D – an interview</option>
-            <option value="E">E – legal status</option>
-            <option value="F">F – records</option>
-            <option value="G">G – rejection</option>
-            <option value="H">H – vetting</option>
-          </select></span> and one for the family).
-          <button class="flag-btn" data-q="17" onclick="toggleFlag(17,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div class="flowchart-arrow">↓</div>
-
-        <div class="flowchart-step" id="anchor-18">
-          The applicant receives
-          <span class="q-inline"><span class="q-num-badge">Q18</span>
-          <select class="q-input" id="q18" data-q="18" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
-            <option value="">—</option>
-            <option value="A">A – acknowledgement</option>
-            <option value="B">B – decision</option>
-            <option value="C">C – identity</option>
-            <option value="D">D – an interview</option>
-            <option value="E">E – legal status</option>
-            <option value="F">F – records</option>
-            <option value="G">G – rejection</option>
-            <option value="H">H – vetting</option>
-          </select></span> within seven days.
-          <button class="flag-btn" data-q="18" onclick="toggleFlag(18,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div class="flowchart-arrow">↓</div>
-
-        <div class="flowchart-step" id="anchor-19">
-          The applicant has
-          <span class="q-inline"><span class="q-num-badge">Q19</span>
-          <select class="q-input" id="q19" data-q="19" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
-            <option value="">—</option>
-            <option value="A">A – acknowledgement</option>
-            <option value="B">B – decision</option>
-            <option value="C">C – identity</option>
-            <option value="D">D – an interview</option>
-            <option value="E">E – legal status</option>
-            <option value="F">F – records</option>
-            <option value="G">G – rejection</option>
-            <option value="H">H – vetting</option>
-          </select></span> with a staff member.
-          <button class="flag-btn" data-q="19" onclick="toggleFlag(19,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div class="flowchart-arrow">↓</div>
-
-        <div class="flowchart-step" id="anchor-20">
-          The applicant receives a final
-          <span class="q-inline"><span class="q-num-badge">Q20</span>
-          <select class="q-input" id="q20" data-q="20" style="width:210px; border-bottom: 1.5px solid #b0a070; background:transparent; font-size:13px; outline:none;">
-            <option value="">—</option>
-            <option value="A">A – acknowledgement</option>
-            <option value="B">B – decision</option>
-            <option value="C">C – identity</option>
-            <option value="D">D – an interview</option>
-            <option value="E">E – legal status</option>
-            <option value="F">F – records</option>
-            <option value="G">G – rejection</option>
-            <option value="H">H – vetting</option>
-          </select></span> in writing.
-          <button class="flag-btn" data-q="20" onclick="toggleFlag(20,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+      <div class="q-block" id="anchor-15">
+        <div class="q-row">
+          <div class="q-num">15</div>
+          <button class="q-flag-btn" data-q="15" onclick="toggleFlag(15)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">The applicant makes an initial phone call to the <input type="text" class="q-input" id="ans-15" data-q="15" oninput="handleInput(15,this)" placeholder="A–H" style="width:60px;text-align:center;" /> department.</div>
+          </div>
         </div>
       </div>
+
+      <div class="q-block" id="anchor-16">
+        <div class="q-row">
+          <div class="q-num">16</div>
+          <button class="q-flag-btn" data-q="16" onclick="toggleFlag(16)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">The applicant sends in a reference to confirm his/her <input type="text" class="q-input" id="ans-16" data-q="16" oninput="handleInput(16,this)" placeholder="A–H" style="width:60px;text-align:center;" /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-17">
+        <div class="q-row">
+          <div class="q-num">17</div>
+          <button class="q-flag-btn" data-q="17" onclick="toggleFlag(17)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">The applicant returns the completed form with two photographs (one for <input type="text" class="q-input" id="ans-17" data-q="17" oninput="handleInput(17,this)" placeholder="A–H" style="width:60px;text-align:center;" /> and one for the family).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-18">
+        <div class="q-row">
+          <div class="q-num">18</div>
+          <button class="q-flag-btn" data-q="18" onclick="toggleFlag(18)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">The applicant receives <input type="text" class="q-input" id="ans-18" data-q="18" oninput="handleInput(18,this)" placeholder="A–H" style="width:60px;text-align:center;" /> within seven days.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-19">
+        <div class="q-row">
+          <div class="q-num">19</div>
+          <button class="q-flag-btn" data-q="19" onclick="toggleFlag(19)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">The applicant has <input type="text" class="q-input" id="ans-19" data-q="19" oninput="handleInput(19,this)" placeholder="A–H" style="width:60px;text-align:center;" /> with a staff member.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-20">
+        <div class="q-row">
+          <div class="q-num">20</div>
+          <button class="q-flag-btn" data-q="20" onclick="toggleFlag(20)" title="Đánh dấu câu này">🚩</button>
+          <div class="q-content">
+            <div class="q-text">The applicant receives a final <input type="text" class="q-input" id="ans-20" data-q="20" oninput="handleInput(20,this)" placeholder="A–H" style="width:60px;text-align:center;" /> in writing.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-nav-bar">
+        <button class="btn-part-nav" onclick="switchPart(1)">← Part 1</button>
+        <span class="part-nav-label">Questions 11 – 20</span>
+        <button class="btn-part-nav" onclick="switchPart(3)">Part 3 →</button>
+      </div>
+      <div style="height:40px"></div>
     </div>
 
-    <hr class="part-divider">
-
-    <!-- ===== PART 3 ===== -->
-    <div id="anchor-part3">
+    <!-- ─── PART 3 ─── -->
+    <div class="part-panel" data-part="3">
       <div class="part-header">
-        <div class="part-label">PART 3</div>
-        <div class="part-instruction">
-          <strong>Questions 21–25</strong><br>
-          Choose the correct answer.
-        </div>
+        <div class="part-tag">Part 3</div>
+        <div class="part-title">Allergies and Pollen</div>
+        <div class="part-instruction"><strong>Questions 21–25:</strong> Choose the correct answer, A, B or C. <strong>Questions 26–30:</strong> What comment is made about the seasonal changes in pollen in each of the following European countries? Choose FIVE correct answers, A – G, next to questions 26–30.</div>
+        <div class="part-divider"></div>
       </div>
 
-      <div class="section-title" style="text-align:center;margin-bottom:20px;">Climate change and allergies</div>
+      <div class="q-section-label">Questions 21 – 25 — Choose the correct answer, A, B or C</div>
 
-      <!-- Q21 -->
       <div class="q-block" id="anchor-21">
         <div class="q-row">
-          <span class="q-row-num">21</span>
-          <span class="q-row-text">Why is Beth unconvinced that allergies are linked to vitamin D deficiency?</span>
-          <button class="flag-btn" data-q="21" onclick="toggleFlag(21,this)" title="Flag">🚩</button>
-        </div>
-        <div class="q-options">
-          <label class="q-option"><input type="radio" name="q21" value="A" data-q="21"><span class="q-option-letter">A</span><span class="q-option-label">because people's diets have improved since the 1950s</span></label>
-          <label class="q-option"><input type="radio" name="q21" value="B" data-q="21"><span class="q-option-letter">B</span><span class="q-option-label">because most people get enough vitamin D</span></label>
-          <label class="q-option"><input type="radio" name="q21" value="C" data-q="21"><span class="q-option-letter">C</span><span class="q-option-label">because the evidence only applies in Britain</span></label>
+          <div class="q-num">21</div>
+          <button class="q-flag-btn" data-q="21" onclick="toggleFlag(21)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Why is Beth unconvinced that allergies are linked to vitamin D deficiency?</div>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="q21" value="A" onchange="handleRadio(21,'A')" /><span class="mcq-label"><span class="mcq-key">A</span> because people's diets have improved since the 1950s</span></label>
+              <label class="mcq-option"><input type="radio" name="q21" value="B" onchange="handleRadio(21,'B')" /><span class="mcq-label"><span class="mcq-key">B</span> because most people get enough vitamin D</span></label>
+              <label class="mcq-option"><input type="radio" name="q21" value="C" onchange="handleRadio(21,'C')" /><span class="mcq-label"><span class="mcq-key">C</span> because the evidence only applies in Britain</span></label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Q22 -->
       <div class="q-block" id="anchor-22">
         <div class="q-row">
-          <span class="q-row-num">22</span>
-          <span class="q-row-text">Eliot explains that rising CO2 levels</span>
-          <button class="flag-btn" data-q="22" onclick="toggleFlag(22,this)" title="Flag">🚩</button>
-        </div>
-        <div class="q-options">
-          <label class="q-option"><input type="radio" name="q22" value="A" data-q="22"><span class="q-option-letter">A</span><span class="q-option-label">will mean distribution of pollen over a wider area.</span></label>
-          <label class="q-option"><input type="radio" name="q22" value="B" data-q="22"><span class="q-option-letter">B</span><span class="q-option-label">are having less impact on pollen than milder winters.</span></label>
-          <label class="q-option"><input type="radio" name="q22" value="C" data-q="22"><span class="q-option-letter">C</span><span class="q-option-label">are responsible for higher quantities of pollen.</span></label>
+          <div class="q-num">22</div>
+          <button class="q-flag-btn" data-q="22" onclick="toggleFlag(22)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Eliot explains that rising CO2 levels</div>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="q22" value="A" onchange="handleRadio(22,'A')" /><span class="mcq-label"><span class="mcq-key">A</span> will mean distribution of pollen over a wider area.</span></label>
+              <label class="mcq-option"><input type="radio" name="q22" value="B" onchange="handleRadio(22,'B')" /><span class="mcq-label"><span class="mcq-key">B</span> are having less impact on pollen than milder winters.</span></label>
+              <label class="mcq-option"><input type="radio" name="q22" value="C" onchange="handleRadio(22,'C')" /><span class="mcq-label"><span class="mcq-key">C</span> are responsible for higher quantities of pollen.</span></label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Q23 -->
       <div class="q-block" id="anchor-23">
         <div class="q-row">
-          <span class="q-row-num">23</span>
-          <span class="q-row-text">What does Beth say about seasonal changes?</span>
-          <button class="flag-btn" data-q="23" onclick="toggleFlag(23,this)" title="Flag">🚩</button>
-        </div>
-        <div class="q-options">
-          <label class="q-option"><input type="radio" name="q23" value="A" data-q="23"><span class="q-option-letter">A</span><span class="q-option-label">There is no clear short-term trend for the arrival of spring.</span></label>
-          <label class="q-option"><input type="radio" name="q23" value="B" data-q="23"><span class="q-option-letter">B</span><span class="q-option-label">In general, spring is likely to continue arriving early.</span></label>
-          <label class="q-option"><input type="radio" name="q23" value="C" data-q="23"><span class="q-option-letter">C</span><span class="q-option-label">Springs are becoming milder and longer.</span></label>
+          <div class="q-num">23</div>
+          <button class="q-flag-btn" data-q="23" onclick="toggleFlag(23)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">What does Beth say about seasonal changes?</div>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="q23" value="A" onchange="handleRadio(23,'A')" /><span class="mcq-label"><span class="mcq-key">A</span> There is no clear short-term trend for the arrival of spring.</span></label>
+              <label class="mcq-option"><input type="radio" name="q23" value="B" onchange="handleRadio(23,'B')" /><span class="mcq-label"><span class="mcq-key">B</span> In general, spring is likely to continue arriving early.</span></label>
+              <label class="mcq-option"><input type="radio" name="q23" value="C" onchange="handleRadio(23,'C')" /><span class="mcq-label"><span class="mcq-key">C</span> Springs are becoming milder and longer.</span></label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Q24 -->
       <div class="q-block" id="anchor-24">
         <div class="q-row">
-          <span class="q-row-num">24</span>
-          <span class="q-row-text">What point is made about the plant ragweed?</span>
-          <button class="flag-btn" data-q="24" onclick="toggleFlag(24,this)" title="Flag">🚩</button>
-        </div>
-        <div class="q-options">
-          <label class="q-option"><input type="radio" name="q24" value="A" data-q="24"><span class="q-option-letter">A</span><span class="q-option-label">it is spreading to more countries.</span></label>
-          <label class="q-option"><input type="radio" name="q24" value="B" data-q="24"><span class="q-option-letter">B</span><span class="q-option-label">it is the most widespread cause of allergies globally.</span></label>
-          <label class="q-option"><input type="radio" name="q24" value="C" data-q="24"><span class="q-option-letter">C</span><span class="q-option-label">it causes the most severe type of allergy.</span></label>
+          <div class="q-num">24</div>
+          <button class="q-flag-btn" data-q="24" onclick="toggleFlag(24)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">What point is made about the plant ragweed?</div>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="q24" value="A" onchange="handleRadio(24,'A')" /><span class="mcq-label"><span class="mcq-key">A</span> it is spreading to more countries.</span></label>
+              <label class="mcq-option"><input type="radio" name="q24" value="B" onchange="handleRadio(24,'B')" /><span class="mcq-label"><span class="mcq-key">B</span> it is the most widespread cause of allergies globally.</span></label>
+              <label class="mcq-option"><input type="radio" name="q24" value="C" onchange="handleRadio(24,'C')" /><span class="mcq-label"><span class="mcq-key">C</span> it causes the most severe type of allergy.</span></label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Q25 -->
       <div class="q-block" id="anchor-25">
         <div class="q-row">
-          <span class="q-row-num">25</span>
-          <span class="q-row-text">Why is tree pollen a more serious problem in cities?</span>
-          <button class="flag-btn" data-q="25" onclick="toggleFlag(25,this)" title="Flag">🚩</button>
+          <div class="q-num">25</div>
+          <button class="q-flag-btn" data-q="25" onclick="toggleFlag(25)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Why is tree pollen a more serious problem in cities?</div>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="q25" value="A" onchange="handleRadio(25,'A')" /><span class="mcq-label"><span class="mcq-key">A</span> Trees produce more pollen there.</span></label>
+              <label class="mcq-option"><input type="radio" name="q25" value="B" onchange="handleRadio(25,'B')" /><span class="mcq-label"><span class="mcq-key">B</span> There is less to absorb the tree pollen.</span></label>
+              <label class="mcq-option"><input type="radio" name="q25" value="C" onchange="handleRadio(25,'C')" /><span class="mcq-label"><span class="mcq-key">C</span> There is not enough control over tree-planting.</span></label>
+            </div>
+          </div>
         </div>
-        <div class="q-options">
-          <label class="q-option"><input type="radio" name="q25" value="A" data-q="25"><span class="q-option-letter">A</span><span class="q-option-label">Trees produce more pollen there.</span></label>
-          <label class="q-option"><input type="radio" name="q25" value="B" data-q="25"><span class="q-option-letter">B</span><span class="q-option-label">There is less to absorb the tree pollen.</span></label>
-          <label class="q-option"><input type="radio" name="q25" value="C" data-q="25"><span class="q-option-letter">C</span><span class="q-option-label">There is not enough control over tree-planting.</span></label>
+      </div>
+
+      <div class="q-section-label">Questions 26 – 30 — Choose FIVE answers from the box (A–G)</div>
+      <div class="q-block" style="padding: 0 48px 16px;">
+        <div style="background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.2); border-radius: 6px; padding: 14px 18px; font-size: 0.85rem; line-height: 1.9;">
+          <strong style="color: var(--gold); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;">Options A – G</strong><br>
+          <span><strong>A</strong> greatest change recorded for oak pollen</span><br>
+          <span><strong>B</strong> changes identified for two pollen types only</span><br>
+          <span><strong>C</strong> a longer season for grass pollen</span><br>
+          <span><strong>D</strong> earlier start dates for all pollen types</span><br>
+          <span><strong>E</strong> significant change in start date of birch pollen</span><br>
+          <span><strong>F</strong> little difference in start dates</span><br>
+          <span><strong>G</strong> information only available for birch pollen</span>
         </div>
       </div>
 
-      <hr class="part-divider" style="margin:32px 0 28px">
-
-      <!-- Q26–30 Matching -->
-      <div class="part-instruction" style="margin-bottom:16px">
-        <strong>Questions 26–30</strong><br>
-        What comment is made about the seasonal changes in pollen in each of the following European countries?<br>
-        Choose <strong>FIVE correct answers</strong>, A – G, next to questions 26 – 30.
+      <div class="q-block" id="anchor-26">
+        <div class="q-row">
+          <div class="q-num">26</div>
+          <button class="q-flag-btn" data-q="26" onclick="toggleFlag(26)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Austria &nbsp;&nbsp; <input type="text" class="q-input" id="ans-26" data-q="26" oninput="handleInput(26,this)" placeholder="A–G" style="width:60px;text-align:center;" /></div>
+          </div>
+        </div>
       </div>
 
-      <div style="text-align:center;font-weight:700;font-size:14px;margin-bottom:12px;">Seasonal changes in pollen</div>
-      <div class="option-list" style="grid-template-columns: repeat(2,1fr)">
-        <div class="option-list-item"><strong>A</strong> greatest change recorded for oak pollen</div>
-        <div class="option-list-item"><strong>B</strong> changes identified for two pollen types only</div>
-        <div class="option-list-item"><strong>C</strong> a longer season for grass pollen</div>
-        <div class="option-list-item"><strong>D</strong> earlier start dates for all pollen types</div>
-        <div class="option-list-item"><strong>E</strong> significant change in start date of birch pollen</div>
-        <div class="option-list-item"><strong>F</strong> little difference in start dates</div>
-        <div class="option-list-item"><strong>G</strong> information only available for birch pollen</div>
+      <div class="q-block" id="anchor-27">
+        <div class="q-row">
+          <div class="q-num">27</div>
+          <button class="q-flag-btn" data-q="27" onclick="toggleFlag(27)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">France &nbsp;&nbsp; <input type="text" class="q-input" id="ans-27" data-q="27" oninput="handleInput(27,this)" placeholder="A–G" style="width:60px;text-align:center;" /></div>
+          </div>
+        </div>
       </div>
 
-      <table class="matching-table">
-        <tbody>
-          <tr id="anchor-26">
-            <td>26</td>
-            <td>Australia</td>
-            <td>
-              <span class="q-inline">
-                <select class="q-input" id="q26" data-q="26" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
-                  <option value="">—</option>
-                  <option value="A">A – greatest change recorded for oak pollen</option>
-                  <option value="B">B – changes identified for two pollen types only</option>
-                  <option value="C">C – a longer season for grass pollen</option>
-                  <option value="D">D – earlier start dates for all pollen types</option>
-                  <option value="E">E – significant change in start date of birch pollen</option>
-                  <option value="F">F – little difference in start dates</option>
-                  <option value="G">G – information only available for birch pollen</option>
-                </select>
-              </span>
-            </td>
-            <td><button class="flag-btn" data-q="26" onclick="toggleFlag(26,this)">🚩</button></td>
-          </tr>
-          <tr id="anchor-27">
-            <td>27</td>
-            <td>France</td>
-            <td>
-              <span class="q-inline">
-                <select class="q-input" id="q27" data-q="27" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
-                  <option value="">—</option>
-                  <option value="A">A – greatest change recorded for oak pollen</option>
-                  <option value="B">B – changes identified for two pollen types only</option>
-                  <option value="C">C – a longer season for grass pollen</option>
-                  <option value="D">D – earlier start dates for all pollen types</option>
-                  <option value="E">E – significant change in start date of birch pollen</option>
-                  <option value="F">F – little difference in start dates</option>
-                  <option value="G">G – information only available for birch pollen</option>
-                </select>
-              </span>
-            </td>
-            <td><button class="flag-btn" data-q="27" onclick="toggleFlag(27,this)">🚩</button></td>
-          </tr>
-          <tr id="anchor-28">
-            <td>28</td>
-            <td>The Netherlands</td>
-            <td>
-              <span class="q-inline">
-                <select class="q-input" id="q28" data-q="28" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
-                  <option value="">—</option>
-                  <option value="A">A – greatest change recorded for oak pollen</option>
-                  <option value="B">B – changes identified for two pollen types only</option>
-                  <option value="C">C – a longer season for grass pollen</option>
-                  <option value="D">D – earlier start dates for all pollen types</option>
-                  <option value="E">E – significant change in start date of birch pollen</option>
-                  <option value="F">F – little difference in start dates</option>
-                  <option value="G">G – information only available for birch pollen</option>
-                </select>
-              </span>
-            </td>
-            <td><button class="flag-btn" data-q="28" onclick="toggleFlag(28,this)">🚩</button></td>
-          </tr>
-          <tr id="anchor-29">
-            <td>29</td>
-            <td>Switzerland</td>
-            <td>
-              <span class="q-inline">
-                <select class="q-input" id="q29" data-q="29" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
-                  <option value="">—</option>
-                  <option value="A">A – greatest change recorded for oak pollen</option>
-                  <option value="B">B – changes identified for two pollen types only</option>
-                  <option value="C">C – a longer season for grass pollen</option>
-                  <option value="D">D – earlier start dates for all pollen types</option>
-                  <option value="E">E – significant change in start date of birch pollen</option>
-                  <option value="F">F – little difference in start dates</option>
-                  <option value="G">G – information only available for birch pollen</option>
-                </select>
-              </span>
-            </td>
-            <td><button class="flag-btn" data-q="29" onclick="toggleFlag(29,this)">🚩</button></td>
-          </tr>
-          <tr id="anchor-30">
-            <td>30</td>
-            <td>UK</td>
-            <td>
-              <span class="q-inline">
-                <select class="q-input" id="q30" data-q="30" style="width:320px;border-bottom:1.5px solid #b0a070;background:transparent;font-size:13px;outline:none;">
-                  <option value="">—</option>
-                  <option value="A">A – greatest change recorded for oak pollen</option>
-                  <option value="B">B – changes identified for two pollen types only</option>
-                  <option value="C">C – a longer season for grass pollen</option>
-                  <option value="D">D – earlier start dates for all pollen types</option>
-                  <option value="E">E – significant change in start date of birch pollen</option>
-                  <option value="F">F – little difference in start dates</option>
-                  <option value="G">G – information only available for birch pollen</option>
-                </select>
-              </span>
-            </td>
-            <td><button class="flag-btn" data-q="30" onclick="toggleFlag(30,this)">🚩</button></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="q-block" id="anchor-28">
+        <div class="q-row">
+          <div class="q-num">28</div>
+          <button class="q-flag-btn" data-q="28" onclick="toggleFlag(28)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">The Netherlands &nbsp;&nbsp; <input type="text" class="q-input" id="ans-28" data-q="28" oninput="handleInput(28,this)" placeholder="A–G" style="width:60px;text-align:center;" /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-29">
+        <div class="q-row">
+          <div class="q-num">29</div>
+          <button class="q-flag-btn" data-q="29" onclick="toggleFlag(29)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Switzerland &nbsp;&nbsp; <input type="text" class="q-input" id="ans-29" data-q="29" oninput="handleInput(29,this)" placeholder="A–G" style="width:60px;text-align:center;" /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-30">
+        <div class="q-row">
+          <div class="q-num">30</div>
+          <button class="q-flag-btn" data-q="30" onclick="toggleFlag(30)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">UK &nbsp;&nbsp; <input type="text" class="q-input" id="ans-30" data-q="30" oninput="handleInput(30,this)" placeholder="A–G" style="width:60px;text-align:center;" /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-nav-bar">
+        <button class="btn-part-nav" onclick="switchPart(2)">← Part 2</button>
+        <span class="part-nav-label">Questions 21 – 30</span>
+        <button class="btn-part-nav" onclick="switchPart(4)">Part 4 →</button>
+      </div>
+      <div style="height:40px"></div>
     </div>
 
-    <hr class="part-divider">
-
-    <!-- ===== PART 4 ===== -->
-    <div id="anchor-part4">
+    <!-- ─── PART 4 ─── -->
+    <div class="part-panel" data-part="4">
       <div class="part-header">
-        <div class="part-label">PART 4</div>
-        <div class="part-instruction">
-          <strong>Questions 31–40</strong><br>
-          Complete the notes below.<br>
-          Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.
+        <div class="part-tag">Part 4</div>
+        <div class="part-title">Saffron — History and Uses</div>
+        <div class="part-instruction">Questions 31–40. Complete the notes below. Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</div>
+        <div class="part-divider"></div>
+      </div>
+
+      <div class="q-section-label">Questions 31 – 40</div>
+
+      <div class="q-block" id="anchor-31">
+        <div class="q-row">
+          <div class="q-num">31</div>
+          <button class="q-flag-btn" data-q="31" onclick="toggleFlag(31)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Number of stigmas needed for 50 grams: <input type="text" class="q-input" id="ans-31" data-q="31" oninput="handleInput(31,this)" placeholder="..." /></div>
+          </div>
         </div>
       </div>
 
-      <div class="notes-box">
-        <h3>Saffron</h3>
-        <div style="font-size:13.5px;color:var(--ink-light);margin-bottom:8px;">Saffron: a spice which comes from the crocus flower</div>
-        <div style="font-size:13.5px;color:var(--ink-light);margin-bottom:14px;">Cultivation and production</div>
-
-        <div class="notes-section-head">Harvested in October</div>
-
-        <div class="notes-line" id="anchor-31">
-          Number of stigmas needed for 50 grams:
-          <span class="q-inline"><span class="q-num-badge">Q31</span><input class="q-input" id="q31" type="text" data-q="31" autocomplete="off" style="width:80px"></span>
-          <button class="flag-btn" data-q="31" onclick="toggleFlag(31,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div class="notes-line" id="anchor-32">
-          Method of preservation:
-          <span class="q-inline"><span class="q-num-badge">Q32</span><input class="q-input" id="q32" type="text" data-q="32" autocomplete="off"></span>
-          <button class="flag-btn" data-q="32" onclick="toggleFlag(32,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div class="notes-line">Taste and aroma: like honey</div>
-        <div class="notes-line" id="anchor-33">
-          Forms in which sold: as whole stigmas and as a
-          <span class="q-inline"><span class="q-num-badge">Q33</span><input class="q-input" id="q33" type="text" data-q="33" autocomplete="off"></span>
-          <button class="flag-btn" data-q="33" onclick="toggleFlag(33,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-
-        <div class="notes-section-head">Uses of saffron today</div>
-        <div class="notes-line" id="anchor-34">
-          To colour and flavour food in many countries especially for making
-          <span class="q-inline"><span class="q-num-badge">Q34</span><input class="q-input" id="q34" type="text" data-q="34" autocomplete="off"></span> dishes
-          <button class="flag-btn" data-q="34" onclick="toggleFlag(34,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-
-        <div class="notes-section-head">In medicine</div>
-        <div class="notes-line" id="anchor-35">
-          • as a drug in treatment of problems affecting the
-          <span class="q-inline"><span class="q-num-badge">Q35</span><input class="q-input" id="q35" type="text" data-q="35" autocomplete="off"></span>
-          <button class="flag-btn" data-q="35" onclick="toggleFlag(35,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div class="notes-line" id="anchor-36">
-          • experiments with rats as protection from exposure to some types of
-          <span class="q-inline"><span class="q-num-badge">Q36</span><input class="q-input" id="q36" type="text" data-q="36" autocomplete="off"></span>
-          <button class="flag-btn" data-q="36" onclick="toggleFlag(36,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-
-        <div class="notes-section-head">History of saffron use</div>
-        <div style="font-size:13px;font-weight:600;color:var(--ink-light);margin:6px 0 2px;">Ancient Crete</div>
-        <div class="notes-line" id="anchor-37">
-          • as a dye for
-          <span class="q-inline"><span class="q-num-badge">Q37</span><input class="q-input" id="q37" type="text" data-q="37" autocomplete="off"></span>
-          <button class="flag-btn" data-q="37" onclick="toggleFlag(37,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div style="font-size:13px;font-weight:600;color:var(--ink-light);margin:6px 0 2px;">Roman Empire</div>
-        <div class="notes-line" id="anchor-38">
-          • in oil used for the production of
-          <span class="q-inline"><span class="q-num-badge">Q38</span><input class="q-input" id="q38" type="text" data-q="38" autocomplete="off"></span>
-          <button class="flag-btn" data-q="38" onclick="toggleFlag(38,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div class="notes-line" id="anchor-39">
-          • as a
-          <span class="q-inline"><span class="q-num-badge">Q39</span><input class="q-input" id="q39" type="text" data-q="39" autocomplete="off"></span> in public baths
-          <button class="flag-btn" data-q="39" onclick="toggleFlag(39,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
-        </div>
-        <div style="font-size:13px;font-weight:600;color:var(--ink-light);margin:6px 0 2px;">Persia (Iran)</div>
-        <div class="notes-line" id="anchor-40">
-          • as a dye used in the making of
-          <span class="q-inline"><span class="q-num-badge">Q40</span><input class="q-input" id="q40" type="text" data-q="40" autocomplete="off"></span>
-          <button class="flag-btn" data-q="40" onclick="toggleFlag(40,this)" style="display:inline-flex;vertical-align:middle;">🚩</button>
+      <div class="q-block" id="anchor-32">
+        <div class="q-row">
+          <div class="q-num">32</div>
+          <button class="q-flag-btn" data-q="32" onclick="toggleFlag(32)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Method of preservation: <input type="text" class="q-input" id="ans-32" data-q="32" oninput="handleInput(32,this)" placeholder="..." /></div>
+          </div>
         </div>
       </div>
+
+      <div class="q-block" id="anchor-33">
+        <div class="q-row">
+          <div class="q-num">33</div>
+          <button class="q-flag-btn" data-q="33" onclick="toggleFlag(33)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Forms in which sold: as whole stigmas and as a <input type="text" class="q-input" id="ans-33" data-q="33" oninput="handleInput(33,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-34">
+        <div class="q-row">
+          <div class="q-num">34</div>
+          <button class="q-flag-btn" data-q="34" onclick="toggleFlag(34)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">To colour and flavour food in many countries — especially for making <input type="text" class="q-input" id="ans-34" data-q="34" oninput="handleInput(34,this)" placeholder="..." /> dishes</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-35">
+        <div class="q-row">
+          <div class="q-num">35</div>
+          <button class="q-flag-btn" data-q="35" onclick="toggleFlag(35)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">As a drug in treatment of problems affecting the <input type="text" class="q-input" id="ans-35" data-q="35" oninput="handleInput(35,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-36">
+        <div class="q-row">
+          <div class="q-num">36</div>
+          <button class="q-flag-btn" data-q="36" onclick="toggleFlag(36)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Experiments with rats as protection from exposure to some types of <input type="text" class="q-input" id="ans-36" data-q="36" oninput="handleInput(36,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-37">
+        <div class="q-row">
+          <div class="q-num">37</div>
+          <button class="q-flag-btn" data-q="37" onclick="toggleFlag(37)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Ancient Crete — as a dye for <input type="text" class="q-input" id="ans-37" data-q="37" oninput="handleInput(37,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-38">
+        <div class="q-row">
+          <div class="q-num">38</div>
+          <button class="q-flag-btn" data-q="38" onclick="toggleFlag(38)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">In oil used for the production of <input type="text" class="q-input" id="ans-38" data-q="38" oninput="handleInput(38,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-39">
+        <div class="q-row">
+          <div class="q-num">39</div>
+          <button class="q-flag-btn" data-q="39" onclick="toggleFlag(39)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">As a <input type="text" class="q-input" id="ans-39" data-q="39" oninput="handleInput(39,this)" placeholder="..." /> in public baths</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="anchor-40">
+        <div class="q-row">
+          <div class="q-num">40</div>
+          <button class="q-flag-btn" data-q="40" onclick="toggleFlag(40)">🚩</button>
+          <div class="q-content">
+            <div class="q-text">Persia (Iran) — as a dye used in the making of <input type="text" class="q-input" id="ans-40" data-q="40" oninput="handleInput(40,this)" placeholder="..." /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-nav-bar">
+        <button class="btn-part-nav" onclick="switchPart(3)">← Part 3</button>
+        <span class="part-nav-label">Questions 31 – 40</span>
+        <button class="btn-part-nav" disabled>Part tiếp →</button>
+      </div>
+      <div style="height:40px"></div>
     </div>
 
   </main>
 </div>
 
-<!-- ===== SUBMIT MODAL ===== -->
-<div class="modal-overlay" id="submit-modal">
-  <div class="modal-box">
-    <div class="modal-title">Xác nhận nộp bài</div>
-    <div class="modal-body" id="submit-modal-body">Bạn có chắc chắn muốn nộp bài không?</div>
-    <div class="modal-btns">
-      <button class="modal-btn-cancel" onclick="closeSubmitModal()">Quay lại</button>
-      <button class="modal-btn-confirm" onclick="confirmSubmit()">NỘP BÀI</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== FLAG PANEL ===== -->
-<div id="flag-panel">
-  <div class="flag-panel-inner">
+<!-- Flag Overlay Panel -->
+<div class="flag-overlay" id="flag-overlay" onclick="closeFlagPanelOuter(event)">
+  <div class="flag-panel">
     <div class="flag-panel-header">
-      <div class="flag-panel-title">🚩 Câu đã đánh dấu</div>
+      <span class="flag-panel-title">🚩 Câu đã đánh dấu</span>
       <button class="flag-panel-close" onclick="closeFlagPanel()">✕</button>
     </div>
-    <div id="flag-panel-list"></div>
+    <div class="flag-panel-body" id="flag-panel-body"></div>
   </div>
 </div>
 
-<!-- ===== RESULT SCREEN ===== -->
-<div id="result-screen">
-  <div style="max-width:900px;width:100%;margin:0 auto;">
-    <!-- Header bar -->
-    <div style="background:var(--navy);border-radius:14px;padding:28px 40px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <div>
-        <div style="font-family:'Playfair Display',serif;font-size:24px;color:var(--gold);letter-spacing:3px;">G.EDU</div>
-        <div style="font-family:'Playfair Display',serif;font-size:18px;color:#fff;margin-top:4px;">Kết quả bài thi · Listening Test 4</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.45);margin-top:6px;">Đáp án của bạn — giáo viên sẽ chữa bài trực tiếp trên lớp.</div>
-      </div>
-      <div style="text-align:right;">
-        <div style="font-family:'Playfair Display',serif;font-size:52px;font-weight:700;color:var(--gold);line-height:1;" id="res-score">—</div>
-        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);">/ 40 câu</div>
-        <div style="font-size:13px;color:#fff;margin-top:6px;" id="res-name-class">—</div>
-      </div>
+<!-- Submit Modal -->
+<div class="modal-overlay" id="modal-submit">
+  <div class="modal-box">
+    <div class="modal-icon">📋</div>
+    <div class="modal-title">Xác nhận nộp bài</div>
+    <div class="modal-body" id="modal-submit-body">Bạn còn <strong id="modal-unanswered">0</strong> câu chưa trả lời. Bạn có chắc muốn nộp bài?</div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal('modal-submit')">Làm tiếp</button>
+      <button class="btn-modal-confirm" onclick="submitExam()">Nộp bài</button>
     </div>
-    <!-- Review content cloned from exam -->
-    <div id="result-review-content" style="background:#fff;border-radius:14px;padding:40px 48px 60px;"></div>
   </div>
 </div>
 
-<script>
-// ===== CONFIG =====
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbze-ULqfpnB5IcJxAvg2m7IfSqkoUY4JmoHnjvpuGvxodzmLbhHHlcqxfcnha2aahY/exec';
-const TEST_NAME = 'listening_test 4';
+<!-- Auto-submit Modal -->
+<div class="modal-overlay" id="modal-timeout">
+  <div class="modal-box">
+    <div class="modal-icon">⏰</div>
+    <div class="modal-title">Hết giờ!</div>
+    <div class="modal-body">Thời gian làm bài đã kết thúc. Hệ thống sẽ tự động nộp bài của bạn.</div>
+    <div class="modal-actions">
+      <button class="btn-modal-confirm" onclick="submitExam()">Nộp bài ngay</button>
+    </div>
+  </div>
+</div>
 
-// ===== ANSWER KEY =====
-const CORRECT_ANSWERS = {
-  1:'top', 2:'silver', 3:'january 12th', 4:'alarm', 5:'10',
-  6:'station', 7:'sandwich', 8:'180', 9:'manager', 10:'door',
-  11:'B', 12:'A', 13:'C', 14:'A',
-  15:'H', 16:'C', 17:'F', 18:'A', 19:'D', 20:'B',
-  21:'C', 22:'C', 23:'A', 24:'A', 25:'B',
-  26:'G', 27:'B', 28:'A', 29:'D', 30:'C',
-  31:'14000', 32:'drying', 33:'powder', 34:'rice', 35:'eye',
-  36:'lights', 37:'clothes', 38:'cosmetics', 39:'perfume', 40:'carpets'
+<!-- Spinner -->
+<div class="spinner-overlay" id="spinner">
+  <div class="spinner"></div>
+  <div class="spinner-text">Đang gửi bài...</div>
+</div>
+
+<!-- ============================================================
+     SCREEN: RESULT
+     ============================================================ -->
+<div id="screen-result" class="screen">
+  <div class="result-header">
+    <div class="result-logo">G.EDU</div>
+    <div class="result-subtitle" id="result-test-name-display"></div>
+  </div>
+  <div class="result-card">
+    <div class="result-score-label">Kết quả bài thi</div>
+    <div class="result-score" id="result-score-display">—<span>/40</span></div>
+    <div class="result-name" id="result-name-display"></div>
+    <div class="result-class" id="result-class-display"></div>
+    <div class="result-divider"></div>
+    <div class="result-note">Điểm đã được ghi nhận.</div>
+  </div>
+
+  <!-- Band Score Card -->
+  <div class="band-card">
+    <div class="band-card-title">Quy đổi Band Score</div>
+    <div class="band-highlight">
+      <div class="band-highlight-score" id="band-score-display">—</div>
+      <div class="band-highlight-label">Band ước tính của bạn</div>
+    </div>
+  </div>
+  <div class="result-btns">
+    <button class="btn-result btn-result-primary" onclick="showAnswerSheet()">📄 Xem Answer Sheet</button>
+    <button class="btn-result btn-result-secondary" onclick="showReview()">👁 Xem lại bài làm</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCREEN: ANSWER SHEET
+     ============================================================ -->
+<div id="screen-answersheet" class="screen">
+  <div class="answersheet-wrap">
+    <div class="answersheet-header">
+      <div>
+        <div class="answersheet-title">Phiếu trả lời — Answer Sheet</div>
+        <div class="answersheet-meta" id="as-meta"></div>
+      </div>
+      <div class="answersheet-close-hint" id="as-score"></div>
+    </div>
+    <div class="as-topbar">Số câu đã trả lời: <strong id="as-answered-count">—</strong></div>
+    <div class="answersheet-notice">
+      📸 Vui lòng chụp lại Answer sheet để lưu bài làm — phòng trường hợp thoát trang hoặc đổi thiết bị làm mất kết quả.
+    </div>
+    <div class="as-table-wrap">
+      <div class="as-columns" id="answersheet-body"></div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
+      <button class="btn-result btn-result-secondary" onclick="showScreen('screen-result')">← Quay lại kết quả</button>
+      <button class="btn-result btn-result-primary" onclick="showReview()">👁 Xem lại bài làm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCREEN: REVIEW (read-only)
+     ============================================================ -->
+<div id="screen-review" class="screen">
+  <!-- Reuse sidebar styling, read-only version -->
+  <aside class="sidebar" id="review-sidebar">
+    <div class="sidebar-logo">
+      <div class="g-logo">G.EDU</div>
+      <div class="g-test-name" id="review-test-name"></div>
+    </div>
+    <div class="sidebar-student">
+      <div class="s-name" id="review-sidebar-name"></div>
+      <div class="s-class" id="review-sidebar-class"></div>
+    </div>
+    <div class="sidebar-timer" style="border-bottom:1px solid rgba(212,175,55,0.08)">
+      <div class="timer-label">Kết quả</div>
+      <div class="timer-display" id="review-score-sidebar" style="font-size:1.4rem">—/40</div>
+    </div>
+    <div class="sidebar-map">
+      <div class="map-label">Question Map</div>
+      <div class="q-grid" id="review-q-grid"></div>
+    </div>
+    <div class="review-sidebar-overlay">
+      <span class="review-readonly-badge">CHỈ XEM — KHÔNG THỂ SỬA</span>
+    </div>
+    <div class="sidebar-actions" style="margin-top:12px">
+      <button class="btn-flag-view" onclick="showAnswerSheet()" style="border-color:var(--gold);color:var(--gold)">← Answer Sheet</button>
+      <button class="btn-submit" onclick="showScreen('screen-result')">← Kết quả</button>
+    </div>
+  </aside>
+
+  <div class="review-main" id="review-main">
+    <!-- Cloned + frozen content rendered by JS -->
+  </div>
+</div>
+
+
+<!-- ============================================================
+     JAVASCRIPT ENGINE
+     ============================================================ -->
+<script>
+/* ─────────────────────────────────────────────────────────────
+   CONFIGURATION — AI STUDIO: chỉnh sửa phần này
+   ───────────────────────────────────────────────────────────── */
+const CONFIG = {
+  SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbze-ULqfpnB5IcJxAvg2m7IfSqkoUY4JmoHnjvpuGvxodzmLbhHHlcqxfcnha2aahY/exec',
+  TEST_NAME:  'listening_test4',
+  TOTAL_Q:    40,
+  TIMER_SECS: 32 * 60,
+  WARN_SECS:  2 * 60,
+
+  CORRECT_ANSWERS: {
+    "1":  "top",
+    "2":  "silver",
+    "3":  { accept: ["january 12th","12th january","january 12","12 january","12/01","01/12"] },
+    "4":  "alarm",
+    "5":  { accept: ["10","ten"] },
+    "6":  "station",
+    "7":  "sandwich",
+    "8":  "180",
+    "9":  "manager",
+    "10": "door",
+    "11": "b",
+    "12": "a",
+    "13": "c",
+    "14": "a",
+    "15": "h",
+    "16": "c",
+    "17": "f",
+    "18": "a",
+    "19": "d",
+    "20": "b",
+    "21": "c",
+    "22": "c",
+    "23": "a",
+    "24": "a",
+    "25": "b",
+    "26": "g",
+    "27": "b",
+    "28": "a",
+    "29": "d",
+    "30": "c",
+    "31": "14000",
+    "32": "drying",
+    "33": "powder",
+    "34": "rice",
+    "35": "eye",
+    "36": "lights",
+    "37": "clothes",
+    "38": "cosmetics",
+    "39": "perfume",
+    "40": "carpets"
+  },
+
+  // Part ranges for Question Map display
+  PARTS: [
+    { label: 'Part 1', from: 1,  to: 10 },
+    { label: 'Part 2', from: 11, to: 20 },
+    { label: 'Part 3', from: 21, to: 30 },
+    { label: 'Part 4', from: 31, to: 40 },
+  ],
+
+  // No dual-answer groups in this test (all questions are individual)
+  DUAL_GROUPS: [],
 };
 
-let studentName = '', studentClass = '';
-let timerInterval = null;
-let secondsLeft = 60 * 60;
-let flags = {};
-let _sheetSent = false;
+/* ─────────────────────────────────────────────────────────────
+   STATE
+   ───────────────────────────────────────────────────────────── */
+let state = {
+  name: '', cls: '',
+  answers: {},      // { "1":"answer", "19-20":["A","C"], ... }
+  flags: {},        // { "1": true, ... }
+  submitted: false,
+  score: 0,
+  timerInterval: null,
+  secondsLeft: CONFIG.TIMER_SECS,
+  hlColor: 'yellow',
+};
 
-// ===== LOCALSTORAGE HELPERS =====
-function lsKey(suffix) {
-  return `gedu_lt_${studentName}_${studentClass}_${suffix}`;
+const STORAGE_KEY  = () => `gedu_${CONFIG.TEST_NAME}_${state.name}_${state.cls}`;
+const FLAG_KEY     = () => `gedu_${CONFIG.TEST_NAME}_flags_${state.name}_${state.cls}`;
+const SUBMIT_KEY   = () => `gedu_${CONFIG.TEST_NAME}_submitted_${state.name}_${state.cls}`;
+const TIMER_KEY    = () => `gedu_${CONFIG.TEST_NAME}_timer_${state.name}_${state.cls}`;
+
+/* ─────────────────────────────────────────────────────────────
+   SCREEN MANAGER
+   ───────────────────────────────────────────────────────────── */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
 }
-function saveAnswers() {
-  if (!studentName) return;
-  const ans = collectAnswers();
-  localStorage.setItem(lsKey('answers'), JSON.stringify(ans));
-}
-function saveFlags() {
-  if (!studentName) return;
-  localStorage.setItem(lsKey('flags'), JSON.stringify(flags));
-}
-function loadSaved() {
-  const ansStr = localStorage.getItem(lsKey('answers'));
-  if (ansStr) {
-    const ans = JSON.parse(ansStr);
-    for (let q = 1; q <= 40; q++) {
-      if (ans[q] === undefined) continue;
-      const el = document.getElementById('q'+q);
-      if (!el) continue;
-      if (el.tagName === 'INPUT') { el.value = ans[q]; }
-      else if (el.tagName === 'SELECT') { el.value = ans[q]; }
+
+/* ─────────────────────────────────────────────────────────────
+   LOGIN
+   ───────────────────────────────────────────────────────────── */
+function handleLogin() {
+  const name = document.getElementById('input-name').value.trim().toUpperCase();
+  const cls  = document.getElementById('input-class').value.trim().toUpperCase();
+  if (!name || !cls) { alert('Vui lòng nhập đầy đủ Họ tên và Lớp.'); return; }
+  state.name = name; state.cls = cls;
+
+  // Restore answers
+  try { const s = localStorage.getItem(STORAGE_KEY()); if (s) state.answers = JSON.parse(s); } catch(e) {}
+  // Restore flags
+  try { const f = localStorage.getItem(FLAG_KEY()); if (f) state.flags = JSON.parse(f); } catch(e) {}
+
+  // Populate shared UI labels
+  const testLabel = CONFIG.TEST_NAME.replace(/_/g,' ').toUpperCase();
+  document.getElementById('sidebar-name').textContent   = name;
+  document.getElementById('sidebar-class').textContent  = cls;
+  document.getElementById('sidebar-test-name').textContent = testLabel;
+  document.getElementById('ready-test-name').textContent   = testLabel;
+  document.getElementById('ready-student-name').textContent  = name;
+  document.getElementById('ready-student-class').textContent = cls;
+
+  // ── SCENARIO 3: already submitted → jump straight to result ──
+  try {
+    const submitData = localStorage.getItem(SUBMIT_KEY());
+    if (submitData) {
+      const saved = JSON.parse(submitData);
+      state.submitted = true;
+      state.score     = saved.score;
+      state.answers   = saved.answers;
+      showResultScreen();
+      return;
     }
-    // Radio buttons
-    [11,12,13,14,21,22,23,24,25].forEach(q => {
-      if (ans[q]) {
-        const r = document.querySelector(`input[name="q${q}"][value="${ans[q]}"]`);
-        if (r) r.checked = true;
-      }
-    });
-  }
-  const flagStr = localStorage.getItem(lsKey('flags'));
-  if (flagStr) {
-    flags = JSON.parse(flagStr);
-    Object.keys(flags).forEach(q => {
-      if (flags[q]) {
-        const btn = document.querySelector(`.flag-btn[data-q="${q}"]`);
-        if (btn) btn.classList.add('active');
-      }
-    });
-  }
-  updateMap();
-}
+  } catch(e) {}
 
-// ===== START TEST =====
-function startTest() {
-  const n = document.getElementById('inp-name').value.trim();
-  const c = document.getElementById('inp-class').value.trim();
-  if (!n || !c) { alert('Vui lòng nhập đầy đủ Họ tên và Lớp học.'); return; }
-  studentName = n; studentClass = c;
-  document.getElementById('sb-name').textContent = n;
-  document.getElementById('sb-class').textContent = c;
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  buildMap();
-  loadSaved();
-  attachInputListeners();
-}
-
-// ===== TIMER =====
-function startTimer() {
-  updateTimerDisplay();
-  timerInterval = setInterval(() => {
-    secondsLeft--;
-    updateTimerDisplay();
-    if (secondsLeft <= 0) {
-      clearInterval(timerInterval);
-      confirmSubmit();
+  // ── SCENARIO 2: mid-exam with saved timer → skip ready, resume directly ──
+  try {
+    const timerData = localStorage.getItem(TIMER_KEY());
+    if (timerData) {
+      const { savedAt, secondsLeft } = JSON.parse(timerData);
+      // Calculate elapsed time since last save
+      const elapsed = Math.floor((Date.now() - savedAt) / 1000);
+      const remaining = secondsLeft - elapsed;
+      if (remaining > 0) {
+        state.secondsLeft = remaining;
+        buildQGrid();
+        showScreen('screen-exam');
+        restoreAnswersToDOM();
+        restoreFlagsToDOM();
+        startTimer();
+        return;
+      }
+      // Timer already expired while away → auto-submit
+      localStorage.removeItem(TIMER_KEY());
+      state.secondsLeft = 0;
+      buildQGrid();
+      showScreen('screen-exam');
+      restoreAnswersToDOM();
+      restoreFlagsToDOM();
+      autoSubmit();
+      return;
     }
-  }, 1000);
-}
-function updateTimerDisplay() {
-  const m = Math.floor(secondsLeft / 60);
-  const s = secondsLeft % 60;
-  const el = document.getElementById('timer');
-  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-  el.classList.toggle('urgent', secondsLeft <= 300);
+  } catch(e) {}
+
+  // ── SCENARIO 1: fresh start → go to ready screen ──
+  buildQGrid();
+  showScreen('screen-ready');
 }
 
-// ===== BUILD MAP =====
-function buildMap() {
-  const map = document.getElementById('q-map');
-  map.innerHTML = '';
-  for (let i = 1; i <= 40; i++) {
-    const d = document.createElement('div');
-    d.className = 'q-dot';
-    d.id = 'dot-' + i;
-    d.textContent = i;
-    d.onclick = () => scrollToQ(i);
-    map.appendChild(d);
-  }
+/* ─────────────────────────────────────────────────────────────
+   BEGIN EXAM
+   ───────────────────────────────────────────────────────────── */
+function handleBegin() {
+  showScreen('screen-exam');
+  restoreAnswersToDOM();
+  restoreFlagsToDOM();
+  startTimer();
 }
-function updateMap() {
-  const ans = collectAnswers();
-  for (let i = 1; i <= 40; i++) {
-    const dot = document.getElementById('dot-' + i);
-    if (!dot) continue;
-    const answered = ans[i] !== '' && ans[i] !== undefined && ans[i] !== null;
-    const flagged = !!flags[i];
-    dot.classList.toggle('answered', answered);
-    dot.classList.toggle('flagged', flagged);
-  }
+
+/* ─────────────────────────────────────────────────────────────
+   QUESTION MAP
+   ───────────────────────────────────────────────────────────── */
+function buildQGrid() {
+  const grid = document.getElementById('q-grid');
+  grid.innerHTML = '';
+  CONFIG.PARTS.forEach(part => {
+    const lbl = document.createElement('div');
+    lbl.className = 'part-label-cell'; lbl.textContent = part.label;
+    grid.appendChild(lbl);
+    for (let i = part.from; i <= part.to; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'q-cell'; cell.textContent = i; cell.id = `qcell-${i}`;
+      cell.onclick = () => scrollToQ(i);
+      grid.appendChild(cell);
+    }
+  });
+  refreshQGrid();
 }
+
+function refreshQGrid() {
+  for (let i = 1; i <= CONFIG.TOTAL_Q; i++) {
+    const cell = document.getElementById(`qcell-${i}`);
+    if (!cell) continue;
+    const hasAns = hasAnswer(i);
+    const isFlagged = state.flags[i];
+    cell.className = 'q-cell' + (hasAns ? ' answered' : '') + (isFlagged ? ' flagged' : '');
+  }
+  updateTabDots && updateTabDots();
+  // Dual groups
+  CONFIG.DUAL_GROUPS.forEach(grp => {
+    const [a, b] = grp.split('-').map(Number);
+    const arr = state.answers[grp];
+    const hasAns = arr && arr.length > 0;
+    [a, b].forEach(n => {
+      const cell = document.getElementById(`qcell-${n}`);
+      if (!cell) return;
+      const isFlagged = state.flags[n];
+      cell.className = 'q-cell' + (hasAns ? ' answered' : '') + (isFlagged ? ' flagged' : '');
+    });
+  });
+}
+
+function hasAnswer(qNum) {
+  // Check if it's part of a dual group
+  const dualKey = CONFIG.DUAL_GROUPS.find(g => {
+    const [a,b] = g.split('-').map(Number);
+    return qNum === a || qNum === b;
+  });
+  if (dualKey) {
+    const arr = state.answers[dualKey];
+    return arr && arr.length > 0;
+  }
+  const ans = state.answers[String(qNum)];
+  return ans !== undefined && String(ans).trim() !== '';
+}
+
 function scrollToQ(n) {
-  const el = document.getElementById('anchor-' + n);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // Switch to correct part first
+  const part = CONFIG.PARTS.find(p => n >= p.from && n <= p.to);
+  if (part) switchPart(part.from <= 10 ? 1 : part.from <= 20 ? 2 : part.from <= 30 ? 3 : 4, false);
+  setTimeout(() => {
+    const el = document.getElementById(`anchor-${n}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
 }
 
-// ===== COLLECT ANSWERS =====
-function collectAnswers() {
-  const ans = {};
-  for (let q = 1; q <= 40; q++) {
-    const el = document.getElementById('q' + q);
-    if (el) {
-      ans[q] = el.tagName === 'SELECT' ? el.value : el.value.trim();
-    } else {
-      // Radio
-      const r = document.querySelector(`input[name="q${q}"]:checked`);
-      ans[q] = r ? r.value : '';
+let currentPart = 1;
+
+function switchPart(n, scrollTop = true) {
+  currentPart = n;
+  // Panels
+  document.querySelectorAll('.part-panel').forEach(p => {
+    p.classList.toggle('active', Number(p.dataset.part) === n);
+  });
+  // Tabs
+  document.querySelectorAll('.part-tab').forEach(t => {
+    t.classList.toggle('active', Number(t.dataset.tab) === n);
+  });
+  if (scrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+  updateTabDots();
+}
+
+function updateTabDots() {
+  CONFIG.PARTS.forEach((part, idx) => {
+    const tabN = idx + 1;
+    const tab = document.querySelector(`.part-tab[data-tab="${tabN}"]`);
+    if (!tab) return;
+    let anyAnswered = false;
+    for (let i = part.from; i <= part.to; i++) {
+      if (hasAnswer(i)) { anyAnswered = true; break; }
     }
+    tab.classList.toggle('has-answers', anyAnswered);
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ANSWER HANDLERS
+   ───────────────────────────────────────────────────────────── */
+function handleInput(qNum, el) {
+  const val = el.value.trim();
+  state.answers[String(qNum)] = val;
+  el.classList.toggle('has-answer', val.length > 0);
+  saveToStorage();
+  refreshQGrid();
+}
+
+function handleRadio(qNum, val) {
+  state.answers[String(qNum)] = val;
+  saveToStorage();
+  refreshQGrid();
+}
+
+function handleDual(groupKey, checkbox) {
+  const group = document.querySelectorAll(`input[name="q${groupKey}"]`);
+  const checked = [...group].filter(cb => cb.checked);
+  if (checked.length > 2) { checkbox.checked = false; return; }
+  state.answers[groupKey] = checked.map(cb => cb.value).sort();
+  saveToStorage();
+  // Update both cells
+  const [a,b] = groupKey.split('-').map(Number);
+  [a,b].forEach(n => {
+    const cell = document.getElementById(`qcell-${n}`);
+    if (cell) {
+      const hasAns = state.answers[groupKey] && state.answers[groupKey].length > 0;
+      cell.className = 'q-cell' + (hasAns ? ' answered' : '') + (state.flags[n] ? ' flagged' : '');
+    }
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FLAG
+   ───────────────────────────────────────────────────────────── */
+function toggleFlag(n) {
+  state.flags[n] = !state.flags[n];
+  localStorage.setItem(FLAG_KEY(), JSON.stringify(state.flags));
+  const btn = document.querySelector(`.q-flag-btn[data-q="${n}"]`);
+  if (btn) btn.classList.toggle('flagged', state.flags[n]);
+  refreshQGrid();
+}
+
+function restoreFlagsToDOM() {
+  Object.entries(state.flags).forEach(([n, flagged]) => {
+    if (flagged) {
+      const btn = document.querySelector(`.q-flag-btn[data-q="${n}"]`);
+      if (btn) btn.classList.add('flagged');
+    }
+  });
+  refreshQGrid();
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RESTORE ANSWERS TO DOM
+   ───────────────────────────────────────────────────────────── */
+function restoreAnswersToDOM() {
+  Object.entries(state.answers).forEach(([key, val]) => {
+    // Fill-in
+    const inp = document.getElementById(`ans-${key}`);
+    if (inp && typeof val === 'string') {
+      inp.value = val;
+      inp.classList.toggle('has-answer', val.length > 0);
+    }
+    // Radio
+    const radios = document.querySelectorAll(`input[type="radio"][name="q${key}"]`);
+    radios.forEach(r => { r.checked = r.value === val; });
+    // Dual checkboxes
+    if (Array.isArray(val)) {
+      const cbs = document.querySelectorAll(`input[type="checkbox"][name="q${key}"]`);
+      cbs.forEach(cb => { cb.checked = val.includes(cb.value); });
+    }
+  });
+  refreshQGrid();
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LOCALSTORAGE
+   ───────────────────────────────────────────────────────────── */
+function saveToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEY(), JSON.stringify(state.answers));
+  } catch(e) {}
+}
+
+function saveSubmitState() {
+  try {
+    localStorage.setItem(SUBMIT_KEY(), JSON.stringify({
+      score:   state.score,
+      answers: state.answers,
+    }));
+    // Keep answer data but mark as done — no need to clear mid-exam save
+  } catch(e) {}
+}
+
+/* ─────────────────────────────────────────────────────────────
+   HIGHLIGHT
+   ───────────────────────────────────────────────────────────── */
+let currentHL = 'yellow';
+const hlToolbar = () => document.getElementById('hl-toolbar');
+
+function selectHLColor(color, btn) {
+  currentHL = color;
+  document.querySelectorAll('.hl-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyHighlightColor(color);
+  hideHLToolbar();
+}
+
+function hideHLToolbar() {
+  hlToolbar().classList.remove('visible');
+}
+
+function showHLToolbar(x, y) {
+  const tb = hlToolbar();
+  tb.classList.add('visible');
+  const tbW = tb.offsetWidth || 160;
+  const tbH = tb.offsetHeight || 44;
+  // Clamp X so toolbar never overflows viewport edges
+  const clampedX = Math.min(Math.max(x, tbW / 2 + 8), window.innerWidth - tbW / 2 - 8);
+  tb.style.left = clampedX + 'px';
+  tb.style.top  = Math.max(8, y - tbH - 10) + 'px';
+}
+
+// Apply highlight with chosen color to current selection
+function applyHighlightColor(color) {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || !sel.rangeCount) return;
+  const range = sel.getRangeAt(0);
+  if (range.collapsed) return;
+  try {
+    const mark = document.createElement('mark');
+    mark.className = `hl-${color}`;
+    range.surroundContents(mark);
+  } catch(err) {
+    wrapTextNodes(range, `hl-${color}`);
   }
-  return ans;
+  sel.removeAllRanges();
 }
 
-// ===== ATTACH LISTENERS =====
-function attachInputListeners() {
-  document.querySelectorAll('.q-input').forEach(el => {
-    el.addEventListener('input', () => { saveAnswers(); updateMap(); });
-    el.addEventListener('change', () => { saveAnswers(); updateMap(); });
+// Show toolbar on mouseup inside main-content
+document.addEventListener('mouseup', (e) => {
+  // Clicking the toolbar itself — don't hide
+  if (e.target.closest('#hl-toolbar')) return;
+
+  // Clicking a highlighted mark — remove it
+  const mark = e.target.closest('mark[class^="hl-"]');
+  if (mark && e.target.closest('#main-content')) {
+    const parent = mark.parentNode;
+    while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+    parent.removeChild(mark);
+    parent.normalize();
+    hideHLToolbar();
+    return;
+  }
+
+  if (!e.target.closest('#main-content')) {
+    hideHLToolbar();
+    return;
+  }
+
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.toString().trim() === '') {
+    hideHLToolbar();
+    return;
+  }
+
+  // Position toolbar above selection midpoint (viewport coords, fixed positioning)
+  const range = sel.getRangeAt(0);
+  const rect  = range.getBoundingClientRect();
+  const midX  = rect.left + rect.width / 2;
+  const topY  = rect.top;   // fixed = viewport coords, no scrollY needed
+  showHLToolbar(midX, topY);
+});
+
+// Hide toolbar on scroll or Escape
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideHLToolbar(); });
+
+function wrapTextNodes(range, className) {
+  const start = range.startContainer, end = range.endContainer;
+  const ancestor = range.commonAncestorContainer;
+  const iter = document.createNodeIterator(ancestor, NodeFilter.SHOW_TEXT);
+  let node, inRange = false;
+  const toWrap = [];
+  while ((node = iter.nextNode())) {
+    if (node === start || (start.nodeType !== 3 && start.contains && start.contains(node))) inRange = true;
+    if (inRange) toWrap.push(node);
+    if (node === end || (end.nodeType !== 3 && end.contains && end.contains(node))) break;
+  }
+  toWrap.forEach(n => {
+    const mark = document.createElement('mark');
+    mark.className = className;
+    n.parentNode.insertBefore(mark, n);
+    mark.appendChild(n);
   });
-  document.querySelectorAll('input[type="radio"]').forEach(el => {
-    el.addEventListener('change', () => { saveAnswers(); updateMap(); });
-  });
 }
 
-// ===== FLAG =====
-function toggleFlag(q, btn) {
-  flags[q] = !flags[q];
-  btn.classList.toggle('active', !!flags[q]);
-  saveFlags();
-  updateMap();
-}
-
-// ===== FLAG PANEL =====
+/* ─────────────────────────────────────────────────────────────
+   FLAG PANEL
+   ───────────────────────────────────────────────────────────── */
 function openFlagPanel() {
-  const list = document.getElementById('flag-panel-list');
-  const flaggedQs = Object.keys(flags).filter(q => flags[q]).sort((a,b) => a-b);
-  if (flaggedQs.length === 0) {
-    list.innerHTML = '<div class="flag-none">Chưa có câu nào được đánh dấu.</div>';
+  const body = document.getElementById('flag-panel-body');
+  const flagged = Object.entries(state.flags).filter(([,v]) => v);
+  if (flagged.length === 0) {
+    body.innerHTML = '<div class="flag-empty">Không có câu nào được đánh dấu.</div>';
   } else {
-    const ans = collectAnswers();
-    list.innerHTML = flaggedQs.map(q => {
-      const a = ans[q] || '';
-      return `<div class="flag-item" onclick="goToFlagged(${q})">
-        <div class="flag-item-num">Câu ${q}</div>
-        <div class="flag-item-ans">${a ? 'Đã điền: ' + a : 'Chưa điền'}</div>
+    body.innerHTML = flagged.sort((a,b) => Number(a[0])-Number(b[0])).map(([n]) => {
+      const ans = getDisplayAnswer(n);
+      return `<div class="flag-item" onclick="goToFlaggedQ(${n})">
+        <span class="flag-item-num">Câu ${n}</span>
+        <span class="flag-item-ans">${ans || '(chưa trả lời)'}</span>
+        <span style="color:rgba(212,175,55,0.4);font-size:0.8rem">→</span>
       </div>`;
     }).join('');
   }
-  document.getElementById('flag-panel').classList.add('open');
+  document.getElementById('flag-overlay').classList.add('open');
 }
-function closeFlagPanel() {
-  document.getElementById('flag-panel').classList.remove('open');
+
+function getDisplayAnswer(n) {
+  const dualKey = CONFIG.DUAL_GROUPS.find(g => {
+    const [a,b] = g.split('-').map(Number);
+    return Number(n) === a || Number(n) === b;
+  });
+  if (dualKey) {
+    const arr = state.answers[dualKey];
+    return arr && arr.length ? arr.join(', ') : '';
+  }
+  return state.answers[String(n)] || '';
 }
-function goToFlagged(q) {
+
+function goToFlaggedQ(n) {
   closeFlagPanel();
-  setTimeout(() => scrollToQ(q), 200);
+  scrollToQ(n);
 }
+function closeFlagPanel() { document.getElementById('flag-overlay').classList.remove('open'); }
+function closeFlagPanelOuter(e) { if (e.target === document.getElementById('flag-overlay')) closeFlagPanel(); }
 
-// ===== SUBMIT MODAL =====
+/* ─────────────────────────────────────────────────────────────
+   MODAL
+   ───────────────────────────────────────────────────────────── */
 function openSubmitModal() {
-  const ans = collectAnswers();
-  const unanswered = Object.values(ans).filter(v => !v).length;
-  let msg = '';
-  if (unanswered > 0) {
-    msg = `Bạn còn <strong>${unanswered} câu chưa trả lời</strong>. Bạn có chắc chắn muốn nộp bài không?`;
-  } else {
-    msg = 'Bạn đã trả lời đủ <strong>40 câu</strong>. Xác nhận nộp bài?';
+  const unanswered = countUnanswered();
+  document.getElementById('modal-unanswered').textContent = unanswered;
+  document.getElementById('modal-submit').classList.add('open');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function countUnanswered() {
+  let count = 0;
+  for (let i = 1; i <= CONFIG.TOTAL_Q; i++) {
+    if (!hasAnswer(i)) count++;
   }
-  document.getElementById('submit-modal-body').innerHTML = msg;
-  document.getElementById('submit-modal').classList.add('open');
-}
-function closeSubmitModal() {
-  document.getElementById('submit-modal').classList.remove('open');
+  return count;
 }
 
-// ===== CONFIRM SUBMIT =====
-function confirmSubmit() {
-  closeSubmitModal();
-  clearInterval(timerInterval);
+/* ─────────────────────────────────────────────────────────────
+   TIMER
+   ───────────────────────────────────────────────────────────── */
+function startTimer() {
+  const display = document.getElementById('timer-display');
 
-  const ans = collectAnswers();
+  // If secondsLeft was NOT restored from storage, initialise to full duration
+  if (state.secondsLeft === CONFIG.TIMER_SECS) {
+    saveTimerState(); // write initial checkpoint
+  }
+
+  function tick() {
+    state.secondsLeft--;
+    const m = Math.floor(state.secondsLeft / 60);
+    const s = state.secondsLeft % 60;
+    display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+
+    // Persist timer every tick so reload knows exact remaining time
+    saveTimerState();
+
+    if (state.secondsLeft <= CONFIG.WARN_SECS && state.secondsLeft > 0) {
+      display.classList.add('warn');
+    }
+    if (state.secondsLeft <= 0) {
+      clearInterval(state.timerInterval);
+      localStorage.removeItem(TIMER_KEY());
+      autoSubmit();
+    }
+  }
+
+  // Render immediately so display isn't blank for 1 second
+  const m0 = Math.floor(state.secondsLeft / 60);
+  const s0 = state.secondsLeft % 60;
+  display.textContent = `${String(m0).padStart(2,'0')}:${String(s0).padStart(2,'0')}`;
+  if (state.secondsLeft <= CONFIG.WARN_SECS) display.classList.add('warn');
+
+  state.timerInterval = setInterval(tick, 1000);
+}
+
+function saveTimerState() {
+  try {
+    localStorage.setItem(TIMER_KEY(), JSON.stringify({
+      secondsLeft: state.secondsLeft,
+      savedAt: Date.now(),
+    }));
+  } catch(e) {}
+}
+
+function autoSubmit() {
+  if (state.submitted) return;
+  document.getElementById('modal-timeout').classList.add('open');
+  submitExam();
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SCORING
+   ───────────────────────────────────────────────────────────── */
+function calcScore() {
   let score = 0;
-  for (let q = 1; q <= 40; q++) {
-    const given = (ans[q] || '').toLowerCase().trim();
-    const correct = (CORRECT_ANSWERS[q] || '').toLowerCase().trim();
-    if (given === correct) score++;
-  }
+  const CA = CONFIG.CORRECT_ANSWERS;
 
-  // Send to Google Sheet
-  if (!_sheetSent) {
-    _sheetSent = true;
-    const params = new URLSearchParams({
-      test_name: TEST_NAME,
-      name: studentName,
-      cls: studentClass,
-      score: score,
-      answers: JSON.stringify(ans)
-    });
-    const img = new Image();
-    img.src = SCRIPT_URL + '?' + params.toString();
-  }
-
-  // Show result
-  showResult(ans, score);
-}
-
-// ===== RESULT =====
-function showResult(ans, score) {
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('res-score').textContent = score;
-  document.getElementById('res-name-class').textContent = studentName + ' · ' + studentClass;
-
-  // Clone the main exam content into result
-  const mainEl = document.getElementById('main');
-  const clone = mainEl.cloneNode(true);
-
-  // Fill all inputs/selects in clone with student answers, then disable
-  clone.querySelectorAll('input.q-input').forEach(el => {
-    const q = el.getAttribute('data-q');
-    if (q && ans[q] !== undefined) el.value = ans[q];
-    el.disabled = true;
-    el.style.color = '#1a6aaf';
-    el.style.fontWeight = '600';
-  });
-  clone.querySelectorAll('select.q-input').forEach(el => {
-    const q = el.getAttribute('data-q');
-    if (q && ans[q] !== undefined) el.value = ans[q];
-    el.disabled = true;
-    el.style.color = '#1a6aaf';
-    el.style.fontWeight = '600';
-  });
-  // Fill radio buttons
-  [11,12,13,14,21,22,23,24,25].forEach(q => {
-    if (ans[q]) {
-      const r = clone.querySelector(`input[name="q${q}"][value="${ans[q]}"]`);
-      if (r) {
-        r.checked = true;
-        r.disabled = true;
-        // highlight selected option label
-        const label = r.closest('.q-option');
-        if (label) label.style.background = 'rgba(26,106,175,0.09)';
+  Object.entries(CA).forEach(([key, correct]) => {
+    const student = state.answers[key];
+    if (correct && typeof correct === 'object' && correct.accept) {
+      // Multiple accepted answers — still worth 1 point
+      if (student) {
+        const s = student.toString().toLowerCase().trim();
+        if (correct.accept.some(a => a.toLowerCase().trim() === s)) score++;
       }
-      clone.querySelectorAll(`input[name="q${q}"]`).forEach(r2 => r2.disabled = true);
+    } else if (Array.isArray(correct)) {
+      // Dual: compare sorted arrays
+      if (Array.isArray(student)) {
+        const a = [...correct].map(x=>x.toLowerCase()).sort().join(',');
+        const b = [...student].map(x=>x.toLowerCase()).sort().join(',');
+        if (a === b) score += correct.length;
+      }
+    } else {
+      if (student && student.toString().toLowerCase().trim() === correct.toLowerCase().trim()) {
+        score++;
+      }
     }
   });
-  // Remove flag buttons
-  clone.querySelectorAll('.flag-btn').forEach(b => b.remove());
-
-  document.getElementById('result-review-content').innerHTML = '';
-  document.getElementById('result-review-content').appendChild(clone);
-
-  const rs = document.getElementById('result-screen');
-  rs.classList.add('show');
+  return score;
 }
 
-// ===== HIGHLIGHT =====
-document.addEventListener('DOMContentLoaded', () => {
-  const hlBtn = document.getElementById('hl-btn');
+/* ─────────────────────────────────────────────────────────────
+   SUBMIT
+   ───────────────────────────────────────────────────────────── */
+async function submitExam() {
+  if (state.submitted) return;
+  state.submitted = true;
+  closeModal('modal-submit');
+  closeModal('modal-timeout');
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  try { localStorage.removeItem(TIMER_KEY()); } catch(e) {}
 
-  document.addEventListener('mouseup', (e) => {
-    const sel = window.getSelection();
-    if (!sel || sel.isCollapsed || !sel.toString().trim()) {
-      hlBtn.style.display = 'none';
-      return;
-    }
-    // Check if selection is within .main-content
-    let node = sel.anchorNode;
-    let inMain = false;
-    while (node) {
-      if (node.classList && node.classList.contains('main-content')) { inMain = true; break; }
-      node = node.parentNode;
-    }
-    if (!inMain) { hlBtn.style.display = 'none'; return; }
+  document.getElementById('spinner').classList.add('open');
 
-    // Check no inputs in range
-    try {
-      const range = sel.getRangeAt(0);
-      const frag = range.cloneContents();
-      if (frag.querySelector('input, select, button')) { hlBtn.style.display = 'none'; return; }
-      const rect = range.getBoundingClientRect();
-      hlBtn.style.display = 'block';
-      hlBtn.style.left = rect.left + rect.width / 2 - 40 + 'px';
-      hlBtn.style.top = rect.top - 36 + 'px';
-    } catch(err) {
-      hlBtn.style.display = 'none';
+  state.score = calcScore();
+  saveSubmitState();
+
+  // Build flat answers object (numeric keys 1–40)
+  const flatAnswers = {};
+  for (let i = 1; i <= CONFIG.TOTAL_Q; i++) {
+    const dualKey = CONFIG.DUAL_GROUPS.find(g => {
+      const [a,b] = g.split('-').map(Number);
+      return i === a || i === b;
+    });
+    if (dualKey) {
+      const arr = state.answers[dualKey] || [];
+      flatAnswers[String(i)] = arr.join('/');
+    } else {
+      flatAnswers[String(i)] = state.answers[String(i)] || '';
     }
+  }
+
+  const params = new URLSearchParams({
+    test_name: CONFIG.TEST_NAME,
+    name:      state.name,
+    cls:       state.cls,
+    score:     state.score,
+    answers:   JSON.stringify(flatAnswers),
   });
 
-  hlBtn.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-    const sel = window.getSelection();
-    if (!sel || sel.isCollapsed) return;
-    try {
-      const range = sel.getRangeAt(0);
-      const mark = document.createElement('mark');
-      mark.className = 'hl';
-      mark.onclick = function() {
-        const parent = this.parentNode;
-        while (this.firstChild) parent.insertBefore(this.firstChild, this);
-        parent.removeChild(this);
-        parent.normalize();
+  const sendURL = `${CONFIG.SCRIPT_URL}?${params.toString()}`;
+
+  try {
+    await fetch(sendURL, { mode: 'no-cors' });
+  } catch(e) {
+    // Image beacon fallback
+    new Image().src = sendURL;
+  }
+
+  document.getElementById('spinner').classList.remove('open');
+  showResultScreen();
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RESULT
+   ───────────────────────────────────────────────────────────── */
+function showResultScreen() {
+  document.getElementById('result-score-display').innerHTML = `${state.score}<span>/${CONFIG.TOTAL_Q}</span>`;
+  document.getElementById('result-name-display').textContent  = state.name;
+  document.getElementById('result-class-display').textContent = state.cls;
+  document.getElementById('result-test-name-display').textContent = CONFIG.TEST_NAME.replace(/_/g,' ').toUpperCase();
+  renderBandTable(state.score);
+  showScreen('screen-result');
+}
+
+const BAND_TABLE = [
+  { min: 39, max: 40, band: 9.0 },
+  { min: 37, max: 38, band: 8.5 },
+  { min: 35, max: 36, band: 8.0 },
+  { min: 33, max: 34, band: 7.5 },
+  { min: 30, max: 32, band: 7.0 },
+  { min: 27, max: 29, band: 6.5 },
+  { min: 23, max: 26, band: 6.0 },
+  { min: 20, max: 22, band: 5.5 },
+  { min: 16, max: 19, band: 5.0 },
+  { min: 13, max: 15, band: 4.5 },
+  { min: 10, max: 12, band: 4.0 },
+  { min: 7,  max: 9,  band: 3.5 },
+  { min: 5,  max: 6,  band: 3.0 },
+  { min: 3,  max: 4,  band: 2.5 },
+];
+
+function getBand(score) {
+  for (const row of BAND_TABLE) {
+    if (score >= row.min && score <= row.max) return row.band;
+  }
+  return score >= 39 ? 9.0 : '—';
+}
+
+function renderBandTable(score) {
+  const band = getBand(score);
+  document.getElementById('band-score-display').textContent = band;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ANSWER SHEET
+   ───────────────────────────────────────────────────────────── */
+function showAnswerSheet() {
+  const dateStr = new Date().toLocaleDateString('vi-VN');
+  document.getElementById('as-meta').textContent =
+    `${state.name} — ${state.cls} — ${CONFIG.TEST_NAME.replace(/_/g,' ').toUpperCase()} — ${dateStr}`;
+  document.getElementById('as-score').textContent = `${state.score} / ${CONFIG.TOTAL_Q}`;
+
+  // Count answered
+  let answered = 0;
+  for (let i = 1; i <= CONFIG.TOTAL_Q; i++) { if (hasAnswer(i)) answered++; }
+  document.getElementById('as-answered-count').textContent = `${answered}/${CONFIG.TOTAL_Q}`;
+
+  // Build 4-column table: each col = 10 rows (Q1-10, Q11-20, Q21-30, Q31-40)
+  const body = document.getElementById('answersheet-body');
+  body.innerHTML = '';
+
+  CONFIG.PARTS.forEach(part => {
+    const col = document.createElement('div');
+    col.className = 'as-col';
+
+    const header = document.createElement('div');
+    header.className = 'as-col-header';
+    header.innerHTML = '<span>Câu</span><span>Đáp án của bạn</span>';
+    col.appendChild(header);
+
+    for (let i = part.from; i <= part.to; i++) {
+      const ans = getDisplayAnswer(i) || '';
+      const row = document.createElement('div');
+      row.className = 'as-row';
+      row.innerHTML = `<span class="as-row-num">${i}</span><span class="as-row-ans ${ans ? '' : 'empty'}">${ans || '—'}</span>`;
+      col.appendChild(row);
+    }
+    body.appendChild(col);
+  });
+
+  showScreen('screen-answersheet');
+}
+
+/* ─────────────────────────────────────────────────────────────
+   REVIEW
+   ───────────────────────────────────────────────────────────── */
+function showReview() {
+  // Populate review sidebar
+  const testLabel = CONFIG.TEST_NAME.replace(/_/g,' ').toUpperCase();
+  document.getElementById('review-test-name').textContent   = testLabel;
+  document.getElementById('review-sidebar-name').textContent  = state.name;
+  document.getElementById('review-sidebar-class').textContent = state.cls;
+  document.getElementById('review-score-sidebar').textContent = `${state.score}/${CONFIG.TOTAL_Q}`;
+
+  // Build read-only question map in review sidebar
+  const grid = document.getElementById('review-q-grid');
+  grid.innerHTML = '';
+  CONFIG.PARTS.forEach(part => {
+    const lbl = document.createElement('div');
+    lbl.className = 'part-label-cell'; lbl.textContent = part.label;
+    grid.appendChild(lbl);
+    for (let i = part.from; i <= part.to; i++) {
+      const cell = document.createElement('div');
+      const hasAns = hasAnswer(i);
+      const isFlagged = state.flags[i];
+      cell.className = 'q-cell' + (hasAns ? ' answered' : '') + (isFlagged ? ' flagged' : '');
+      cell.textContent = i;
+      cell.onclick = () => {
+        const el = reviewMain.querySelector(`#anchor-${i}`);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       };
-      range.surroundContents(mark);
-    } catch(err) {
-      // ignore complex selections
+      grid.appendChild(cell);
     }
-    sel.removeAllRanges();
-    hlBtn.style.display = 'none';
   });
 
-  document.addEventListener('mousedown', (e) => {
-    if (e.target !== hlBtn) hlBtn.style.display = 'none';
+  // Clone exam content into review main
+  const mainContent = document.getElementById('main-content');
+  const reviewMain  = document.getElementById('review-main');
+  reviewMain.innerHTML = '';
+  const clone = mainContent.cloneNode(true);
+
+  // Make all inputs read-only
+  clone.querySelectorAll('input[type="text"]').forEach(inp => {
+    const q = inp.dataset.q;
+    inp.value = state.answers[q] || '';
+    inp.readOnly = true;
+    inp.classList.toggle('has-answer', !!(state.answers[q]));
+    inp.oninput = null;
   });
+  clone.querySelectorAll('input[type="radio"]').forEach(r => {
+    const name = r.name.replace('q','');
+    r.checked = state.answers[name] === r.value;
+    r.disabled = true;
+  });
+  clone.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    const name = cb.name.replace('q','');
+    const arr = state.answers[name] || [];
+    cb.checked = arr.includes(cb.value);
+    cb.disabled = true;
+  });
+  clone.querySelectorAll('select').forEach(sel => {
+    const q = sel.dataset.q;
+    sel.value = state.answers[q] || '';
+    sel.disabled = true;
+  });
+  clone.querySelectorAll('.q-flag-btn').forEach(btn => btn.remove());
+
+  reviewMain.appendChild(clone);
+  showScreen('screen-review');
+}
+
+/* ─────────────────────────────────────────────────────────────
+   INIT
+   ───────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  const testLabel = CONFIG.TEST_NAME.replace(/_/g,' ').toUpperCase();
+  document.querySelectorAll('[id$="-test-name"]').forEach(el => el.textContent = testLabel);
+  // Background watermark text on login screen
+  const bg = document.getElementById('login-bg-text');
+  if (bg) bg.textContent = testLabel;
 });
 </script>
 </body>
